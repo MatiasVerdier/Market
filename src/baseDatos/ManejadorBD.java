@@ -1,10 +1,14 @@
 package baseDatos;
+import dominio.Categoria;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ManejadorBD {
     
@@ -15,6 +19,7 @@ public class ManejadorBD {
     
     private Connection conexion;
     private java.sql.Statement st;
+    private java.sql.PreparedStatement ps;
     
     private static ManejadorBD instancia = null;
     
@@ -41,5 +46,17 @@ public class ManejadorBD {
         return st;
     }
     
+    public int insertCategorias(Categoria c, String sql){
+        int res = 0;
+        try {
+            ps = conexion.prepareStatement(sql);
+            ps.setString(1, c.getNombre());
+            res = ps.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.out.println("Error: "+ex.toString());
+        }
+        return res;
+    }
     
 }

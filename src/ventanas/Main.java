@@ -1,18 +1,17 @@
 package ventanas;
 
 import baseDatos.ManejadorBD;
+import java.awt.GridLayout;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JInternalFrame;
+import javax.swing.*;
 
 
 public class Main extends javax.swing.JFrame {
 
-    ManejadorBD base = ManejadorBD.getInstancia();
-    Statement s = base.getStatement();
     public Main() {
         initComponents();
     }
@@ -70,7 +69,12 @@ public class Main extends javax.swing.JFrame {
 
         jButton6.setText("jButton6");
 
-        jButton7.setText("jButton7");
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Turn off.png"))); // NOI18N
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Archivo");
 
@@ -189,11 +193,13 @@ public class Main extends javax.swing.JFrame {
     private void AdministrarPerfiles(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdministrarPerfiles
         Perfiles p = new Perfiles(this, true);
         p.setVisible(true);
+        p.setLocation(300, 200);
     }//GEN-LAST:event_AdministrarPerfiles
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         Perfiles p = new Perfiles(this, true);
         p.setVisible(true);
+        p.setLocation(300, 200);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -204,11 +210,13 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         Juegos j = new Juegos(this, true);
+        j.setLocation(300, 200);
         j.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         AltaJuego aj = new AltaJuego(null, true);
+        aj.setLocation(300, 200);
         aj.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -222,11 +230,18 @@ public class Main extends javax.swing.JFrame {
         j.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                Main app = new Main();
+                app.setLayout(new GridLayout(3,2));
+                app.setLocation(500, 300);
+                app.setVisible(true);
             }
         });
     }
