@@ -1,10 +1,33 @@
 package ventanas;
 
+import controladores.ControladorUsuarios;
+import dominio.Usuario;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+
 public class Perfiles extends javax.swing.JDialog {
+    
+    ControladorUsuarios cu = ControladorUsuarios.getInstancia();
+    ArrayList ids = new ArrayList();
+    int id_usu;
 
     public Perfiles(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        ArrayList usuarios = cu.listarUsuarios();
+       
+        if (usuarios != null){
+            DefaultListModel modelo_usuarios = new DefaultListModel();
+            this.lista_perfiles.setModel(modelo_usuarios);
+            int i = 0;
+            while (i < usuarios.size()){
+                Usuario user;
+                user = (Usuario)usuarios.get(i);
+                i++;
+                modelo_usuarios.addElement(user.getNick());
+                ids.add(user.getId());
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -55,6 +78,12 @@ public class Perfiles extends javax.swing.JDialog {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        lista_perfiles.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lista_perfiles.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                seleccionarUsuario(evt);
+            }
+        });
         jScrollPane1.setViewportView(lista_perfiles);
 
         btn_salir.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -70,7 +99,7 @@ public class Perfiles extends javax.swing.JDialog {
         btn_info_perfil.setText("Ver Informacion");
         btn_info_perfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_info_perfilActionPerformed(evt);
+                verInformacion(evt);
             }
         });
 
@@ -86,7 +115,7 @@ public class Perfiles extends javax.swing.JDialog {
         jButton1.setToolTipText("Modificar Usuario");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                modificarUsuario(evt);
             }
         });
 
@@ -95,7 +124,7 @@ public class Perfiles extends javax.swing.JDialog {
         jButton2.setToolTipText("Nuevo Usuario");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                nuevousuario(evt);
             }
         });
 
@@ -175,24 +204,30 @@ public class Perfiles extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_salir
 
-    private void btn_info_perfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_info_perfilActionPerformed
+    private void verInformacion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verInformacion
         InformacionPerfil ip = new InformacionPerfil(null, true);
         
         ip.setVisible(true);
-    }//GEN-LAST:event_btn_info_perfilActionPerformed
+    }//GEN-LAST:event_verInformacion
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void nuevousuario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevousuario
         InformacionPerfil ip = new InformacionPerfil(null, true);
         ip.limpiarCampos();
         ip.cambiarEstado(rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled);
         ip.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_nuevousuario
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void modificarUsuario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarUsuario
         InformacionPerfil ip = new InformacionPerfil(null, true);
         ip.cambiarEstado(rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, false);
         ip.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_modificarUsuario
+
+    private void seleccionarUsuario(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_seleccionarUsuario
+        int lugar;
+        lugar = this.lista_perfiles.getSelectedIndex();
+        id_usu = (int)ids.get(lugar);
+    }//GEN-LAST:event_seleccionarUsuario
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;

@@ -75,7 +75,7 @@ public class Main extends javax.swing.JFrame {
 
         menu_login.setText("LogIn");
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Turn off.png"))); // NOI18N
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/exit.png"))); // NOI18N
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
@@ -247,7 +247,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void arch_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arch_salirActionPerformed
