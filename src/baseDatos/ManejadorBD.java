@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,8 +19,8 @@ public class ManejadorBD {
     private final static String password = "root";
     
     private Connection conexion;
-    private java.sql.Statement st;
-    private java.sql.PreparedStatement ps;
+    private Statement st;
+    private PreparedStatement ps;
     
     private static ManejadorBD instancia = null;
     
@@ -52,11 +53,24 @@ public class ManejadorBD {
             ps = conexion.prepareStatement(sql);
             ps.setString(1, c.getNombre());
             res = ps.executeUpdate();
+            ps.close();
             
         } catch (SQLException ex) {
-            System.out.println("Error: "+ex.toString());
+            res = ex.getErrorCode();
         }
         return res;
     }
     
+    
+    public ResultSet selectTodosUsuarios(){
+         ResultSet res;
+        try {
+            String sql = "select id_usuario, nick from usuarios";
+             res = st.executeQuery(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(ManejadorBD.class.getName()).log(Level.SEVERE, null, ex);
+            res = null;
+        }
+        return res;
+    }
 }

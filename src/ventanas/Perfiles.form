@@ -182,7 +182,11 @@
                 <StringItem index="4" value="Item 5"/>
               </StringArray>
             </Property>
+            <Property name="selectionMode" type="int" value="0"/>
           </Properties>
+          <Events>
+            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="seleccionarUsuario"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -208,7 +212,7 @@
         <Property name="text" type="java.lang.String" value="Ver Informacion"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_info_perfilActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verInformacion"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_buscar">
@@ -241,7 +245,7 @@
         <Property name="toolTipText" type="java.lang.String" value="Modificar Usuario"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="modificarUsuario"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
@@ -255,7 +259,7 @@
         <Property name="toolTipText" type="java.lang.String" value="Nuevo Usuario"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nuevousuario"/>
       </Events>
     </Component>
   </SubComponents>
