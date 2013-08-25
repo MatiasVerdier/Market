@@ -177,16 +177,20 @@ public class Perfiles extends javax.swing.JDialog {
 
     private void btn_info_perfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_info_perfilActionPerformed
         InformacionPerfil ip = new InformacionPerfil(null, true);
+        
         ip.setVisible(true);
     }//GEN-LAST:event_btn_info_perfilActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         InformacionPerfil ip = new InformacionPerfil(null, true);
+        ip.limpiarCampos();
+        ip.cambiarEstado(rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled);
         ip.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         InformacionPerfil ip = new InformacionPerfil(null, true);
+        ip.cambiarEstado(rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, false);
         ip.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

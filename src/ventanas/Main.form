@@ -9,7 +9,7 @@
     </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="jMenu1">
+        <Menu class="javax.swing.JMenu" name="carga_datos">
           <Properties>
             <Property name="text" type="java.lang.String" value="Archivo"/>
           </Properties>
@@ -19,6 +19,14 @@
                 <Property name="text" type="java.lang.String" value="Cargar Datos de Prueba"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="arch_salir">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Salir"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="arch_salirActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menu_perfil">
@@ -26,20 +34,20 @@
             <Property name="text" type="java.lang.String" value="Perfiles"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+            <MenuItem class="javax.swing.JMenuItem" name="menu_admin_p">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Administrar Perfiles"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_admin_pActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="menu_alta_p">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Alta de Perfil"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_alta_pActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -49,20 +57,20 @@
             <Property name="text" type="java.lang.String" value="Juegos"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+            <MenuItem class="javax.swing.JMenuItem" name="menu_admin_j">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Administrar Juegos"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_admin_jActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+            <MenuItem class="javax.swing.JMenuItem" name="menu_alta_j">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Alta Juego"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem4ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_alta_jActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -72,12 +80,12 @@
             <Property name="text" type="java.lang.String" value="Categorias"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
+            <MenuItem class="javax.swing.JMenuItem" name="menu_alta_c">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Alta Categoria"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem5ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_alta_cActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -119,7 +127,6 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,0,-55,0,0,1,31"/>
   </AuxValues>
 
   <Layout>
@@ -136,9 +143,9 @@
                       <Component id="jButton4" linkSize="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jButton5" linkSize="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="menu_comp" linkSize="1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton6" linkSize="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="menu_login" linkSize="1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton7" linkSize="1" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -160,8 +167,8 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton5" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton6" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="menu_comp" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="menu_login" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton7" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -197,14 +204,17 @@
         <Property name="text" type="java.lang.String" value="Categorias"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton5">
+    <Component class="javax.swing.JButton" name="menu_comp">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jButton5"/>
+        <Property name="text" type="java.lang.String" value="Compra"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_compActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton6">
+    <Component class="javax.swing.JButton" name="menu_login">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jButton6"/>
+        <Property name="text" type="java.lang.String" value="LogIn"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton7">

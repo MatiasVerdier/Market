@@ -24,20 +24,21 @@ public class Main extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        menu_comp = new javax.swing.JButton();
+        menu_login = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        carga_datos = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
+        arch_salir = new javax.swing.JMenuItem();
         menu_perfil = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menu_admin_p = new javax.swing.JMenuItem();
+        menu_alta_p = new javax.swing.JMenuItem();
         menu_juego = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        menu_admin_j = new javax.swing.JMenuItem();
+        menu_alta_j = new javax.swing.JMenuItem();
         menu_categoria = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        menu_alta_c = new javax.swing.JMenuItem();
         menu_acerca = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
 
@@ -65,9 +66,14 @@ public class Main extends javax.swing.JFrame {
 
         jButton4.setText("Categorias");
 
-        jButton5.setText("jButton5");
+        menu_comp.setText("Compra");
+        menu_comp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_compActionPerformed(evt);
+            }
+        });
 
-        jButton6.setText("jButton6");
+        menu_login.setText("LogIn");
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Turn off.png"))); // NOI18N
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -76,62 +82,70 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jMenu1.setText("Archivo");
+        carga_datos.setText("Archivo");
 
         jMenuItem7.setText("Cargar Datos de Prueba");
-        jMenu1.add(jMenuItem7);
+        carga_datos.add(jMenuItem7);
 
-        jMenuBar1.add(jMenu1);
+        arch_salir.setText("Salir");
+        arch_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                arch_salirActionPerformed(evt);
+            }
+        });
+        carga_datos.add(arch_salir);
+
+        jMenuBar1.add(carga_datos);
 
         menu_perfil.setText("Perfiles");
 
-        jMenuItem2.setText("Administrar Perfiles");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menu_admin_p.setText("Administrar Perfiles");
+        menu_admin_p.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menu_admin_pActionPerformed(evt);
             }
         });
-        menu_perfil.add(jMenuItem2);
+        menu_perfil.add(menu_admin_p);
 
-        jMenuItem1.setText("Alta de Perfil");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menu_alta_p.setText("Alta de Perfil");
+        menu_alta_p.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menu_alta_pActionPerformed(evt);
             }
         });
-        menu_perfil.add(jMenuItem1);
+        menu_perfil.add(menu_alta_p);
 
         jMenuBar1.add(menu_perfil);
 
         menu_juego.setText("Juegos");
 
-        jMenuItem3.setText("Administrar Juegos");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menu_admin_j.setText("Administrar Juegos");
+        menu_admin_j.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menu_admin_jActionPerformed(evt);
             }
         });
-        menu_juego.add(jMenuItem3);
+        menu_juego.add(menu_admin_j);
 
-        jMenuItem4.setText("Alta Juego");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        menu_alta_j.setText("Alta Juego");
+        menu_alta_j.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                menu_alta_jActionPerformed(evt);
             }
         });
-        menu_juego.add(jMenuItem4);
+        menu_juego.add(menu_alta_j);
 
         jMenuBar1.add(menu_juego);
 
         menu_categoria.setText("Categorias");
 
-        jMenuItem5.setText("Alta Categoria");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        menu_alta_c.setText("Alta Categoria");
+        menu_alta_c.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                menu_alta_cActionPerformed(evt);
             }
         });
-        menu_categoria.add(jMenuItem5);
+        menu_categoria.add(menu_alta_c);
 
         jMenuBar1.add(menu_categoria);
 
@@ -158,15 +172,15 @@ public class Main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton5)
+                        .addComponent(menu_comp)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6)
+                        .addComponent(menu_login)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton7)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton2, jButton3, jButton4, jButton5, jButton6, jButton7});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton2, jButton3, jButton4, jButton7, menu_comp, menu_login});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,13 +193,13 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6)
+                    .addComponent(menu_comp)
+                    .addComponent(menu_login)
                     .addComponent(jButton7))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton2, jButton3, jButton4, jButton5, jButton6, jButton7});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton2, jButton3, jButton4, jButton7, menu_comp, menu_login});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -196,34 +210,36 @@ public class Main extends javax.swing.JFrame {
         p.setLocation(300, 200);
     }//GEN-LAST:event_AdministrarPerfiles
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void menu_admin_pActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_admin_pActionPerformed
         Perfiles p = new Perfiles(this, true);
         p.setVisible(true);
         p.setLocation(300, 200);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_menu_admin_pActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menu_alta_pActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_alta_pActionPerformed
         InformacionPerfil ip = new InformacionPerfil(this, true);
+        ip.limpiarCampos();
+        ip.cambiarEstado(rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled);
         ip.setVisible(true);
         
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menu_alta_pActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void menu_admin_jActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_admin_jActionPerformed
         Juegos j = new Juegos(this, true);
         j.setLocation(300, 200);
         j.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_menu_admin_jActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void menu_alta_jActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_alta_jActionPerformed
         AltaJuego aj = new AltaJuego(null, true);
         aj.setLocation(300, 200);
         aj.setVisible(true);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_menu_alta_jActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void menu_alta_cActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_alta_cActionPerformed
         NuevaCategoria ac = new NuevaCategoria(null, true);
         ac.setVisible(true);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_menu_alta_cActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Juegos j = new Juegos(this, true);
@@ -233,6 +249,17 @@ public class Main extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void arch_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arch_salirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_arch_salirActionPerformed
+
+    private void menu_compActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_compActionPerformed
+        // TODO add your handling code here:
+        NuevaCompra nc = new NuevaCompra(null,true);
+        nc.setVisible(true);
+    }//GEN-LAST:event_menu_compActionPerformed
 
 
     public static void main(String args[]) {
@@ -246,25 +273,26 @@ public class Main extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem arch_salir;
+    private javax.swing.JMenu carga_datos;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenu menu_acerca;
+    private javax.swing.JMenuItem menu_admin_j;
+    private javax.swing.JMenuItem menu_admin_p;
+    private javax.swing.JMenuItem menu_alta_c;
+    private javax.swing.JMenuItem menu_alta_j;
+    private javax.swing.JMenuItem menu_alta_p;
     private javax.swing.JMenu menu_categoria;
+    private javax.swing.JButton menu_comp;
     private javax.swing.JMenu menu_juego;
+    private javax.swing.JButton menu_login;
     private javax.swing.JMenu menu_perfil;
     // End of variables declaration//GEN-END:variables
 }

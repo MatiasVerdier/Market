@@ -18,7 +18,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
         initComponents();
     }
     
-    private void cambiarEstado(boolean nom, boolean ape, boolean fnac, boolean nick, boolean email, boolean radio){
+    public void cambiarEstado(boolean nom, boolean ape, boolean fnac, boolean nick, boolean email, boolean radio){
         this.txt_nombre.setEditable(nom);
         this.txt_ape.setEditable(ape);
         this.txt_fnac.setEditable(fnac);
@@ -28,7 +28,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
         this.radio_des.setEnabled(radio);
     }
     
-    private void limpiarCampos(){
+    public void limpiarCampos(){
         this.txt_nombre.setText("");
         this.txt_ape.setText("");
         this.txt_fnac.setText("");
@@ -67,7 +67,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         txt_fnac = new javax.swing.JTextField();
         btn_new = new javax.swing.JButton();
-        btn_mod = new javax.swing.JButton();
+        perfiles_edit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -179,9 +179,14 @@ public class InformacionPerfil extends javax.swing.JDialog {
             }
         });
 
-        btn_mod.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        btn_mod.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/edit16.png"))); // NOI18N
-        btn_mod.setToolTipText("Modificar Usuario");
+        perfiles_edit.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        perfiles_edit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/edit16.png"))); // NOI18N
+        perfiles_edit.setToolTipText("Modificar Usuario");
+        perfiles_edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                perfiles_editActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -194,7 +199,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btn_new, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btn_mod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(perfiles_edit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -245,7 +250,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel5, jLabel6, jLabel7});
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btn_mod, btn_new});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btn_new, perfiles_edit});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,7 +287,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
                         .addComponent(btn_aceptar)
                         .addComponent(btn_cancelar))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btn_mod)
+                        .addComponent(perfiles_edit)
                         .addComponent(btn_new)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -311,10 +316,15 @@ public class InformacionPerfil extends javax.swing.JDialog {
         this.limpiarCampos();
     }//GEN-LAST:event_btn_newActionPerformed
 
+    private void perfiles_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_perfiles_editActionPerformed
+        // TODO add your handling code here:
+        this.cambiarEstado(rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, false);
+        
+    }//GEN-LAST:event_perfiles_editActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_aceptar;
     private javax.swing.JButton btn_cancelar;
-    private javax.swing.JButton btn_mod;
     private javax.swing.JButton btn_new;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -326,6 +336,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
     private javax.swing.JLabel label_edad;
     private javax.swing.JLabel label_imagen;
     private javax.swing.JPanel panel_imagen;
+    private javax.swing.JButton perfiles_edit;
     private javax.swing.JRadioButton radio_cli;
     private javax.swing.JRadioButton radio_des;
     private javax.swing.ButtonGroup tipo_perfil;
