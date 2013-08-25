@@ -1,13 +1,6 @@
 package ventanas;
 
-import baseDatos.ManejadorBD;
 import java.awt.GridLayout;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.*;
 
 
 public class Main extends javax.swing.JFrame {
@@ -264,6 +257,7 @@ public class Main extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 Main app = new Main();
                 app.setLayout(new GridLayout(3,2));

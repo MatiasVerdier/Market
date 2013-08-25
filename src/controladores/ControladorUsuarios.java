@@ -34,7 +34,7 @@ public class ControladorUsuarios {
             
             return usuarios;
         } catch (SQLException ex) {
-            Logger.getLogger(ControladorUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
             return null;
         }
     }

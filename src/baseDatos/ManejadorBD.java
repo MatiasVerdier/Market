@@ -42,11 +42,11 @@ public class ManejadorBD {
             System.out.println(ex.toString());
         }
     }
-    ////////////////////////////////////////////////////////////////////////////////////
+    
     public java.sql.Statement getStatement(){
         return st;
     }
-    
+    /******************* METODOS DE CATEGORIAS  *****************/
     public int insertCategorias(Categoria c, String sql){
         int res = 0;
         try {
@@ -61,14 +61,38 @@ public class ManejadorBD {
         return res;
     }
     
+    public ResultSet selectTodasCategorias(){
+        ResultSet res;
+        try {
+            String sql = "select id_categoria, nombre from categorias";
+            res = st.executeQuery(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            res = null;
+        }
+        return res;
+    }
     
+    /********************* METODOS USUARIOS *********************/
     public ResultSet selectTodosUsuarios(){
-         ResultSet res;
+        ResultSet res;
         try {
             String sql = "select id_usuario, nick from usuarios";
              res = st.executeQuery(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(ManejadorBD.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
+            res = null;
+        }
+        return res;
+    }
+    
+    public ResultSet selectJuego(int id){
+        ResultSet res;
+        try {
+            String sql = "select * from juegos where id_juego = "+id;
+            res = st.executeQuery(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
             res = null;
         }
         return res;

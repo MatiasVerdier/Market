@@ -1,10 +1,20 @@
 
 package controladores;
 
+import baseDatos.ManejadorBD;
 import dominio.Juego;
 import java.util.ArrayList;
 
 public class Controladorjuegos {
+    
+    private static Controladorjuegos INSTANCIA = null;
+    private ManejadorBD mbd = ManejadorBD.getInstancia();
+    
+    public static Controladorjuegos getInstancia(){
+        if (INSTANCIA == null)
+             INSTANCIA = new Controladorjuegos();
+         return INSTANCIA;
+    }
     private ArrayList juegos;
     
     public static String SELECT_TODOS = "select * from juegos";

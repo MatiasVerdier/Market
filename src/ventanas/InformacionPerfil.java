@@ -59,19 +59,15 @@ public class InformacionPerfil extends javax.swing.JDialog {
 
         txt_nick.setEditable(false);
         txt_nick.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        txt_nick.setText("matiasvj");
 
         txt_email.setEditable(false);
         txt_email.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        txt_email.setText("matias@email.com");
 
         txt_nombre.setEditable(false);
         txt_nombre.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        txt_nombre.setText("Matias");
 
         txt_ape.setEditable(false);
         txt_ape.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        txt_ape.setText("Verdier");
 
         jLabel6.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel6.setText("Email");
@@ -98,7 +94,6 @@ public class InformacionPerfil extends javax.swing.JDialog {
         });
 
         label_edad.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        label_edad.setText("22");
 
         tipo_perfil.add(radio_cli);
         radio_cli.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -153,7 +148,6 @@ public class InformacionPerfil extends javax.swing.JDialog {
 
         txt_fnac.setEditable(false);
         txt_fnac.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        txt_fnac.setText("16/03/91");
 
         btn_new.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btn_new.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/user_add_16.png"))); // NOI18N

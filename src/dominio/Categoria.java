@@ -6,9 +6,18 @@ import java.util.ArrayList;
 
 public class Categoria {
     
+    private int id;
     private String nombre;
     private FileInputStream imagen;
     private ArrayList juegos;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNombre() {
         return nombre;

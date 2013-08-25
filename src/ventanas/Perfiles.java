@@ -9,11 +9,15 @@ public class Perfiles extends javax.swing.JDialog {
     
     ControladorUsuarios cu = ControladorUsuarios.getInstancia();
     ArrayList ids = new ArrayList();
-    int id_usu;
+    private int id_usu;
 
     public Perfiles(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.cargarUsuarios();
+    }
+    
+    private void cargarUsuarios(){
         ArrayList usuarios = cu.listarUsuarios();
        
         if (usuarios != null){
