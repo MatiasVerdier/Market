@@ -39,24 +39,25 @@ public class Juegos extends javax.swing.JDialog {
             while (i < categorias.size()){
                 Categoria cat;
                 cat = (Categoria)categorias.get(i);
-                i++;
                 modelo_cat.addElement(cat.getNombre());
                 ids_cat.add(cat.getId());
+                i++;
             }
         }
     }
     
     private void CargarJuegos(int id_cat){
-        ArrayList juegos = cj.listarJuegosPorCategoria(id_cat);
+        ids_j.clear();
         modelo_juego.clear();
+        ArrayList juegos = cj.listarJuegosPorCategoria(id_cat);
         if (juegos != null){
             int i = 0;
             while (i < juegos.size()){
                 Juego j;
                 j = (Juego)juegos.get(i);
-                i++;
                 modelo_juego.addElement(j.getNombre());
                 ids_j.add(j.getId());
+                i++;
             }
         }
     }
@@ -236,9 +237,17 @@ public class Juegos extends javax.swing.JDialog {
     }//GEN-LAST:event_salir
 
     private void seleccionarCategoria(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_seleccionarCategoria
-        int fila_sel = this.lista_categorias.getSelectedIndex();
-        id_cat = (int)ids_cat.get(fila_sel);
-        this.CargarJuegos(id_cat);
+        if (!evt.getValueIsAdjusting()){
+            try{
+                int fila_sel = this.lista_categorias.getSelectedIndex();
+                id_cat = (int)ids_cat.get(fila_sel);
+                this.CargarJuegos(id_cat);
+            }
+            catch(Exception ex){
+                System.out.println("error cat"+ex.toString());
+            }
+            System.out.println("id categoria: "+id_cat);
+        }
     }//GEN-LAST:event_seleccionarCategoria
 
     private void verInfoJuego(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verInfoJuego
@@ -256,8 +265,16 @@ public class Juegos extends javax.swing.JDialog {
     }//GEN-LAST:event_NuevoJuego
 
     private void seleccionarJuego(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_seleccionarJuego
-        int fila_sel = this.lista_juegos.getSelectedIndex();
-        id_juego = (int)ids_j.get(fila_sel);
+        if (!evt.getValueIsAdjusting()){
+            try{
+                int fila_sel = this.lista_juegos.getSelectedIndex();
+                id_juego = (int)ids_j.get(fila_sel);
+                System.out.println("id juego: "+id_juego);
+            }
+            catch(Exception ex){
+                System.out.println("error juego"+ex.toString());
+            }
+        }
     }//GEN-LAST:event_seleccionarJuego
 
 

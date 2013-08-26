@@ -112,4 +112,22 @@ public class ManejadorBD {
         }
         return res;
     }
+    
+    public ResultSet selectCategoriasPorJuego(int id){
+        ResultSet res;
+        try{
+            String sql = "select c.id_categoria, c.nombre from categorias c, categorias_juegos cj "+
+                        "where cj.id_juego = ? and c.id_categoria = cj.id_categoria";
+            
+            ps = conexion.prepareStatement(sql);
+            ps.setInt(1, id);
+            res = ps.executeQuery();
+            return res;
+            
+        }catch(SQLException ex){
+            System.out.println("select categorias por juego "+ex.toString());
+            return null;
+        }
+        
+    }
 }

@@ -2,6 +2,7 @@
 package controladores;
 
 import baseDatos.ManejadorBD;
+import dominio.Categoria;
 import dominio.Juego;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -64,6 +65,26 @@ public class Controladorjuegos {
             j.setId_desarrollador(res.getInt("id_desarrollador"));
             
             return j;
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+    }
+    
+    public ArrayList verCategoriasPorJuego(int id){
+        try {
+            ArrayList cats = new ArrayList();
+            
+            ResultSet res = mbd.selectCategoriasPorJuego(id);
+            
+            while(res.next()){
+                Categoria c = new Categoria();
+                c.setId(res.getInt("id_categoria"));
+                c.setNombre(res.getString("nombre"));
+                cats.add(c);
+            }
+            
+            return cats;
         } catch (SQLException ex) {
             System.out.println(ex.toString());
             return null;
