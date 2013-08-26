@@ -19,6 +19,10 @@ public class Juegos extends javax.swing.JDialog {
         this.cargarCategorias();
     }
 
+    private Juegos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     private void cargarCategorias(){
         ArrayList categorias = cc.listarCategorias();
        
@@ -211,6 +215,8 @@ public class Juegos extends javax.swing.JDialog {
 
     private void nuevaCategoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaCategoria
         NuevaCategoria nc = new NuevaCategoria(null, true);
+        nc.setVisible(true);
+        nc.setLocation(300, 200);
     }//GEN-LAST:event_nuevaCategoria
 
     private void salir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salir
@@ -232,7 +238,9 @@ public class Juegos extends javax.swing.JDialog {
     }//GEN-LAST:event_IngresarCompra
 
     private void NuevoJuego(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevoJuego
-        
+AltaJuego j = new AltaJuego(null, true);
+j.setVisible(true);
+j.setLocation(300, 200);
     }//GEN-LAST:event_NuevoJuego
 
 

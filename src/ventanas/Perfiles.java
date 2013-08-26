@@ -2,6 +2,7 @@ package ventanas;
 
 import controladores.ControladorUsuarios;
 import dominio.Usuario;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
@@ -110,6 +111,11 @@ public class Perfiles extends javax.swing.JDialog {
         btn_buscar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/search_button_green_16.png"))); // NOI18N
         btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
 
         campo_busqueda.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         campo_busqueda.setText("buscar");
@@ -210,7 +216,6 @@ public class Perfiles extends javax.swing.JDialog {
 
     private void verInformacion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verInformacion
         InformacionPerfil ip = new InformacionPerfil(null, true);
-        
         ip.setVisible(true);
     }//GEN-LAST:event_verInformacion
 
@@ -232,6 +237,10 @@ public class Perfiles extends javax.swing.JDialog {
         lugar = this.lista_perfiles.getSelectedIndex();
         id_usu = (int)ids.get(lugar);
     }//GEN-LAST:event_seleccionarUsuario
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+      
+    }//GEN-LAST:event_btn_buscarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;

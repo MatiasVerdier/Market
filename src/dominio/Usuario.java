@@ -77,4 +77,6 @@ public class Usuario {
     public void setFoto(FileInputStream foto) {
         this.foto = foto;
     }
+
+    
 }
