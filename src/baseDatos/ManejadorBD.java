@@ -88,7 +88,22 @@ public class ManejadorBD {
         return res;
     }
     
-    public ResultSet selectJuego(int id){
+    /************** METODOS JUEGOS ***************/
+    public ResultSet selectJuegosPorCategotia(int id_cat){
+        ResultSet res;
+        try {
+            String sql = "select j.id_juego, j.nombre from juegos j, categorias_juegos cj "+
+                    "where cj.id_categoria = "+id_cat+
+                    " and cj.id_juego = j.id_juego";
+            res = st.executeQuery(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            res = null;
+        }
+        return res;
+    }
+    
+    public ResultSet selectInfoBasicaJuego(int id){
         ResultSet res;
         try {
             String sql = "select * from juegos where id_juego = "+id;
@@ -99,6 +114,7 @@ public class ManejadorBD {
         }
         return res;
     }
+
 
     //---------- Insertar nuevo Usuario------------- //Modificado 25/8 Matias R
     public int insertCliente(dominio.Cliente user, String sql) {
@@ -145,6 +161,23 @@ public class ManejadorBD {
             
         }
         return res;
+    }
+    public ResultSet selectCategoriasPorJuego(int id){
+        ResultSet res;
+        try{
+            String sql = "select c.id_categoria, c.nombre from categorias c, categorias_juegos cj "+
+                        "where cj.id_juego = ? and c.id_categoria = cj.id_categoria";
+            
+            ps = conexion.prepareStatement(sql);
+            ps.setInt(1, id);
+            res = ps.executeQuery();
+            return res;
+            
+        }catch(SQLException ex){
+            System.out.println("select categorias por juego "+ex.toString());
+            return null;
+        }
+
     }
 }
 

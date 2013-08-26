@@ -2,20 +2,32 @@
 package ventanas;
 
 import controladores.ControladorCategorias;
+import controladores.Controladorjuegos;
 import dominio.Categoria;
+import dominio.Juego;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
 public class Juegos extends javax.swing.JDialog {
     
     ControladorCategorias cc = ControladorCategorias.getInstancia();
-    ArrayList ids = new ArrayList();
+    Controladorjuegos cj = Controladorjuegos.getInstancia();
+    
+    ArrayList ids_cat = new ArrayList();
+    ArrayList ids_j = new ArrayList();
+    
+    DefaultListModel modelo_cat = new DefaultListModel();
+    DefaultListModel modelo_juego = new DefaultListModel();
+    
     private int id_cat;
     private int id_juego;
 
     public Juegos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.lista_categorias.setModel(modelo_cat);
+        this.lista_juegos.setModel(modelo_juego);
+        
         this.cargarCategorias();
     }
 
@@ -27,29 +39,39 @@ public class Juegos extends javax.swing.JDialog {
         ArrayList categorias = cc.listarCategorias();
        
         if (categorias != null){
-            DefaultListModel modelo_cat = new DefaultListModel();
-            this.lista_categorias.setModel(modelo_cat);
             int i = 0;
             while (i < categorias.size()){
                 Categoria cat;
                 cat = (Categoria)categorias.get(i);
-                i++;
                 modelo_cat.addElement(cat.getNombre());
-                ids.add(cat.getId());
+                ids_cat.add(cat.getId());
+                i++;
             }
         }
     }
     
     private void CargarJuegos(int id_cat){
-        
+        ids_j.clear();
+        modelo_juego.clear();
+        ArrayList juegos = cj.listarJuegosPorCategoria(id_cat);
+        if (juegos != null){
+            int i = 0;
+            while (i < juegos.size()){
+                Juego j;
+                j = (Juego)juegos.get(i);
+                modelo_juego.addElement(j.getNombre());
+                ids_j.add(j.getId());
+                i++;
+            }
+        }
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
+        btn_compra = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btn_salir = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         lista_juegos = new javax.swing.JList();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -64,10 +86,10 @@ public class Juegos extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jButton2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/shop-cart-add-icon16.png"))); // NOI18N
-        jButton2.setText("Ingresar Compra");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_compra.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btn_compra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/shop-cart-add-icon16.png"))); // NOI18N
+        btn_compra.setText("Ingresar Compra");
+        btn_compra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IngresarCompra(evt);
             }
@@ -76,30 +98,26 @@ public class Juegos extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel1.setText("Categorias");
 
-        jButton3.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton3.setText("Salir");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btn_salir.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btn_salir.setText("Salir");
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 salir(evt);
             }
         });
 
         lista_juegos.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        lista_juegos.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         lista_juegos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lista_juegos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                seleccionarJuego(evt);
+            }
+        });
         jScrollPane2.setViewportView(lista_juegos);
 
         lista_categorias.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        lista_categorias.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         lista_categorias.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lista_categorias.setVerifyInputWhenFocusTarget(false);
         lista_categorias.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 seleccionarCategoria(evt);
@@ -169,7 +187,7 @@ public class Juegos extends javax.swing.JDialog {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btn_infoJuego)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2))
+                                .addComponent(btn_compra))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -179,7 +197,7 @@ public class Juegos extends javax.swing.JDialog {
                             .addComponent(jScrollPane2)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3)))
+                        .addComponent(btn_salir)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -198,15 +216,15 @@ public class Juegos extends javax.swing.JDialog {
                             .addComponent(btn_new_categ)))
                     .addComponent(btn_del_categ))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_infoJuego)
-                    .addComponent(jButton2))
+                    .addComponent(btn_compra))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
+                .addComponent(btn_salir)
                 .addContainerGap())
         );
 
@@ -224,13 +242,23 @@ public class Juegos extends javax.swing.JDialog {
     }//GEN-LAST:event_salir
 
     private void seleccionarCategoria(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_seleccionarCategoria
-        int fila_sel = this.lista_categorias.getSelectedIndex();
-        id_cat = (int)ids.get(fila_sel);
-        this.CargarJuegos(id_cat);
+        if (!evt.getValueIsAdjusting()){
+            try{
+                int fila_sel = this.lista_categorias.getSelectedIndex();
+                id_cat = (int)ids_cat.get(fila_sel);
+                this.CargarJuegos(id_cat);
+            }
+            catch(Exception ex){
+                System.out.println("error cat"+ex.toString());
+            }
+            System.out.println("id categoria: "+id_cat);
+        }
     }//GEN-LAST:event_seleccionarCategoria
 
     private void verInfoJuego(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verInfoJuego
         InformacionJuego info_juego = new InformacionJuego(null, true);
+        info_juego.cargarInfoJuego(id_juego);
+        info_juego.setVisible(true);
     }//GEN-LAST:event_verInfoJuego
 
     private void IngresarCompra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarCompra
@@ -243,15 +271,28 @@ j.setVisible(true);
 j.setLocation(300, 200);
     }//GEN-LAST:event_NuevoJuego
 
+    private void seleccionarJuego(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_seleccionarJuego
+        if (!evt.getValueIsAdjusting()){
+            try{
+                int fila_sel = this.lista_juegos.getSelectedIndex();
+                id_juego = (int)ids_j.get(fila_sel);
+                System.out.println("id juego: "+id_juego);
+            }
+            catch(Exception ex){
+                System.out.println("error juego"+ex.toString());
+            }
+        }
+    }//GEN-LAST:event_seleccionarJuego
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_compra;
     private javax.swing.JButton btn_del_categ;
     private javax.swing.JButton btn_eliminar_juego;
     private javax.swing.JButton btn_infoJuego;
     private javax.swing.JButton btn_new_categ;
     private javax.swing.JButton btn_new_juego;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btn_salir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
