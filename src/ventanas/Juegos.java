@@ -2,20 +2,32 @@
 package ventanas;
 
 import controladores.ControladorCategorias;
+import controladores.Controladorjuegos;
 import dominio.Categoria;
+import dominio.Juego;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
 public class Juegos extends javax.swing.JDialog {
     
     ControladorCategorias cc = ControladorCategorias.getInstancia();
-    ArrayList ids = new ArrayList();
+    Controladorjuegos cj = Controladorjuegos.getInstancia();
+    
+    ArrayList ids_cat = new ArrayList();
+    ArrayList ids_j = new ArrayList();
+    
+    DefaultListModel modelo_cat = new DefaultListModel();
+    DefaultListModel modelo_juego = new DefaultListModel();
+    
     private int id_cat;
     private int id_juego;
 
     public Juegos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.lista_categorias.setModel(modelo_cat);
+        this.lista_juegos.setModel(modelo_juego);
+        
         this.cargarCategorias();
     }
 
@@ -23,21 +35,30 @@ public class Juegos extends javax.swing.JDialog {
         ArrayList categorias = cc.listarCategorias();
        
         if (categorias != null){
-            DefaultListModel modelo_cat = new DefaultListModel();
-            this.lista_categorias.setModel(modelo_cat);
             int i = 0;
             while (i < categorias.size()){
                 Categoria cat;
                 cat = (Categoria)categorias.get(i);
                 i++;
                 modelo_cat.addElement(cat.getNombre());
-                ids.add(cat.getId());
+                ids_cat.add(cat.getId());
             }
         }
     }
     
     private void CargarJuegos(int id_cat){
-        
+        ArrayList juegos = cj.listarJuegosPorCategoria(id_cat);
+        modelo_juego.clear();
+        if (juegos != null){
+            int i = 0;
+            while (i < juegos.size()){
+                Juego j;
+                j = (Juego)juegos.get(i);
+                i++;
+                modelo_juego.addElement(j.getNombre());
+                ids_j.add(j.getId());
+            }
+        }
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -81,21 +102,12 @@ public class Juegos extends javax.swing.JDialog {
         });
 
         lista_juegos.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        lista_juegos.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         lista_juegos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(lista_juegos);
 
         lista_categorias.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        lista_categorias.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         lista_categorias.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lista_categorias.setVerifyInputWhenFocusTarget(false);
         lista_categorias.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 seleccionarCategoria(evt);
@@ -194,9 +206,9 @@ public class Juegos extends javax.swing.JDialog {
                             .addComponent(btn_new_categ)))
                     .addComponent(btn_del_categ))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_infoJuego)
@@ -219,7 +231,7 @@ public class Juegos extends javax.swing.JDialog {
 
     private void seleccionarCategoria(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_seleccionarCategoria
         int fila_sel = this.lista_categorias.getSelectedIndex();
-        id_cat = (int)ids.get(fila_sel);
+        id_cat = (int)ids_cat.get(fila_sel);
         this.CargarJuegos(id_cat);
     }//GEN-LAST:event_seleccionarCategoria
 

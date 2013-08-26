@@ -7,6 +7,7 @@ INSERT INTO `market`.`categorias` (`nombre`) VALUES ('Simulacion de combate');
 INSERT INTO `market`.`categorias` (`nombre`) VALUES ('Estrategia');
 INSERT INTO `market`.`categorias` (`nombre`) VALUES ('Simulacion de vida');
 INSERT INTO `market`.`categorias` (`nombre`) VALUES ('Arcade');
+INSERT INTO `market`.`categorias` (`nombre`) VALUES ('Deporte');
 INSERT INTO `market`.`categorias` (`nombre`) VALUES ('Puzle');
 INSERT INTO `market`.`categorias` (`nombre`) VALUES ('Aventura');
 INSERT INTO `market`.`categorias` (`nombre`) VALUES ('Rol');

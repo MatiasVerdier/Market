@@ -86,6 +86,20 @@ public class ManejadorBD {
         return res;
     }
     
+    public ResultSet selectJuegosPorCategotia(int id_cat){
+        ResultSet res;
+        try {
+            String sql = "select j.id_juego, j.nombre from juegos j, categorias_juegos cj "+
+                    "where cj.id_categoria = "+id_cat+
+                    " and cj.id_juego = j.id_juego";
+            res = st.executeQuery(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            res = null;
+        }
+        return res;
+    }
+    
     public ResultSet selectJuego(int id){
         ResultSet res;
         try {
