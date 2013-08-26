@@ -64,9 +64,9 @@ public class Juegos extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
+        btn_compra = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btn_salir = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         lista_juegos = new javax.swing.JList();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -81,10 +81,10 @@ public class Juegos extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jButton2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/shop-cart-add-icon16.png"))); // NOI18N
-        jButton2.setText("Ingresar Compra");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_compra.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btn_compra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/shop-cart-add-icon16.png"))); // NOI18N
+        btn_compra.setText("Ingresar Compra");
+        btn_compra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IngresarCompra(evt);
             }
@@ -93,9 +93,9 @@ public class Juegos extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel1.setText("Categorias");
 
-        jButton3.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton3.setText("Salir");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btn_salir.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btn_salir.setText("Salir");
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 salir(evt);
             }
@@ -103,6 +103,11 @@ public class Juegos extends javax.swing.JDialog {
 
         lista_juegos.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         lista_juegos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lista_juegos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                seleccionarJuego(evt);
+            }
+        });
         jScrollPane2.setViewportView(lista_juegos);
 
         lista_categorias.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -177,7 +182,7 @@ public class Juegos extends javax.swing.JDialog {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btn_infoJuego)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2))
+                                .addComponent(btn_compra))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -187,7 +192,7 @@ public class Juegos extends javax.swing.JDialog {
                             .addComponent(jScrollPane2)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3)))
+                        .addComponent(btn_salir)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -212,9 +217,9 @@ public class Juegos extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_infoJuego)
-                    .addComponent(jButton2))
+                    .addComponent(btn_compra))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
+                .addComponent(btn_salir)
                 .addContainerGap())
         );
 
@@ -223,6 +228,7 @@ public class Juegos extends javax.swing.JDialog {
 
     private void nuevaCategoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaCategoria
         NuevaCategoria nc = new NuevaCategoria(null, true);
+        nc.setVisible(true);
     }//GEN-LAST:event_nuevaCategoria
 
     private void salir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salir
@@ -237,6 +243,8 @@ public class Juegos extends javax.swing.JDialog {
 
     private void verInfoJuego(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verInfoJuego
         InformacionJuego info_juego = new InformacionJuego(null, true);
+        info_juego.cargarInfoJuego(id_juego);
+        info_juego.setVisible(true);
     }//GEN-LAST:event_verInfoJuego
 
     private void IngresarCompra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarCompra
@@ -247,15 +255,20 @@ public class Juegos extends javax.swing.JDialog {
         
     }//GEN-LAST:event_NuevoJuego
 
+    private void seleccionarJuego(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_seleccionarJuego
+        int fila_sel = this.lista_juegos.getSelectedIndex();
+        id_juego = (int)ids_j.get(fila_sel);
+    }//GEN-LAST:event_seleccionarJuego
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_compra;
     private javax.swing.JButton btn_del_categ;
     private javax.swing.JButton btn_eliminar_juego;
     private javax.swing.JButton btn_infoJuego;
     private javax.swing.JButton btn_new_categ;
     private javax.swing.JButton btn_new_juego;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btn_salir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

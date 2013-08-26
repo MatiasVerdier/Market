@@ -86,6 +86,7 @@ public class ManejadorBD {
         return res;
     }
     
+    /************** METODOS JUEGOS ***************/
     public ResultSet selectJuegosPorCategotia(int id_cat){
         ResultSet res;
         try {
@@ -100,7 +101,7 @@ public class ManejadorBD {
         return res;
     }
     
-    public ResultSet selectJuego(int id){
+    public ResultSet selectInfoBasicaJuego(int id){
         ResultSet res;
         try {
             String sql = "select * from juegos where id_juego = "+id;

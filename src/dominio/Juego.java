@@ -2,6 +2,7 @@
 package dominio;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
 
 public class Juego {
     private int id;
@@ -11,6 +12,10 @@ public class Juego {
     private double precio;
     private int id_desarrollador;
     private FileInputStream portada;
+    
+    private ArrayList categorias;
+    private ArrayList compras;
+    private ArrayList comentarios;
 
     public int getId() {
         return id;
@@ -66,6 +71,30 @@ public class Juego {
 
     public void setPortada(FileInputStream portada) {
         this.portada = portada;
+    }
+
+    public ArrayList getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(ArrayList categorias) {
+        this.categorias = categorias;
+    }
+
+    public ArrayList getCompras() {
+        return compras;
+    }
+
+    public void setCompras(ArrayList compras) {
+        this.compras = compras;
+    }
+
+    public ArrayList getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(ArrayList comentarios) {
+        this.comentarios = comentarios;
     }
     
 }

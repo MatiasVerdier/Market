@@ -6,6 +6,8 @@ import dominio.Juego;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Controladorjuegos {
     
@@ -41,6 +43,27 @@ public class Controladorjuegos {
             }
             
             return juegos;
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+    }
+    
+    public Juego verInfoJuego(int id){
+        try {
+            Juego j = new Juego();
+            
+            ResultSet res = mbd.selectInfoBasicaJuego(id);
+            res.next();
+            
+            j.setId(res.getInt("id_juego"));
+            j.setNombre(res.getString("nombre"));
+            j.setDescripcion(res.getString("descripcion"));
+            j.setPrecio(res.getDouble("precio"));
+            j.setSize(res.getDouble("size"));
+            j.setId_desarrollador(res.getInt("id_desarrollador"));
+            
+            return j;
         } catch (SQLException ex) {
             System.out.println(ex.toString());
             return null;
