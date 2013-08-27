@@ -27,6 +27,11 @@ public class NuevaCompra extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alta Compra");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel2.setText("Juego");
@@ -135,6 +140,10 @@ public class NuevaCompra extends javax.swing.JDialog {
     private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
         this.dispose();
     }//GEN-LAST:event_cancelar
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox anio;
