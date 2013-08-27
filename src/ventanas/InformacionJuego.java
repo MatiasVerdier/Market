@@ -3,6 +3,7 @@ package ventanas;
 import controladores.Controladorjuegos;
 import dominio.Categoria;
 import dominio.Juego;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -14,6 +15,7 @@ public class InformacionJuego extends javax.swing.JDialog {
     private DefaultListModel modelo_cats = new DefaultListModel();
     private DefaultListModel modelo_compras = new DefaultListModel();
     private DefaultTreeModel modelo_coments = new DefaultTreeModel(null, true);
+    private SimpleDateFormat SimpleDateFormat;
     
     public InformacionJuego(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -347,7 +349,10 @@ public class InformacionJuego extends javax.swing.JDialog {
 
     private void ingresarCompra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarCompra
         NuevaCompra c = new NuevaCompra(null, true);
+        c.txtJuego.setText(this.nombre.getText());
         c.setVisible(true);
+        
+        
     }//GEN-LAST:event_ingresarCompra
 
 

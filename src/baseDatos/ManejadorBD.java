@@ -1,24 +1,18 @@
 package baseDatos;
 import dominio.Categoria;
-import dominio.Usuario;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ManejadorBD {
     
     private final static String driver = "com.mysql.jdbc.Driver";
-    private final static String bd = "jdbc:mysql://localhost:3306/market";
-    private final static String usuario = "root";
-    private final static String password = "admin";
+    private final static String bd = "jdbc:mysql://201.221.15.100:3306/market";
+    private final static String usuario = "random";
+    private final static String password = "random1";
     
     private Connection conexion;
     private Statement st;
@@ -40,7 +34,7 @@ public class ManejadorBD {
             st = conexion.createStatement();
             System.out.println("Conexion exitosa");
         }
-        catch(Exception ex){
+        catch(ClassNotFoundException | SQLException ex){
             System.out.println(ex.toString());
         }
     }
@@ -63,6 +57,23 @@ public class ManejadorBD {
         return res;
     }
     
+    public int insertCompra(dominio.Compra c, String sql){
+     int res = 0;
+        try {
+            ps = conexion.prepareStatement(sql);
+            ps.setInt(1, c.getJuego().getId());
+            ps.setInt(2, c.getCliente().getId());
+            java.sql.Date fec = new java.sql.Date(c.getFecha().getTime());
+            ps.setDate(3, fec);
+            res = ps.executeUpdate();
+            ps.close();
+
+        } catch (SQLException ex) {
+            res = ex.getErrorCode();
+        }
+     return res;
+    }
+    
     public ResultSet selectTodasCategorias(){
         ResultSet res;
         try {
@@ -80,6 +91,18 @@ public class ManejadorBD {
         ResultSet res;
         try {
             String sql = "select id_usuario, nick from usuarios";
+             res = st.executeQuery(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            res = null;
+        }
+        return res;
+    }
+    
+    public ResultSet selectTodosClientes(){
+        ResultSet res;
+        try {
+            String sql = "select id_usuario, nick from usuarios where tipo = 'c'";
              res = st.executeQuery(sql);
         } catch (SQLException ex) {
             System.out.println(ex.toString());
@@ -115,10 +138,9 @@ public class ManejadorBD {
         return res;
     }
 
-
     //---------- Insertar nuevo Usuario------------- //Modificado 25/8 Matias R
-    public int insertCliente(dominio.Cliente user, String sql) {
-       int res = 0;
+    public void insertCliente(dominio.Cliente user, String sql) throws Exception {
+     
         try {
             java.sql.Date fec = new java.sql.Date(user.getFecha_nac().getTime());
             
@@ -129,13 +151,13 @@ public class ManejadorBD {
             ps.setDate(4, fec);
             ps.setString(5, user.getEmail());
             ps.setString(6, "c");
-            res = ps.executeUpdate();
+            ps.executeUpdate();
             ps.close();
             
         } catch (SQLException ex) {
-            res = ex.getErrorCode();
+            throw new Exception(ex);
         }
-        return res;
+       
     }
     
 
@@ -162,6 +184,7 @@ public class ManejadorBD {
         }
         return res;
     }
+  
     public ResultSet selectCategoriasPorJuego(int id){
         ResultSet res;
         try{

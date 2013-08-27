@@ -22,9 +22,13 @@ public class ControladorUsuarios {
    
     //Modificado 25/8 Matias R
     //se da de alta un cliente
-    public int altaCliente(dominio.Cliente user){
-        String sql = "insert into usuarios (nombre, apellido, nick, fecha_nacimiento, email, tipo) values (?,?,?,?,?,?)";
-        return mbd.insertCliente(user, sql);
+    public void altaCliente(dominio.Cliente user) throws Exception{
+        try {
+            String sql = "insert into usuarios (nombre, apellido, nick, fecha_nacimiento, email, tipo) values (?,?,?,?,?,?)";
+            mbd.insertCliente(user, sql);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
     }
     //Da de alta un desarrollador
      public void altaDesarrollador(dominio.Desarrollador user) throws Exception{
@@ -37,6 +41,26 @@ public class ControladorUsuarios {
         }
     }
     
+     
+        public ArrayList listarClientes(){
+        try {
+            ArrayList usuarios = new ArrayList();
+            
+            ResultSet res = mbd.selectTodosClientes();
+            while(res.next()){
+                Usuario u = new Usuario();
+                u.setNick(res.getString("nick"));
+                u.setId(res.getInt("id_usuario"));
+                usuarios.add(u);
+            }
+            
+            return usuarios;
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+    }
+     
     public ArrayList listarUsuarios(){
         try {
             ArrayList usuarios = new ArrayList();
