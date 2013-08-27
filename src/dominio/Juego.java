@@ -10,7 +10,7 @@ public class Juego {
     private String descripcion;
     private double size;
     private double precio;
-    private int id_desarrollador;
+    private String nick_des;
     private FileInputStream portada;
     
     private ArrayList categorias;
@@ -57,12 +57,12 @@ public class Juego {
         this.precio = precio;
     }
 
-    public int getId_desarrollador() {
-        return id_desarrollador;
+    public String getNick_des() {
+        return nick_des;
     }
 
-    public void setId_desarrollador(int id_desarrollador) {
-        this.id_desarrollador = id_desarrollador;
+    public void setNick_des(String nick_des) {
+        this.nick_des = nick_des;
     }
 
     public FileInputStream getPortada() {

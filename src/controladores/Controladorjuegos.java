@@ -3,6 +3,7 @@ package controladores;
 
 import baseDatos.ManejadorBD;
 import dominio.Categoria;
+import dominio.Cliente;
 import dominio.Juego;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -62,7 +63,7 @@ public class Controladorjuegos {
             j.setDescripcion(res.getString("descripcion"));
             j.setPrecio(res.getDouble("precio"));
             j.setSize(res.getDouble("size"));
-            j.setId_desarrollador(res.getInt("id_desarrollador"));
+            j.setNick_des(res.getString("nick"));
             
             return j;
         } catch (SQLException ex) {
@@ -85,6 +86,25 @@ public class Controladorjuegos {
             }
             
             return cats;
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+    }
+    
+    public ArrayList verComprasPorJuego(int id){
+        try {
+            ArrayList compras = new ArrayList();
+            
+            ResultSet res = mbd.selectComprasPorJuego(id);
+            
+            while(res.next()){
+                Cliente c = new Cliente();
+                c.setNick(res.getString("nick"));
+                compras.add(c);
+            }
+            
+            return compras;
         } catch (SQLException ex) {
             System.out.println(ex.toString());
             return null;
