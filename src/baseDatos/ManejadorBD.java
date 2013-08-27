@@ -129,7 +129,20 @@ public class ManejadorBD {
     public ResultSet selectInfoBasicaJuego(int id){
         ResultSet res;
         try {
-            String sql = "select * from juegos where id_juego = "+id;
+            String sql = "select j.*, u.nick from juegos j, usuarios u where j.id_desarrollador = u.id_usuario and j.id_juego ="+id;
+            res = st.executeQuery(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            res = null;
+        }
+        return res;
+    }
+    
+    public ResultSet selectComprasPorJuego(int id){
+        ResultSet res;
+        try {
+            String sql = "select u.nick from usuarios u, compras c "+
+                    "where c.id_juego = "+id+" and c.id_usuario = u.id_usuario";
             res = st.executeQuery(sql);
         } catch (SQLException ex) {
             System.out.println(ex.toString());

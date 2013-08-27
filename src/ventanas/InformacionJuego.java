@@ -2,6 +2,7 @@ package ventanas;
 
 import controladores.Controladorjuegos;
 import dominio.Categoria;
+import dominio.Cliente;
 import dominio.Juego;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class InformacionJuego extends javax.swing.JDialog {
     private DefaultListModel modelo_cats = new DefaultListModel();
     private DefaultListModel modelo_compras = new DefaultListModel();
     private DefaultTreeModel modelo_coments = new DefaultTreeModel(null, true);
-    private SimpleDateFormat SimpleDateFormat;
+    private DefaultComboBoxModel modelo_des = new DefaultComboBoxModel();
     
     public InformacionJuego(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -30,19 +31,37 @@ public class InformacionJuego extends javax.swing.JDialog {
         this.nombre.setText(j.getNombre());
         this.tam.setText(String.valueOf(j.getSize()));
         this.precio.setText(String.valueOf(j.getPrecio()));
-        this.desa.setEnabled(false);
+        this.desa.setModel(modelo_des);
+        modelo_des.addElement(j.getNick_des());
         this.desc.setText(j.getDescripcion());
         
         modelo_cats.clear();
         
         ArrayList cats = cj.verCategoriasPorJuego(id);
         int i = 0;
-        while (i < cats.size()){
-            Categoria c;
-            c = (Categoria)cats.get(i);
-            modelo_cats.addElement(c.getNombre());
-            i++;
+        if (!cats.isEmpty()){
+            while (i < cats.size()){
+                Categoria c;
+                c = (Categoria)cats.get(i);
+                modelo_cats.addElement(c.getNombre());
+                i++;
+            }
         }
+        
+        modelo_compras.clear();
+        ArrayList compras = cj.verComprasPorJuego(id);
+        i = 0;
+        if (!compras.isEmpty()){
+            while(i < compras.size()){
+                Cliente c;
+                c = (Cliente)compras.get(i);
+                modelo_compras.addElement(c.getNick());
+                i++;
+            }
+        }
+        else
+            modelo_compras.addElement("El Juego no tiene compras");
+
         //this.desa.setModel(new DefaultComboBoxModel().addElement());
     }
     
@@ -110,7 +129,6 @@ public class InformacionJuego extends javax.swing.JDialog {
 
         desa.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         desa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        desa.setEnabled(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
