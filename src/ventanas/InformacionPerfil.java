@@ -4,9 +4,7 @@ package ventanas;
 import dominio.Cliente;
 import dominio.Desarrollador;
 import dominio.Usuario;
-import java.sql.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static java.awt.image.ImageObserver.WIDTH;
 import javax.swing.*;
 public class InformacionPerfil extends javax.swing.JDialog {
 
@@ -189,7 +187,8 @@ public class InformacionPerfil extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel8.setText("Sitio Web");
 
-        calendarNacimiento.setDateFormatString("yyyy/MM/dd");
+        calendarNacimiento.setEnabled(false);
+        calendarNacimiento.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -215,7 +214,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(calendarNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(calendarNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_ape))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,7 +247,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_edad, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                        .addComponent(label_edad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(292, 292, 292)))
                 .addGap(2, 2, 2))
         );
@@ -283,17 +282,16 @@ public class InformacionPerfil extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(txt_ape, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6)
+                            .addComponent(txt_ape, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel7)
-                                .addComponent(radio_cli)
-                                .addComponent(radio_des))
-                            .addComponent(calendarNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel7)
+                            .addComponent(radio_cli)
+                            .addComponent(radio_des)
+                            .addComponent(calendarNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -302,7 +300,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(txt_web, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel8)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -326,7 +324,11 @@ public class InformacionPerfil extends javax.swing.JDialog {
         user.setFecha_nac(calendarNacimiento.getDate());
         user.setEmail(this.txt_email.getText());
         if(radio_cli.isSelected()){
-        controladores.ControladorUsuarios.getInstancia().altaCliente((Cliente)user);
+        try {
+            controladores.ControladorUsuarios.getInstancia().altaCliente((Cliente)user);
+        } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage() , null, WIDTH, null);
+            }
         }else{
             try {
                 controladores.ControladorUsuarios.getInstancia().altaDesarrollador((Desarrollador)user);

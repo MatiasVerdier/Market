@@ -4,6 +4,7 @@ import controladores.Controladorjuegos;
 import dominio.Categoria;
 import dominio.Cliente;
 import dominio.Juego;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -366,7 +367,10 @@ public class InformacionJuego extends javax.swing.JDialog {
 
     private void ingresarCompra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarCompra
         NuevaCompra c = new NuevaCompra(null, true);
+        c.txtJuego.setText(this.nombre.getText());
         c.setVisible(true);
+        
+        
     }//GEN-LAST:event_ingresarCompra
 
 

@@ -4,30 +4,24 @@ package dominio;
 import java.util.Date;
 
 public class Compra {
-    private int id_juego;
-    private int id_cliente;
+    private Juego juego;
+    private Cliente cliente;
     private Date fecha;
 
-    public Compra(int id_juego, int id_cliente, Date fecha) {
-        this.id_juego = id_juego;
-        this.id_cliente = id_cliente;
-        this.fecha = fecha;
+    public Juego getJuego() {
+        return juego;
     }
 
-    public int getId_juego() {
-        return id_juego;
+    public void setJuego(Juego juego) {
+        this.juego = juego;
     }
 
-    public void setId_juego(int id_juego) {
-        this.id_juego = id_juego;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public int getId_cliente() {
-        return id_cliente;
-    }
-
-    public void setId_cliente(int id_cliente) {
-        this.id_cliente = id_cliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public Date getFecha() {
@@ -37,5 +31,11 @@ public class Compra {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    
+
+    public Compra(Juego juego, Cliente cliente, Date fecha) {
+        this.juego = juego;
+        this.cliente = cliente;
+        this.fecha = fecha;
+    }
+   
 }
