@@ -66,42 +66,4 @@ public class Controladorjuegos {
         }
     }
     
-    public ArrayList verCategoriasPorJuego(int id){
-        try {
-            ArrayList cats = new ArrayList();
-            
-            ResultSet res = mbd.selectCategoriasPorJuego(id);
-            
-            while(res.next()){
-                Categoria c = new Categoria();
-                c.setId(res.getInt("id_categoria"));
-                c.setNombre(res.getString("nombre"));
-                cats.add(c);
-            }
-            
-            return cats;
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-            return null;
-        }
-    }
-    
-    public ArrayList verComprasPorJuego(int id){
-        try {
-            ArrayList compras = new ArrayList();
-            
-            ResultSet res = mbd.selectComprasPorJuego(id);
-            
-            while(res.next()){
-                Cliente c = new Cliente();
-                c.setNick(res.getString("nick"));
-                compras.add(c);
-            }
-            
-            return compras;
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-            return null;
-        }
-    }
 }

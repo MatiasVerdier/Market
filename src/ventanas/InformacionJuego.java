@@ -1,5 +1,7 @@
 package ventanas;
 
+import controladores.ControladorCategorias;
+import controladores.ControladorCompras;
 import controladores.Controladorjuegos;
 import dominio.Categoria;
 import dominio.Cliente;
@@ -14,6 +16,8 @@ public class InformacionJuego extends javax.swing.JDialog {
 
     private Juego j;
     private Controladorjuegos cj = Controladorjuegos.getInstancia();
+    private ControladorCategorias cc = ControladorCategorias.getInstancia();
+    private ControladorCompras ccomp = ControladorCompras.getInstancia();
     private DefaultListModel modelo_cats = new DefaultListModel();
     private DefaultListModel modelo_compras = new DefaultListModel();
     private DefaultTreeModel modelo_coments = new DefaultTreeModel(null, true);
@@ -30,15 +34,15 @@ public class InformacionJuego extends javax.swing.JDialog {
     public void cargarInfoJuego(int id){
         j = cj.verInfoJuego(id);
         this.nombre.setText(j.getNombre());
-        this.tam.setText(String.valueOf(j.getSize()));
-        this.precio.setText(String.valueOf(j.getPrecio()));
+        this.tam.setText(String.valueOf(j.getSize()) + " KB");
+        this.precio.setText("U$S " + String.valueOf(j.getPrecio()));
         this.desa.setModel(modelo_des);
         modelo_des.addElement(j.getNick_des());
         this.desc.setText(j.getDescripcion());
         
         modelo_cats.clear();
         
-        ArrayList cats = cj.verCategoriasPorJuego(id);
+        ArrayList cats = cc.verCategoriasPorJuego(id);
         int i = 0;
         if (!cats.isEmpty()){
             while (i < cats.size()){
@@ -50,7 +54,7 @@ public class InformacionJuego extends javax.swing.JDialog {
         }
         
         modelo_compras.clear();
-        ArrayList compras = cj.verComprasPorJuego(id);
+        ArrayList compras = ccomp.verComprasPorJuego(id);
         i = 0;
         if (!compras.isEmpty()){
             while(i < compras.size()){
