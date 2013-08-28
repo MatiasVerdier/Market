@@ -1,16 +1,49 @@
 
 package ventanas;
 
+import controladores.ControladorUsuarios;
 import dominio.Cliente;
 import dominio.Desarrollador;
 import dominio.Usuario;
+import java.awt.Image;
 import static java.awt.image.ImageObserver.WIDTH;
 import javax.swing.*;
 public class InformacionPerfil extends javax.swing.JDialog {
+    
+    private ControladorUsuarios cu = ControladorUsuarios.getInstancia();
 
     public InformacionPerfil(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+    
+    public void cargarInfoPerfil(int id){
+        Usuario u = cu.verInfoUsuario(id);
+        this.txt_nombre.setText(u.getNombre());
+        this.txt_ape.setText(u.getApellido());
+        this.txt_nick.setText(u.getNick());
+        this.txt_email.setText(u.getEmail());
+        this.calendarNacimiento.setDate(u.getFecha_nac());
+        
+        int label_w = this.label_imagen.getWidth();
+        int label_h = this.label_imagen.getHeight();
+        int img_w = u.getFoto().getIconWidth();
+        int img_h = u.getFoto().getIconHeight();
+//        int w = img_w;
+//        int h = img_h;
+//        
+//        if (img_w > label_w){
+//            w = label_w;
+//            h = (w * img_h)/img_w;
+//        }
+//        
+//        if (img_h > label_h){
+//            h = label_h;
+//            w = (h * img_w)/img_h;
+//        }
+            
+        Image img = u.getFoto().getImage().getScaledInstance(label_w, label_h, Image.SCALE_DEFAULT);  
+        this.label_imagen.setIcon(new ImageIcon(img));
     }
     
     public void cambiarEstado(boolean nom, boolean ape, boolean fnac, boolean nick, boolean email, boolean radio){
@@ -65,16 +98,16 @@ public class InformacionPerfil extends javax.swing.JDialog {
         setResizable(false);
 
         txt_nick.setEditable(false);
-        txt_nick.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txt_nick.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
 
         txt_email.setEditable(false);
-        txt_email.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txt_email.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
 
         txt_nombre.setEditable(false);
-        txt_nombre.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txt_nombre.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
 
         txt_ape.setEditable(false);
-        txt_ape.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txt_ape.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel6.setText("Email");
@@ -163,7 +196,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
         btn_new.setToolTipText("Nuevo Usuario");
         btn_new.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_newActionPerformed(evt);
+                altaPerfil(evt);
             }
         });
 
@@ -172,17 +205,12 @@ public class InformacionPerfil extends javax.swing.JDialog {
         perfiles_edit.setToolTipText("Modificar Usuario");
         perfiles_edit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                perfiles_editActionPerformed(evt);
+                modificarInfo(evt);
             }
         });
 
         txt_web.setEditable(false);
-        txt_web.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        txt_web.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_webActionPerformed(evt);
-            }
-        });
+        txt_web.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel8.setText("Sitio Web");
@@ -205,51 +233,51 @@ public class InformacionPerfil extends javax.swing.JDialog {
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_aceptar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_cancelar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(calendarNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_ape))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel5))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(24, 24, 24)
-                                            .addComponent(txt_nick, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addComponent(txt_web, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel8)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel7)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(radio_cli)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(radio_des)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_nombre)
-                        .addGap(286, 286, 286))
+                        .addGap(10, 10, 10)
+                        .addComponent(btn_cancelar)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_edad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(292, 292, 292)))
-                .addGap(2, 2, 2))
+                        .addGap(306, 306, 306))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(calendarNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_ape, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel5))
+                                        .addGap(24, 24, 24)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txt_nick, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txt_web, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(radio_cli)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(radio_des, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4});
@@ -257,6 +285,8 @@ public class InformacionPerfil extends javax.swing.JDialog {
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel5, jLabel6, jLabel7});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btn_new, perfiles_edit});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {calendarNacimiento, txt_ape, txt_nombre});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,11 +310,12 @@ public class InformacionPerfil extends javax.swing.JDialog {
                             .addComponent(txt_nick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addComponent(txt_ape, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_ape, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -353,20 +384,16 @@ public class InformacionPerfil extends javax.swing.JDialog {
         
     }//GEN-LAST:event_cargarImagen
 
-    private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
+    private void altaPerfil(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaPerfil
         this.cambiarEstado(true, true, true, true, true, true);
         this.limpiarCampos();
-    }//GEN-LAST:event_btn_newActionPerformed
+    }//GEN-LAST:event_altaPerfil
 
-    private void perfiles_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_perfiles_editActionPerformed
+    private void modificarInfo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarInfo
         // TODO add your handling code here:
-        this.cambiarEstado(rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, false);
+        this.cambiarEstado(true, true, true, true, true, false);
         
-    }//GEN-LAST:event_perfiles_editActionPerformed
-
-    private void txt_webActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_webActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_webActionPerformed
+    }//GEN-LAST:event_modificarInfo
 
     private void radio_desActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_desActionPerformed
         if(radio_des.isSelected()){

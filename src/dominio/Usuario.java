@@ -3,16 +3,18 @@ package dominio;
 
 import java.io.FileInputStream;
 import java.util.Date;
+import javax.swing.ImageIcon;
 
 public class Usuario {
     private int id;
     private String nombre;
     private String apellido;
+    private String tipo;
     private Date fecha_nac;
     private int edad;
     private String nick;
     private String email;
-    private FileInputStream foto;
+    private ImageIcon foto;
 
     public int getId() {
         return id;
@@ -36,6 +38,14 @@ public class Usuario {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public Date getFecha_nac() {
@@ -70,11 +80,11 @@ public class Usuario {
         this.email = email;
     }
 
-    public FileInputStream getFoto() {
+    public ImageIcon getFoto() {
         return foto;
     }
 
-    public void setFoto(FileInputStream foto) {
+    public void setFoto(ImageIcon foto) {
         this.foto = foto;
     }
 

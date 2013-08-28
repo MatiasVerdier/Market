@@ -108,18 +108,21 @@ public class ControladorUsuarios {
                 u.setEmail(res.getString("email"));
                 u.setNick(res.getString("nick"));
                 u.setFecha_nac(res.getDate("fecha_nacimiento"));
-                
                 InputStream is = res.getBinaryStream("foto");
-                FileInputStream fis;
-                BufferedImage bi;
-                try {
-                    bi = ImageIO.read(is);
-                    ImageIcon ci = new ImageIcon(bi);
-                } catch (IOException ex) {
-                    System.out.println(ex.toString());
+                if (is != null){
+                    BufferedImage bi;
+                    try {
+                        bi = ImageIO.read(is);
+                        ImageIcon img = new ImageIcon(bi);
+                        u.setFoto(img);
+                    } catch (IOException ex) {
+                        System.out.println(ex.toString());
+                    }
+                }
+                else{
+                    u.setFoto(new ImageIcon(getClass().getResource("/recursos/user-icon.png")));
                 }
                 
-                //u.setFoto();
             }
             return u;
         }catch(SQLException ex){
