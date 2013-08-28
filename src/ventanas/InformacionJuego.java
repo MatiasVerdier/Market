@@ -12,6 +12,7 @@ import javax.swing.tree.DefaultTreeModel;
 
 public class InformacionJuego extends javax.swing.JDialog {
 
+    private Juego j;
     private Controladorjuegos cj = Controladorjuegos.getInstancia();
     private DefaultListModel modelo_cats = new DefaultListModel();
     private DefaultListModel modelo_compras = new DefaultListModel();
@@ -27,7 +28,7 @@ public class InformacionJuego extends javax.swing.JDialog {
     }
 
     public void cargarInfoJuego(int id){
-        Juego j = cj.verInfoJuego(id);
+        j = cj.verInfoJuego(id);
         this.nombre.setText(j.getNombre());
         this.tam.setText(String.valueOf(j.getSize()));
         this.precio.setText(String.valueOf(j.getPrecio()));
@@ -368,6 +369,7 @@ public class InformacionJuego extends javax.swing.JDialog {
     private void ingresarCompra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarCompra
         NuevaCompra c = new NuevaCompra(null, true);
         c.txtJuego.setText(this.nombre.getText());
+        c.setJuegoComprar(j);
         c.setVisible(true);
         
         

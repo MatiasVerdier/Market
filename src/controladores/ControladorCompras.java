@@ -10,7 +10,7 @@ public class ControladorCompras {
     private ManejadorBD mbd = ManejadorBD.getInstancia();
       
     public int altaCompra(dominio.Compra c){
-        String sql = "insert into compra values (?,?,?)";
+        String sql = "insert into compras values (?,?,?)";
         return mbd.insertCompra(c, sql);
     }
     

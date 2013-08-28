@@ -56,10 +56,10 @@ public class ControladorUsuarios {
             
             ResultSet res = mbd.selectTodosClientes();
             while(res.next()){
-                Usuario u = new Usuario();
-                u.setNick(res.getString("nick"));
-                u.setId(res.getInt("id_usuario"));
-                usuarios.add(u);
+                Cliente c = new Cliente();
+                c.setNick(res.getString("nick"));
+                c.setId(res.getInt("id_usuario"));
+                usuarios.add(c);
             }
             
             return usuarios;

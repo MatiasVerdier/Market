@@ -1,6 +1,7 @@
 package ventanas;
 
 import dominio.Cliente;
+import dominio.Juego;
 import dominio.Usuario;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,6 +9,15 @@ import java.util.Iterator;
 public class NuevaCompra extends javax.swing.JDialog {
 private ArrayList listaUsuarios;
 private dominio.Juego juegoComprar;
+
+    public Juego getJuegoComprar() {
+        return juegoComprar;
+    }
+
+    public void setJuegoComprar(Juego juegoComprar) {
+        this.juegoComprar = juegoComprar;
+    }
+
     public NuevaCompra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -136,14 +146,16 @@ private dominio.Juego juegoComprar;
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         listaUsuarios = controladores.ControladorUsuarios.getInstancia().listarClientes();
         for (Iterator it = listaUsuarios.iterator(); it.hasNext();) {
-            Usuario usuario = (Usuario)it.next();
-            comboClientes.addItem(usuario.getNick());
+            Cliente cli  = (Cliente)it.next();
+            comboClientes.addItem(cli.getNick());
         }
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Cliente cli = (Cliente)listaUsuarios.get(comboClientes.getSelectedIndex());
+        dominio.Compra compra = new dominio.Compra(juegoComprar,cli, dateFechaCompra.getDate());
         
+        controladores.ControladorCompras.getInstancia().altaCompra(compra);
         
         
     }//GEN-LAST:event_jButton3ActionPerformed
