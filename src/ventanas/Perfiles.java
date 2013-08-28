@@ -235,7 +235,9 @@ public class Perfiles extends javax.swing.JDialog {
     private void seleccionarUsuario(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_seleccionarUsuario
         int lugar;
         lugar = this.lista_perfiles.getSelectedIndex();
-        id_usu = (int)ids.get(lugar);
+        if (lugar != -1){
+            id_usu = (int)ids.get(lugar);
+        }
     }//GEN-LAST:event_seleccionarUsuario
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed

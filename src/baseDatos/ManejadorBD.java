@@ -10,9 +10,9 @@ import java.sql.Statement;
 public class ManejadorBD {
     
     private final static String driver = "com.mysql.jdbc.Driver";
-    private final static String bd = "jdbc:mysql://201.221.15.100:3306/market";
-    private final static String usuario = "random";
-    private final static String password = "random1";
+    private final static String bd = "jdbc:mysql://localhost:3306/market";
+    private final static String usuario = "root";
+    private final static String password = "root";
     
     private Connection conexion;
     private Statement st;
@@ -26,7 +26,7 @@ public class ManejadorBD {
         }
         return instancia;
     }
-    ////////////////////////////// se establece la conexion ///////////////////////////
+    /*--------------------- se establece la conexion -------------------*/
     private ManejadorBD() {
         try{
             Class.forName(driver);
@@ -42,7 +42,7 @@ public class ManejadorBD {
     public java.sql.Statement getStatement(){
         return st;
     }
-    /******************* METODOS DE CATEGORIAS  *****************/
+    /******************* INSERTAR CATEGORIA *****************/
     public int insertCategorias(Categoria c, String sql){
         int res = 0;
         try {
@@ -56,7 +56,7 @@ public class ManejadorBD {
         }
         return res;
     }
-    
+    /*---------------------- INSERTAR COMPRA -----------------------*/
     public int insertCompra(dominio.Compra c, String sql){
      int res = 0;
         try {
@@ -74,6 +74,7 @@ public class ManejadorBD {
      return res;
     }
     
+    /*----------------- LISTAR CATEGORIAS ------------------------*/
     public ResultSet selectTodasCategorias(){
         ResultSet res;
         try {
@@ -86,7 +87,7 @@ public class ManejadorBD {
         return res;
     }
     
-    /********************* METODOS USUARIOS *********************/
+    /*-------------------- LISTAR USUARIOS -------------------------*/
     public ResultSet selectTodosUsuarios(){
         ResultSet res;
         try {
@@ -99,6 +100,21 @@ public class ManejadorBD {
         return res;
     }
     
+    /*------------- RETORNA INFORMACION DEL USUARIO -------------------*/
+    public ResultSet selectInfoUsuario(int id){
+        ResultSet res;
+        try {
+            String sql = "select * from usuarios where id_usuario = "+id;
+            res = st.executeQuery(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            res = null;
+        }
+        return res;
+    }
+    
+    
+    /*------------------- SELECCIONAR CLIENTES ----------------------*/
     public ResultSet selectTodosClientes(){
         ResultSet res;
         try {
@@ -111,7 +127,7 @@ public class ManejadorBD {
         return res;
     }
     
-    /************** METODOS JUEGOS ***************/
+    /*------------- MUESTRA LOS JUEGOS DE UNA DETERMINADA CATEGORIA --------------*/
     public ResultSet selectJuegosPorCategotia(int id_cat){
         ResultSet res;
         try {
@@ -126,6 +142,8 @@ public class ManejadorBD {
         return res;
     }
     
+    
+    /*------------ RETORNA INFORMACION BASICA DEL JUEGO -------------------*/
     public ResultSet selectInfoBasicaJuego(int id){
         ResultSet res;
         try {
@@ -138,6 +156,7 @@ public class ManejadorBD {
         return res;
     }
     
+    /*------------ RETORNA LAS COMPRAS DE UN JUEGO ------------*/
     public ResultSet selectComprasPorJuego(int id){
         ResultSet res;
         try {
@@ -197,7 +216,7 @@ public class ManejadorBD {
         }
         return res;
     }
-  
+  /*-------- RETORNA LAS CATEGORIAS A LAS QUE PERTENECE UN JUEGO ------*/
     public ResultSet selectCategoriasPorJuego(int id){
         ResultSet res;
         try{

@@ -2,12 +2,20 @@
 package controladores;
 
 import baseDatos.ManejadorBD;
+import dominio.Cliente;
+import dominio.Desarrollador;
 import dominio.Usuario;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 public class ControladorUsuarios {
     
@@ -31,7 +39,7 @@ public class ControladorUsuarios {
         }
     }
     //Da de alta un desarrollador
-     public void altaDesarrollador(dominio.Desarrollador user) throws Exception{
+    public void altaDesarrollador(dominio.Desarrollador user) throws Exception{
         try {
             String sql = "insert into usuarios (nombre, apellido, nick, fecha_nacimiento, email, sitio_web, tipo) values (?,?,?,?,?,?,?)";
              mbd.insertDesarrollador(user, sql);
@@ -42,7 +50,7 @@ public class ControladorUsuarios {
     }
     
      
-        public ArrayList listarClientes(){
+    public ArrayList listarClientes(){
         try {
             ArrayList usuarios = new ArrayList();
             
@@ -76,6 +84,46 @@ public class ControladorUsuarios {
             return usuarios;
         } catch (SQLException ex) {
             System.out.println(ex.toString());
+            return null;
+        }
+    }
+    
+    public Usuario verInfoUsuario(int id){
+        try{
+            ResultSet res = mbd.selectInfoUsuario(id);
+            Usuario u = null;
+            while(res.next()){
+                if (res.getString("tipo").equals("d")){
+                    Desarrollador d = new Desarrollador();
+                    d.setWeb(res.getString("sitio_web"));
+                    u = d;
+                }
+                else{
+                    Cliente c = new Cliente();
+                    u = c;
+                }
+                u.setId(res.getInt("id_usuario"));
+                u.setNombre(res.getString("nombre"));
+                u.setApellido(res.getString("apellido"));
+                u.setEmail(res.getString("email"));
+                u.setNick(res.getString("nick"));
+                u.setFecha_nac(res.getDate("fecha_nacimiento"));
+                
+                InputStream is = res.getBinaryStream("foto");
+                FileInputStream fis;
+                BufferedImage bi;
+                try {
+                    bi = ImageIO.read(is);
+                    ImageIcon ci = new ImageIcon(bi);
+                } catch (IOException ex) {
+                    System.out.println(ex.toString());
+                }
+                
+                //u.setFoto();
+            }
+            return u;
+        }catch(SQLException ex){
+            System.out.println("ver info usuario "+ex.toString());
             return null;
         }
     }
