@@ -3,7 +3,6 @@ package controladores;
 
 import baseDatos.ManejadorBD;
 import dominio.Cliente;
-import dominio.Desarrollador;
 import dominio.Usuario;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
