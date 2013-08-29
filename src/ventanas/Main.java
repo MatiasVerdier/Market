@@ -212,7 +212,7 @@ public class Main extends javax.swing.JFrame {
     private void menu_alta_pActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_alta_pActionPerformed
         InformacionPerfil ip = new InformacionPerfil(this, true);
         ip.limpiarCampos();
-        ip.cambiarEstado(rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled, rootPaneCheckingEnabled);
+        ip.cambiarEstado(true, true, true, true, true, true, true);
         ip.setVisible(true);
         
     }//GEN-LAST:event_menu_alta_pActionPerformed

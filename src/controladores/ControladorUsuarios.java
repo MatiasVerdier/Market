@@ -89,9 +89,10 @@ public class ControladorUsuarios {
     }
     
     public Usuario verInfoUsuario(int id){
+        Usuario u = null;
         try{
+
             ResultSet res = mbd.selectInfoUsuario(id);
-            Usuario u = null;
             while(res.next()){
                 if (res.getString("tipo").equals("d")){
                     Desarrollador d = new Desarrollador();
@@ -102,6 +103,7 @@ public class ControladorUsuarios {
                     Cliente c = new Cliente();
                     u = c;
                 }
+                u.setTipo(res.getString("tipo"));
                 u.setId(res.getInt("id_usuario"));
                 u.setNombre(res.getString("nombre"));
                 u.setApellido(res.getString("apellido"));
@@ -109,6 +111,7 @@ public class ControladorUsuarios {
                 u.setNick(res.getString("nick"));
                 u.setFecha_nac(res.getDate("fecha_nacimiento"));
                 InputStream is = res.getBinaryStream("foto");
+                
                 if (is != null){
                     BufferedImage bi;
                     try {
@@ -124,10 +127,9 @@ public class ControladorUsuarios {
                 }
                 
             }
-            return u;
         }catch(SQLException ex){
             System.out.println("ver info usuario "+ex.toString());
-            return null;
         }
+        return u;
     }
 }

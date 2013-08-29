@@ -224,13 +224,13 @@ public class Perfiles extends javax.swing.JDialog {
     private void nuevousuario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevousuario
         InformacionPerfil ip = new InformacionPerfil(null, true);
         ip.limpiarCampos();
-        ip.cambiarEstado(true, true, true, true, true, true);
+        ip.cambiarEstado(true, true, true, true, true, true, true);
         ip.setVisible(true);
     }//GEN-LAST:event_nuevousuario
 
     private void modificarUsuario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarUsuario
         InformacionPerfil ip = new InformacionPerfil(null, true);
-        ip.cambiarEstado(true, true, true, true, true, false);
+        ip.cambiarEstado(true, true, true, true, true, true, false);
         ip.setVisible(true);
     }//GEN-LAST:event_modificarUsuario
 
