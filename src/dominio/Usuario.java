@@ -1,7 +1,7 @@
 
 package dominio;
 
-import java.io.FileInputStream;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.ImageIcon;
 
@@ -10,6 +10,7 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String tipo;
+    //private Calendar fecha_nac;
     private Date fecha_nac;
     private int edad;
     private String nick;
@@ -48,6 +49,14 @@ public class Usuario {
         this.tipo = tipo;
     }
 
+//    public Calendar getFecha_nac() {
+//        return fecha_nac;
+//    }
+//
+//    public void setFecha_nac(Calendar fecha_nac) {
+//        this.fecha_nac = fecha_nac;
+//    }
+
     public Date getFecha_nac() {
         return fecha_nac;
     }
@@ -60,9 +69,17 @@ public class Usuario {
         return edad;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
+    private void calcular() {
+        Calendar hoy = Calendar.getInstance();
+        //int dif_y = hoy.get(Calendar.YEAR) - this.fecha_nac.get(Calendar.YEAR);
+        //int dif_m = hoy.get(Calendar.MONTH) - this.fecha_nac.get(Calendar.MONTH);
+        //int dif_d = hoy.get(Calendar.DAY_OF_MONTH) - this.fecha_nac.get(Calendar.DAY_OF_MONTH); 
+        
+        //if(dif_m<0 || (dif_m==0 && dif_d<0))
+            //dif_y = dif_y – 1;
+        
+        //this.edad = dif_y;
+        }
 
     public String getNick() {
         return nick;

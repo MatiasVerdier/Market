@@ -4,6 +4,7 @@ package controladores;
 import baseDatos.ManejadorBD;
 import dominio.Categoria;
 import dominio.Cliente;
+import dominio.Comentario;
 import dominio.Juego;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -60,6 +61,26 @@ public class Controladorjuegos {
             j.setNick_des(res.getString("nick"));
             
             return j;
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+    }
+    
+    public ArrayList verComentariosJuego(int id){
+        try {
+            ArrayList coments = new ArrayList();
+            
+            ResultSet res = mbd.selectComentariosJuego(id);
+            while(res.next()){
+                Comentario com = new Comentario();
+                com.setId(res.getInt("id_comentario"));
+                com.setTexto(res.getString("texto"));
+                com.setFecha(res.getDate("fecha"));
+                com.setId_usu(res.getInt("id_usuario"));
+            }
+            
+            return coments;
         } catch (SQLException ex) {
             System.out.println(ex.toString());
             return null;

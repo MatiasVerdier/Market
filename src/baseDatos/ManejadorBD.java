@@ -234,6 +234,31 @@ public class ManejadorBD {
         }
 
     }
+    
+    public ResultSet selectComentariosJuego(int id){
+        ResultSet res;
+        try{
+            String sql = "select c.*, r.id_padre from comentarios c, respuestas r where id_juego = "+id+
+                         " and c.id_comentario = r.id_com";
+            res = st.executeQuery(sql);
+            return res;
+        }catch(SQLException ex){
+            System.out.println("select comentarios juego "+ex.toString());
+            return null;
+        } 
+    }
+    
+    public ResultSet selectPadre(int id){
+        ResultSet res;
+        try{
+            String sql = "select id_padre from respuestas where id_com = "+id;
+            res = st.executeQuery(sql);
+            return res;
+        }catch(SQLException ex){
+            System.out.println("select padre"+ex.toString());
+            return null;
+        } 
+    }
 }
 
 

@@ -16,6 +16,9 @@ public class Perfiles extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.cargarUsuarios();
+        if (this.lista_perfiles.getSelectedIndex() == -1){
+            this.btn_info_perfil.setEnabled(false);
+        }
     }
     
     private void cargarUsuarios(){
@@ -239,6 +242,8 @@ public class Perfiles extends javax.swing.JDialog {
         lugar = this.lista_perfiles.getSelectedIndex();
         if (lugar != -1){
             id_usu = (int)ids.get(lugar);
+            if (! this.btn_info_perfil.isEnabled())
+                this.btn_info_perfil.setEnabled(true);
         }
     }//GEN-LAST:event_seleccionarUsuario
 
