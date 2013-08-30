@@ -6,7 +6,6 @@ import controladores.Controladorjuegos;
 import dominio.Categoria;
 import dominio.Cliente;
 import dominio.Juego;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;

@@ -10,9 +10,9 @@ import java.sql.Statement;
 public class ManejadorBD {
     
     private final static String driver = "com.mysql.jdbc.Driver";
-    private final static String bd = "jdbc:mysql://localhost:3306/market";
-    private final static String usuario = "root";
-    private final static String password = "root";
+    private final static String bd = "jdbc:mysql://201.221.15.100:3306/market";
+    private final static String usuario = "random";
+    private final static String password = "random1";
     
     private Connection conexion;
     private Statement st;
@@ -57,21 +57,19 @@ public class ManejadorBD {
         return res;
     }
     /*---------------------- INSERTAR COMPRA -----------------------*/
-    public int insertCompra(dominio.Compra c, String sql){
-     int res = 0;
-        try {
+    public void insertCompra(dominio.Compra c, String sql) throws SQLException{
+      try {
             ps = conexion.prepareStatement(sql);
             ps.setInt(1, c.getJuego().getId());
             ps.setInt(2, c.getCliente().getId());
             java.sql.Date fec = new java.sql.Date(c.getFecha().getTime());
             ps.setDate(3, fec);
-            res = ps.executeUpdate();
+            ps.executeUpdate();
             ps.close();
 
         } catch (SQLException ex) {
-            res = ex.getErrorCode();
+            throw ex;
         }
-     return res;
     }
     
     /*----------------- LISTAR CATEGORIAS ------------------------*/
@@ -171,7 +169,7 @@ public class ManejadorBD {
     }
 
     //---------- Insertar nuevo Usuario------------- //Modificado 25/8 Matias R
-    public void insertCliente(dominio.Cliente user, String sql) throws Exception {
+    public void insertCliente(dominio.Cliente user, String sql) throws SQLException{
      
         try {
             java.sql.Date fec = new java.sql.Date(user.getFecha_nac().getTime());
@@ -187,7 +185,7 @@ public class ManejadorBD {
             ps.close();
             
         } catch (SQLException ex) {
-            throw new Exception(ex);
+            throw ex;
         }
        
     }
@@ -211,7 +209,7 @@ public class ManejadorBD {
             
         } catch (SQLException ex) {
             //res = ex.getErrorCode();
-            throw new SQLException(ex);
+            throw ex;
             
         }
         return res;

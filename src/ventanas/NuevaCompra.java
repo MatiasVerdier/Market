@@ -3,8 +3,14 @@ package ventanas;
 import dominio.Cliente;
 import dominio.Juego;
 import dominio.Usuario;
+import static java.awt.image.ImageObserver.WIDTH;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 public class NuevaCompra extends javax.swing.JDialog {
 private ArrayList listaUsuarios;
@@ -21,6 +27,11 @@ private dominio.Juego juegoComprar;
     public NuevaCompra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+         listaUsuarios = controladores.ControladorUsuarios.getInstancia().listarClientes();
+        for (Iterator it = listaUsuarios.iterator(); it.hasNext();) {
+            Cliente cli  = (Cliente)it.next();
+            comboClientes.addItem(cli.getNick());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -89,24 +100,23 @@ private dominio.Juego juegoComprar;
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 64, Short.MAX_VALUE)
+                        .addGap(0, 68, Short.MAX_VALUE)
                         .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(4, 4, 4)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4))
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtJuego)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(dateFechaCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(comboClientes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtJuego)))
+                            .addComponent(comboClientes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
@@ -144,18 +154,24 @@ private dominio.Juego juegoComprar;
     }//GEN-LAST:event_cancelar
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        listaUsuarios = controladores.ControladorUsuarios.getInstancia().listarClientes();
-        for (Iterator it = listaUsuarios.iterator(); it.hasNext();) {
-            Cliente cli  = (Cliente)it.next();
-            comboClientes.addItem(cli.getNick());
-        }
+     
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    try {
         Cliente cli = (Cliente)listaUsuarios.get(comboClientes.getSelectedIndex());
         dominio.Compra compra = new dominio.Compra(juegoComprar,cli, dateFechaCompra.getDate());
-        
+        if(dateFechaCompra.getDate() == null) throw new Exception("No se ha ingresado una fecha de compra");
+                    
         controladores.ControladorCompras.getInstancia().altaCompra(compra);
+        JOptionPane.showMessageDialog(null, "La compra ha sido completada exitosamente" , "Correcto", WIDTH, null);
+        this.dispose();
+    } catch (SQLException ex) {
+          JOptionPane.showMessageDialog(null, ex.getMessage() , "Error", WIDTH, null);
+    } catch (Exception ex) {
+        
+        JOptionPane.showMessageDialog(null, ex.getMessage() , "Error", WIDTH, null);
+    }
         
         
     }//GEN-LAST:event_jButton3ActionPerformed
