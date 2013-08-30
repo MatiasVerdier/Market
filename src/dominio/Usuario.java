@@ -16,7 +16,7 @@ public class Usuario {
     private String nick;
     private String email;
     private ImageIcon foto;
-    private FileInputStream fotofis;
+    //private FileInputStream fotofis;
 
     public int getId() {
         return id;
