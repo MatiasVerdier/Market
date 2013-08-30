@@ -1,30 +1,43 @@
 package ventanas;
 
 import controladores.ControladorUsuarios;
+import dominio.Cliente;
 import dominio.Usuario;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 public class Perfiles extends javax.swing.JDialog {
     
     ControladorUsuarios cu = ControladorUsuarios.getInstancia();
     ArrayList ids = new ArrayList();
     private int id_usu;
+    DefaultListModel modelo_usuarios = new DefaultListModel();
+    
 
     public Perfiles(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.cargarUsuarios();
+        
     }
-    
+ArrayList usuarios = new ArrayList();    
+
     private void cargarUsuarios(){
-        ArrayList usuarios = cu.listarUsuarios();
+        this.lista_perfiles.setModel(modelo_usuarios);
+         usuarios.clear();
+        
+      
+        if(radio_todos.isSelected()){
+        
+            usuarios.clear();
+            usuarios = cu.listarUsuarios();
        
         if (usuarios != null){
-            DefaultListModel modelo_usuarios = new DefaultListModel();
-            this.lista_perfiles.setModel(modelo_usuarios);
+            
             int i = 0;
+            modelo_usuarios.clear();
             while (i < usuarios.size()){
                 Usuario user;
                 user = (Usuario)usuarios.get(i);
@@ -34,7 +47,7 @@ public class Perfiles extends javax.swing.JDialog {
             }
         }
     }
-
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -62,14 +75,34 @@ public class Perfiles extends javax.swing.JDialog {
         radio_todos.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         radio_todos.setSelected(true);
         radio_todos.setText("Todos");
+        radio_todos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                radio_todosMouseClicked(evt);
+            }
+        });
+        radio_todos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radio_todosActionPerformed(evt);
+            }
+        });
 
         filtros.add(radio_clientes);
         radio_clientes.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         radio_clientes.setText("Clientes");
+        radio_clientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                radio_clientesMouseClicked(evt);
+            }
+        });
 
         filtros.add(radio_des);
         radio_des.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         radio_des.setText("Desarrolladores");
+        radio_des.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                radio_desMouseClicked(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel8.setText("Usuarios del Sistema");
@@ -118,7 +151,7 @@ public class Perfiles extends javax.swing.JDialog {
         });
 
         campo_busqueda.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        campo_busqueda.setText("buscar");
+        campo_busqueda.setToolTipText("Buscar");
 
         jButton1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/edit16.png"))); // NOI18N
@@ -243,8 +276,97 @@ public class Perfiles extends javax.swing.JDialog {
     }//GEN-LAST:event_seleccionarUsuario
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-      
+
+        String bs = this.campo_busqueda.getText();
+            usuarios.clear();
+            usuarios = cu.listarbusqueda(bs);
+       
+        if (usuarios != null){
+            
+            int i = 0;
+            modelo_usuarios.clear();
+            ids.clear();
+            while (i < usuarios.size()){
+                Usuario user;
+                user = (Usuario)usuarios.get(i);
+                i++;
+                modelo_usuarios.addElement(user.getNick());
+                ids.add(user.getId());
+            }
+        } else{
+            modelo_usuarios.clear();
+            JOptionPane.showMessageDialog(this, "No se encontro ningun usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+        }  
     }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void radio_clientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radio_clientesMouseClicked
+        
+        usuarios.clear();
+        usuarios = cu.listarClientes();
+       
+        if (usuarios != null){
+            int i = 0;
+            modelo_usuarios.clear();
+            ids.clear();
+            while (i < usuarios.size()){
+             
+                
+                Usuario user;
+                user = (Usuario)usuarios.get(i);
+                i++;
+                modelo_usuarios.addElement(user.getNick());
+                ids.add(user.getId());
+              
+            }
+        } 
+        
+    }//GEN-LAST:event_radio_clientesMouseClicked
+
+    private void radio_todosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_todosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radio_todosActionPerformed
+
+    private void radio_todosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radio_todosMouseClicked
+
+            usuarios.clear();
+            usuarios = cu.listarUsuarios();
+       
+        if (usuarios != null){
+            
+            int i = 0;
+            modelo_usuarios.clear();
+            ids.clear();
+            while (i < usuarios.size()){
+                Usuario user;
+                user = (Usuario)usuarios.get(i);
+                i++;
+                modelo_usuarios.addElement(user.getNick());
+                ids.add(user.getId());
+            }
+        }
+      
+    }//GEN-LAST:event_radio_todosMouseClicked
+
+    private void radio_desMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radio_desMouseClicked
+            usuarios.clear();
+            usuarios = cu.listarDevelopers();
+       
+        if (usuarios != null){
+            
+            int i = 0;
+            modelo_usuarios.clear();
+            ids.clear();
+            while (i < usuarios.size()){
+                Usuario user;
+                user = (Usuario)usuarios.get(i);
+                i++;
+                modelo_usuarios.addElement(user.getNick());
+                ids.add(user.getId());
+            }
+        }  
+        
+        
+    }//GEN-LAST:event_radio_desMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;

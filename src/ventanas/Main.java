@@ -40,6 +40,7 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Market");
         setBounds(new java.awt.Rectangle(0, 0, 640, 480));
+        setResizable(false);
 
         jButton2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/19_Games_48x48.png"))); // NOI18N
@@ -50,25 +51,30 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Perfiles");
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/id-card_48.png"))); // NOI18N
+        jButton3.setToolTipText("Consultar Perfiles");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AdministrarPerfiles(evt);
             }
         });
 
-        jButton4.setText("Categorias");
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/page_table_add_48.png"))); // NOI18N
+        jButton4.setToolTipText("Agregar Categoria");
 
-        menu_comp.setText("Compra");
+        menu_comp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/comment_add_48.png"))); // NOI18N
+        menu_comp.setToolTipText("Añadir Comentario");
         menu_comp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_compActionPerformed(evt);
             }
         });
 
-        menu_login.setText("LogIn");
+        menu_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/help_48.png"))); // NOI18N
+        menu_login.setToolTipText("Ayuda");
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/exit.png"))); // NOI18N
+        jButton7.setToolTipText("Salir");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
@@ -260,7 +266,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void run() {
                 Main app = new Main();
-                app.setLayout(new GridLayout(3,2));
+                app.setLayout(new GridLayout(2,3));
                 app.setLocation(500, 300);
                 app.setVisible(true);
             }

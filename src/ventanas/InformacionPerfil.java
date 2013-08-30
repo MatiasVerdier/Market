@@ -8,11 +8,20 @@ import dominio.Usuario;
 import java.awt.Color;
 import java.awt.Image;
 import static java.awt.image.ImageObserver.WIDTH;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 public class InformacionPerfil extends javax.swing.JDialog {
     
     private ControladorUsuarios cu = ControladorUsuarios.getInstancia();
-
+    private FileInputStream fis;
+    private int longitudBytes;
+    
+    
     public InformacionPerfil(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -388,6 +397,8 @@ public class InformacionPerfil extends javax.swing.JDialog {
         user.setNick(this.txt_nick.getText());
         user.setFecha_nac(calendarNacimiento.getDate());
         user.setEmail(this.txt_email.getText());
+        //user.setFoto(fis);
+        
         if(radio_cli.isSelected()){
         try {
             controladores.ControladorUsuarios.getInstancia().altaCliente((Cliente)user);
@@ -417,7 +428,28 @@ public class InformacionPerfil extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelar
 
     private void cargarImagen(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarImagen
-        
+        JFileChooser se = new JFileChooser();
+        se.setFileSelectionMode(JFileChooser.FILES_ONLY);       
+        int estado = se.showOpenDialog(null);
+        if(estado == JFileChooser.APPROVE_OPTION)
+        {
+            try {
+                
+                fis =  new FileInputStream(se.getSelectedFile());
+                this.longitudBytes = (int)se.getSelectedFile().length();
+                
+                Image icono = ImageIO.read(se.getSelectedFile()).getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT);
+                label_imagen.setIcon(new ImageIcon(icono));
+                label_imagen.updateUI(); 
+                
+            } catch (FileNotFoundException ex) {ex.printStackTrace();}
+            catch (IOException ex){
+                ex.printStackTrace();
+            } 
+            //catch (IOException ex) {
+              //  Logger.getLogger(InformacionPerfil.class.getName()).log(Level.SEVERE, null, ex);
+           // }
+        }
     }//GEN-LAST:event_cargarImagen
 
     private void altaPerfil(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaPerfil

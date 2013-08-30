@@ -15,6 +15,7 @@ public class Usuario {
     private String nick;
     private String email;
     private ImageIcon foto;
+    private FileInputStream fotofis;
 
     public int getId() {
         return id;
@@ -88,5 +89,14 @@ public class Usuario {
         this.foto = foto;
     }
 
+//    public void setFoto(FileInputStream fis) {
+//        this.fotofis = fotofis; //To change body of generated methods, choose Tools | Templates.
+//    }
+    
+//    public FileInputStream getFoto2(){
+//        return fotofis;
+//    }
+    
+     
     
 }

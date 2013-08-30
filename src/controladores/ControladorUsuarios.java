@@ -32,7 +32,7 @@ public class ControladorUsuarios {
     //se da de alta un cliente
     public void altaCliente(dominio.Cliente user) throws Exception{
         try {
-            String sql = "insert into usuarios (nombre, apellido, nick, fecha_nacimiento, email, tipo) values (?,?,?,?,?,?)";
+            String sql = "insert into usuarios (nombre, apellido, nick, fecha_nacimiento, email, tipo,foto) values (?,?,?,?,?,?,?)";
             mbd.insertCliente(user, sql);
         } catch (Exception ex) {
             throw new Exception(ex);
@@ -41,7 +41,7 @@ public class ControladorUsuarios {
     //Da de alta un desarrollador
     public void altaDesarrollador(dominio.Desarrollador user) throws Exception{
         try {
-            String sql = "insert into usuarios (nombre, apellido, nick, fecha_nacimiento, email, sitio_web, tipo) values (?,?,?,?,?,?,?)";
+            String sql = "insert into usuarios (nombre, apellido, nick, fecha_nacimiento, email, sitio_web, tipo, foto) values (?,?,?,?,?,?,?,?)";
              mbd.insertDesarrollador(user, sql);
         } catch (Exception ex) {
             //Logger.getLogger(ControladorUsuarios.class.getName()).log(Level.SEVERE, null, ex);
@@ -49,7 +49,7 @@ public class ControladorUsuarios {
         }
     }
     
-     
+////// Filtrar por Clientes     
     public ArrayList listarClientes(){
         try {
             ArrayList usuarios = new ArrayList();
@@ -69,6 +69,50 @@ public class ControladorUsuarios {
         }
     }
      
+    ////// Filtrar por Clientes     
+    public ArrayList listarDevelopers(){
+        try {
+            ArrayList usuarios = new ArrayList();
+            
+            ResultSet res = mbd.selectDevelopers();
+            while(res.next()){
+                Desarrollador d = new Desarrollador();
+                d.setNick(res.getString("nick"));
+                d.setId(res.getInt("id_usuario"));
+                usuarios.add(d);
+            }
+            
+            return usuarios;
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+    }
+    
+////// Filtrar por Clientes     
+    public ArrayList listarbusqueda(String bs){
+        try {
+            ArrayList usuarios = new ArrayList();
+            ResultSet res = mbd.selectBuscar(bs);
+            while(res.next()){
+                Usuario u = new Usuario();
+                u.setNick(res.getString("nick"));
+                u.setId(res.getInt("id_usuario"));
+                usuarios.add(u);
+            }
+            if(usuarios.isEmpty()){
+                return null;
+            }else{
+                return usuarios;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+    }
+    
+    
+///////// Listar Todos los Usuarios
     public ArrayList listarUsuarios(){
         try {
             ArrayList usuarios = new ArrayList();

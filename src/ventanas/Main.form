@@ -111,6 +111,7 @@
     <Property name="bounds" type="java.awt.Rectangle" editor="org.netbeans.beaninfo.editors.RectangleEditor">
       <Rectangle value="[0, 0, 640, 480]"/>
     </Property>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
@@ -193,7 +194,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Perfiles"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/recursos/id-card_48.png"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Consultar Perfiles"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AdministrarPerfiles"/>
@@ -201,12 +205,18 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Categorias"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/recursos/page_table_add_48.png"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Agregar Categoria"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="menu_comp">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Compra"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/recursos/comment_add_48.png"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="A&#xf1;adir Comentario"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_compActionPerformed"/>
@@ -214,7 +224,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="menu_login">
       <Properties>
-        <Property name="text" type="java.lang.String" value="LogIn"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/recursos/help_48.png"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Ayuda"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton7">
@@ -222,6 +235,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/recursos/exit.png"/>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Salir"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>

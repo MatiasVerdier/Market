@@ -12,7 +12,7 @@ public class ManejadorBD {
     private final static String driver = "com.mysql.jdbc.Driver";
     private final static String bd = "jdbc:mysql://localhost:3306/market";
     private final static String usuario = "root";
-    private final static String password = "root";
+    private final static String password = "admin";
     
     private Connection conexion;
     private Statement st;
@@ -127,6 +127,32 @@ public class ManejadorBD {
         return res;
     }
     
+     /*------------------- SELECCIONAR DESARROLLADORES ----------------------*/
+    public ResultSet selectDevelopers(){
+        ResultSet res;
+        try {
+            String sql = "select id_usuario, nick from usuarios where tipo = 'd'";
+             res = st.executeQuery(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            res = null;
+        }
+        return res;
+    }
+    
+    /*------------------- SELECCIONAR POR FILTRO DE BUSQUEDA ----------------------*/
+    public ResultSet selectBuscar(String bs){
+        ResultSet res;
+        try {
+            String sql = "select id_usuario, nick from usuarios where nick like '%" + bs + "%'";
+             res = st.executeQuery(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            res = null;
+        }
+        return res;
+    }
+    
     /*------------- MUESTRA LOS JUEGOS DE UNA DETERMINADA CATEGORIA --------------*/
     public ResultSet selectJuegosPorCategotia(int id_cat){
         ResultSet res;
@@ -183,6 +209,7 @@ public class ManejadorBD {
             ps.setDate(4, fec);
             ps.setString(5, user.getEmail());
             ps.setString(6, "c");
+            //ps.setBinaryStream(7, user.getFoto());
             ps.executeUpdate();
             ps.close();
             
