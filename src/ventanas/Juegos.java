@@ -262,13 +262,17 @@ public class Juegos extends javax.swing.JDialog {
     }//GEN-LAST:event_verInfoJuego
 
     private void IngresarCompra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarCompra
-        
+            NuevaCompra c = new NuevaCompra(null, true);
+            c.txtJuego.setText(this.lista_juegos.getSelectedValue().toString());
+            c.setJuegoComprar(Controladorjuegos.getInstancia().verInfoJuego(id_juego));     
+            c.setVisible(true);
+    
     }//GEN-LAST:event_IngresarCompra
 
     private void NuevoJuego(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevoJuego
-AltaJuego j = new AltaJuego(null, true);
-j.setVisible(true);
-j.setLocation(300, 200);
+        AltaJuego j = new AltaJuego(null, true);
+        j.setVisible(true);
+        j.setLocation(300, 200);
     }//GEN-LAST:event_NuevoJuego
 
     private void seleccionarJuego(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_seleccionarJuego

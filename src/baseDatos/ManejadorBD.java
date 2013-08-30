@@ -57,21 +57,19 @@ public class ManejadorBD {
         return res;
     }
     /*---------------------- INSERTAR COMPRA -----------------------*/
-    public int insertCompra(dominio.Compra c, String sql){
-     int res = 0;
-        try {
+    public void insertCompra(dominio.Compra c, String sql) throws SQLException{
+      try {
             ps = conexion.prepareStatement(sql);
             ps.setInt(1, c.getJuego().getId());
             ps.setInt(2, c.getCliente().getId());
             java.sql.Date fec = new java.sql.Date(c.getFecha().getTime());
             ps.setDate(3, fec);
-            res = ps.executeUpdate();
+            ps.executeUpdate();
             ps.close();
 
         } catch (SQLException ex) {
-            res = ex.getErrorCode();
+            throw ex;
         }
-     return res;
     }
     
     /*----------------- LISTAR CATEGORIAS ------------------------*/
@@ -197,7 +195,7 @@ public class ManejadorBD {
     }
 
     //---------- Insertar nuevo Usuario------------- //Modificado 25/8 Matias R
-    public void insertCliente(dominio.Cliente user, String sql) throws Exception {
+    public void insertCliente(dominio.Cliente user, String sql) throws SQLException{
      
         try {
             java.sql.Date fec = new java.sql.Date(user.getFecha_nac().getTime());
@@ -214,7 +212,7 @@ public class ManejadorBD {
             ps.close();
             
         } catch (SQLException ex) {
-            throw new Exception(ex);
+            throw ex;
         }
        
     }
@@ -238,7 +236,7 @@ public class ManejadorBD {
             
         } catch (SQLException ex) {
             //res = ex.getErrorCode();
-            throw new SQLException(ex);
+            throw ex;
             
         }
         return res;
@@ -260,6 +258,31 @@ public class ManejadorBD {
             return null;
         }
 
+    }
+    
+    public ResultSet selectComentariosJuego(int id){
+        ResultSet res;
+        try{
+            String sql = "select c.*, r.id_padre from comentarios c, respuestas r where id_juego = "+id+
+                         " and c.id_comentario = r.id_com";
+            res = st.executeQuery(sql);
+            return res;
+        }catch(SQLException ex){
+            System.out.println("select comentarios juego "+ex.toString());
+            return null;
+        } 
+    }
+    
+    public ResultSet selectPadre(int id){
+        ResultSet res;
+        try{
+            String sql = "select id_padre from respuestas where id_com = "+id;
+            res = st.executeQuery(sql);
+            return res;
+        }catch(SQLException ex){
+            System.out.println("select padre"+ex.toString());
+            return null;
+        } 
     }
 }
 
