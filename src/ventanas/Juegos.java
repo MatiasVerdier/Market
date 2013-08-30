@@ -85,6 +85,11 @@ public class Juegos extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                cerrar(evt);
+            }
+        });
 
         btn_compra.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btn_compra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/shop-cart-add-icon16.png"))); // NOI18N
@@ -276,7 +281,6 @@ public class Juegos extends javax.swing.JDialog {
             c.txtJuego.setText(this.lista_juegos.getSelectedValue().toString());
             c.setJuegoComprar(Controladorjuegos.getInstancia().verInfoJuego(id_juego));     
             c.setVisible(true);
-    
     }//GEN-LAST:event_IngresarCompra
 
     private void NuevoJuego(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevoJuego
@@ -291,7 +295,6 @@ public class Juegos extends javax.swing.JDialog {
                 int fila_sel = this.lista_juegos.getSelectedIndex();
                 if (fila_sel != -1){
                     id_juego = (int)ids_j.get(fila_sel);
-                    System.out.println("id juego: "+id_juego);
                 }
             }
             catch(Exception ex){
@@ -299,6 +302,10 @@ public class Juegos extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_seleccionarJuego
+
+    private void cerrar(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_cerrar
+        
+    }//GEN-LAST:event_cerrar
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

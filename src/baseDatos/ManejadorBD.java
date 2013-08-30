@@ -1,5 +1,6 @@
 package baseDatos;
 import dominio.Categoria;
+import dominio.Comentario;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -295,6 +296,27 @@ public class ManejadorBD {
         }catch(SQLException ex){
             System.out.println("listar juegos"+ex.toString());
             return null;
+        }
+    }
+    
+    public int insertComentario(Comentario c){
+        int res;
+        java.sql.Date fnac = new java.sql.Date(c.getFecha().getTime());
+        try{
+            String sql = "insert into comentarios (id_juego, texto, fecha, id_usuario, id_padre) "+
+                         " values (?,?,?,?)";
+            ps = conexion.prepareStatement(sql);
+            ps.setInt(1, c.getId_juego());
+            ps.setString(2, c.getTexto());
+            ps.setDate(3, fnac);
+            ps.setInt(4, c.getId_usu());
+            ps.setInt(5, c.getId_padre());
+            
+            res = ps.executeUpdate();
+            return res;
+        }catch(SQLException ex){
+            System.out.println("insert comentario "+ex.toString());
+            return -1;
         }
     }
 }
