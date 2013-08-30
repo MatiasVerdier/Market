@@ -285,7 +285,7 @@ ArrayList usuarios = new ArrayList();
             usuarios.clear();
             usuarios = cu.listarbusqueda(bs);
        
-        if (usuarios != null){
+        if (!usuarios.isEmpty()){
             
             int i = 0;
             modelo_usuarios.clear();
@@ -299,6 +299,7 @@ ArrayList usuarios = new ArrayList();
             }
         } else{
             modelo_usuarios.clear();
+            ids.clear();
             JOptionPane.showMessageDialog(this, "No se encontro ningun usuario.", "Error", JOptionPane.ERROR_MESSAGE);
         }  
     }//GEN-LAST:event_btn_buscarActionPerformed

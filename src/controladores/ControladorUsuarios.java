@@ -100,11 +100,9 @@ public class ControladorUsuarios {
                 u.setId(res.getInt("id_usuario"));
                 usuarios.add(u);
             }
-            if(usuarios.isEmpty()){
-                return null;
-            }else{
+            
                 return usuarios;
-            }
+            
         } catch (SQLException ex) {
             System.out.println(ex.toString());
             return null;
