@@ -1,8 +1,10 @@
 
 package ventanas;
 
+import clases.CustomImageIcon;
 import controladores.ControladorUsuarios;
 import dominio.Cliente;
+import javax.swing.ImageIcon;
 import dominio.Desarrollador;
 import dominio.Usuario;
 import java.awt.Color;
@@ -28,50 +30,52 @@ public class InformacionPerfil extends javax.swing.JDialog {
     }
     
     public void cargarInfoPerfil(int id){
-        this.btn_aceptar.setVisible(false);
-        this.btn_cancelar.setText("Salir");
-        this.cambiarColor(Color.WHITE);
-        
-        Usuario u = cu.verInfoUsuario(id);
-        if (u.getTipo().equals("d")){
-            Desarrollador d = (Desarrollador)u;
-            this.radio_des.setSelected(true);
-            this.txt_web.setText(d.getWeb());
-        }
-        else{
-            this.radio_cli.setSelected(true);
-            this.txt_web.setVisible(false);
-            this.label_web.setVisible(false);
-        }
+   
+            this.btn_aceptar.setVisible(false);
+            this.btn_cancelar.setText("Salir");
+            this.cambiarColor(Color.WHITE);
+            
+            Usuario u = cu.verInfoUsuario(id);
+            if (u.getTipo().equals("d")){
+                Desarrollador d = (Desarrollador)u;
+                this.radio_des.setSelected(true);
+                this.txt_web.setText(d.getWeb());
+            }
+            else{
+                this.radio_cli.setSelected(true);
+                this.txt_web.setVisible(false);
+                this.label_web.setVisible(false);
+            }
+                
+                
+            this.txt_nombre.setText(u.getNombre());
+            this.txt_ape.setText(u.getApellido());
+            this.txt_nick.setText(u.getNick());
+            this.txt_email.setText(u.getEmail());
+            this.calendarNacimiento.setDateFormatString("yyyy/MM/dd");
+            this.calendarNacimiento.setDate(u.getFecha_nac());
             
             
-        this.txt_nombre.setText(u.getNombre());
-        this.txt_ape.setText(u.getApellido());
-        this.txt_nick.setText(u.getNick());
-        this.txt_email.setText(u.getEmail());
-        this.calendarNacimiento.setDateFormatString("yyyy/MM/dd");
-        this.calendarNacimiento.setDate(u.getFecha_nac());
-        
-        
-        int label_w = this.label_imagen.getWidth();
-        int label_h = this.label_imagen.getHeight();
-        int img_w = u.getFoto().getIconWidth();
-        int img_h = u.getFoto().getIconHeight();
-//        int w = img_w;
-//        int h = img_h;
-//        
-//        if (img_w > label_w){
-//            w = label_w;
-//            h = (w * img_h)/img_w;
-//        }
-//        
-//        if (img_h > label_h){
-//            h = label_h;
-//            w = (h * img_w)/img_h;
-//        }
-            
-        Image img = u.getFoto().getImage().getScaledInstance(label_w, label_h, Image.SCALE_DEFAULT);  
-        this.label_imagen.setIcon(new ImageIcon(img));
+            int label_w = this.label_imagen.getWidth();
+            int label_h = this.label_imagen.getHeight();
+          /*  int img_w = u.getFoto().getIconWidth();
+            int img_h = u.getFoto().getIconHeight();*/
+    //        int w = img_w;
+    //        int h = img_h;
+    //        
+    //        if (img_w > label_w){
+    //            w = label_w;
+    //            h = (w * img_h)/img_w;
+    //        }
+    //        
+    //        if (img_h > label_h){
+    //            h = label_h;
+    //            w = (h * img_w)/img_h;
+    //        }
+                
+            Image img = u.getImagen().getImage().getScaledInstance(label_w, label_h, Image.SCALE_DEFAULT);  
+            label_imagen.setIcon(new ImageIcon(img));
+      
     }
     
     public void cambiarEstado(boolean nom, boolean ape, boolean fnac, boolean nick, boolean email, boolean web, boolean radio){
@@ -397,7 +401,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
         user.setNick(this.txt_nick.getText());
         user.setFecha_nac(calendarNacimiento.getDate());
         user.setEmail(this.txt_email.getText());
-        //user.setFoto(fis);
+        user.setFoto(fis);
         
         if(radio_cli.isSelected()){
         try {

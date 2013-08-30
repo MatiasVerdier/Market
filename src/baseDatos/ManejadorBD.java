@@ -1,5 +1,6 @@
 package baseDatos;
 import dominio.Categoria;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,7 +13,7 @@ public class ManejadorBD {
     private final static String driver = "com.mysql.jdbc.Driver";
     private final static String bd = "jdbc:mysql://localhost:3306/market";
     private final static String usuario = "root";
-    private final static String password = "admin";
+    private final static String password = "07504187";
     
     private Connection conexion;
     private Statement st;
@@ -195,7 +196,7 @@ public class ManejadorBD {
     }
 
     //---------- Insertar nuevo Usuario------------- //Modificado 25/8 Matias R
-    public void insertCliente(dominio.Cliente user, String sql) throws SQLException{
+    public void insertCliente(dominio.Cliente user, String sql) throws SQLException, IOException{
      
         try {
             java.sql.Date fec = new java.sql.Date(user.getFecha_nac().getTime());
@@ -207,7 +208,7 @@ public class ManejadorBD {
             ps.setDate(4, fec);
             ps.setString(5, user.getEmail());
             ps.setString(6, "c");
-            //ps.setBinaryStream(7, user.getFoto());
+            ps.setBinaryStream(7, user.getFotoFi());
             ps.executeUpdate();
             ps.close();
             

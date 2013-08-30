@@ -1,8 +1,16 @@
 
 package dominio;
 
+import clases.CustomImageIcon;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class Usuario {
@@ -15,9 +23,19 @@ public class Usuario {
     private int edad;
     private String nick;
     private String email;
-    private ImageIcon foto;
+    private FileInputStream foto;
     //private FileInputStream fotofis;
+    private CustomImageIcon imagen;
 
+    public CustomImageIcon getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(CustomImageIcon imagen) {
+        this.imagen = imagen;
+    }
+    
+    
     public int getId() {
         return id;
     }
@@ -98,11 +116,27 @@ public class Usuario {
         this.email = email;
     }
 
-    public ImageIcon getFoto() {
+       public FileInputStream getFotoFi() throws IOException {
         return foto;
     }
+    
+    public CustomImageIcon getFoto() throws IOException {
+        CustomImageIcon ii = null;
+        try {
+            
+            InputStream is = foto;
+           
+            BufferedImage bi = ImageIO.read(is);
+            ii = new CustomImageIcon(bi);
+            
+        } catch (IOException ex) {
+            throw ex;
+        }
+        return ii;
+    }
 
-    public void setFoto(ImageIcon foto) {
+    public void setFoto(FileInputStream foto) {
+       
         this.foto = foto;
     }
 
@@ -113,7 +147,6 @@ public class Usuario {
 //    public FileInputStream getFoto2(){
 //        return fotofis;
 //    }
-    
-     
+
     
 }

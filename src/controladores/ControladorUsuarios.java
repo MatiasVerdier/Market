@@ -132,6 +132,7 @@ public class ControladorUsuarios {
     
     public Usuario verInfoUsuario(int id){
         Usuario u = null;
+         clases.CustomImageIcon ii;
         try{
 
             ResultSet res = mbd.selectInfoUsuario(id);
@@ -158,17 +159,14 @@ public class ControladorUsuarios {
                     BufferedImage bi;
                     try {
                         bi = ImageIO.read(is);
-                        ImageIcon img = new ImageIcon(bi);
-                        u.setFoto(img);
+                        ii = new clases.CustomImageIcon(bi);
+                        
+                        u.setImagen(ii);
                     } catch (IOException ex) {
                         System.out.println(ex.toString());
                     }
                 }
-                else{
-                    u.setFoto(new ImageIcon(getClass().getResource("/recursos/user-icon.png")));
-                }
-                
-            }
+            }       
         }catch(SQLException ex){
             System.out.println("ver info usuario "+ex.toString());
         }
