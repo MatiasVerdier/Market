@@ -13,7 +13,7 @@ public class ManejadorBD {
     private final static String driver = "com.mysql.jdbc.Driver";
     private final static String bd = "jdbc:mysql://localhost:3306/market";
     private final static String usuario = "root";
-    private final static String password = "07504187";
+    private final static String password = "root";
     
     private Connection conexion;
     private Statement st;
@@ -260,12 +260,11 @@ public class ManejadorBD {
         }
 
     }
-    
+    /*---------------- seleccionar todos los comentarios de un juego ----------------------*/
     public ResultSet selectComentariosJuego(int id){
         ResultSet res;
         try{
-            String sql = "select c.*, r.id_padre from comentarios c, respuestas r where id_juego = "+id+
-                         " and c.id_comentario = r.id_com";
+            String sql = "select * from comentarios where id_juego = "+id;
             res = st.executeQuery(sql);
             return res;
         }catch(SQLException ex){
@@ -274,16 +273,29 @@ public class ManejadorBD {
         } 
     }
     
-    public ResultSet selectPadre(int id){
+    public ResultSet selectRespuestas(int id){
         ResultSet res;
         try{
-            String sql = "select id_padre from respuestas where id_com = "+id;
+            String sql = "select c.* from comentarios c, respuestas r where r.id_padre = "+id+
+                         " and c.id_comentario = r.id_com";
             res = st.executeQuery(sql);
             return res;
         }catch(SQLException ex){
-            System.out.println("select padre"+ex.toString());
+            System.out.println("select respuestas"+ex.toString());
             return null;
-        } 
+        }
+    }
+    
+    public ResultSet selectJuegos(){
+        ResultSet res;
+        try{
+            String sql = "select id_juego, nombre from juegos";
+            res = st.executeQuery(sql);
+            return res;
+        }catch(SQLException ex){
+            System.out.println("listar juegos"+ex.toString());
+            return null;
+        }
     }
 }
 

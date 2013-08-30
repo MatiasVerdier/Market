@@ -78,6 +78,10 @@ public class Controladorjuegos {
                 com.setTexto(res.getString("texto"));
                 com.setFecha(res.getDate("fecha"));
                 com.setId_usu(res.getInt("id_usuario"));
+                com.setId_padre(res.getInt("id_padre"));
+                com.setRespuestas(this.selectRespuestas(com.getId()));
+                coments.add(com);
+                
             }
             
             return coments;
@@ -86,5 +90,47 @@ public class Controladorjuegos {
             return null;
         }
     }
+    
+    public ArrayList selectRespuestas(int id){
+        try {
+            ArrayList respuestas = new ArrayList();
+            
+            ResultSet res = mbd.selectRespuestas(id);
+            while(res.next()){
+                Comentario com = new Comentario();
+                com.setId(res.getInt("id_comentario"));
+                com.setTexto(res.getString("texto"));
+                com.setId_juego(res.getInt("id_juego"));
+                com.setFecha(res.getDate("fecha"));
+                com.setId_usu(res.getInt("id_usuario"));
+                com.setId_padre(res.getInt("id_padre"));
+                respuestas.add(com);
+            }
+            
+            return respuestas;
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+    }
+    
+    public ArrayList listarJuegos(){
+        try {
+            ArrayList juegos = new ArrayList();
+            
+            ResultSet res = mbd.selectJuegos();
+            while(res.next()){
+                Juego j = new Juego();
+                j.setId(res.getInt("id_juego"));
+                j.setNombre(res.getString("nombre"));
+                juegos.add(j);
+            }
+            
+            return juegos;
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+    } 
     
 }

@@ -1,6 +1,7 @@
 
 package dominio;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Comentario {
@@ -11,7 +12,16 @@ public class Comentario {
     private int id_usu;
     private int id_padre;
     
+    private ArrayList respuestas;
 
+    public ArrayList getRespuestas() {
+        return respuestas;
+    }
+
+    public void setRespuestas(ArrayList respuestas) {
+        this.respuestas = respuestas;
+    }
+    
     public int getId() {
         return id;
     }
