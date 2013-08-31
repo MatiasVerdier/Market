@@ -38,6 +38,17 @@ public class ControladorUsuarios {
             throw new Exception(ex);
         }
     }
+    
+      public void actualizarCliente(dominio.Cliente user) throws Exception{
+        try {
+            String sql = "update usuarios set nombre = ?, apellido = ?, nick = ?, fecha_nacimiento = ?, " +
+                    "email = ?, foto = ? where id_usuario = ?;";
+            mbd.actualizarCliente(user, sql);
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+      
     //Da de alta un desarrollador
     public void altaDesarrollador(dominio.Desarrollador user) throws Exception{
         try {

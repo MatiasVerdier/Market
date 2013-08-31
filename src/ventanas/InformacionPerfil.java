@@ -18,11 +18,11 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 public class InformacionPerfil extends javax.swing.JDialog {
-    
+    private boolean alta = true;
     private ControladorUsuarios cu = ControladorUsuarios.getInstancia();
     private FileInputStream fis;
     private int longitudBytes;
-    
+    Usuario u;
     
     public InformacionPerfil(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -35,7 +35,8 @@ public class InformacionPerfil extends javax.swing.JDialog {
             this.btn_cancelar.setText("Salir");
             this.cambiarColor(Color.WHITE);
             
-            Usuario u = cu.verInfoUsuario(id);
+            u = cu.verInfoUsuario(id);
+            u.setId(id);
             if (u.getTipo().equals("d")){
                 Desarrollador d = (Desarrollador)u;
                 this.radio_des.setSelected(true);
@@ -52,30 +53,19 @@ public class InformacionPerfil extends javax.swing.JDialog {
             this.txt_ape.setText(u.getApellido());
             this.txt_nick.setText(u.getNick());
             this.txt_email.setText(u.getEmail());
-            this.calendarNacimiento.setDateFormatString("yyyy/MM/dd");
+            this.calendarNacimiento.setDateFormatString("dd/MM/yyyy");
             this.calendarNacimiento.setDate(u.getFecha_nac());
             
-            
+            if (u.getImagen() != null){
             int label_w = this.label_imagen.getWidth();
             int label_h = this.label_imagen.getHeight();
-          /*  int img_w = u.getFoto().getIconWidth();
-            int img_h = u.getFoto().getIconHeight();*/
-    //        int w = img_w;
-    //        int h = img_h;
-    //        
-    //        if (img_w > label_w){
-    //            w = label_w;
-    //            h = (w * img_h)/img_w;
-    //        }
-    //        
-    //        if (img_h > label_h){
-    //            h = label_h;
-    //            w = (h * img_w)/img_h;
-    //        }
-                
+                   
             Image img = u.getImagen().getImage().getScaledInstance(label_w, label_h, Image.SCALE_DEFAULT);  
             label_imagen.setIcon(new ImageIcon(img));
-      
+            }else
+            {
+                label_imagen.setIcon( new ImageIcon(getClass().getResource("/recursos/user-icon.png")));
+            }
     }
     
     public void cambiarEstado(boolean nom, boolean ape, boolean fnac, boolean nick, boolean email, boolean web, boolean radio){
@@ -387,14 +377,15 @@ public class InformacionPerfil extends javax.swing.JDialog {
     //Modificado 25/8 Matias R
     private void btn_aceptarconsulta(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarconsulta
         Usuario user;
-        
-        if (this.radio_cli.isSelected()){
+            if (alta == true && this.radio_cli.isSelected()){
             user = new Cliente();
-    }else{
+            }else if(alta == true && this.radio_des.isSelected()){
             user= new Desarrollador();
             Desarrollador des = (Desarrollador) user;
             des.setWeb(this.txt_web.getText());
-        }
+        }else{
+                 user = u;
+            }
         
         user.setNombre(this.txt_nombre.getText());
         user.setApellido(this.txt_ape.getText());
@@ -403,9 +394,21 @@ public class InformacionPerfil extends javax.swing.JDialog {
         user.setEmail(this.txt_email.getText());
         user.setFoto(fis);
         
+       
         if(radio_cli.isSelected()){
         try {
+            if (alta == true){
             controladores.ControladorUsuarios.getInstancia().altaCliente((Cliente)user);
+            JOptionPane.showMessageDialog(null, "El usuario se ha agregado correctamente" , null, WIDTH, null);
+            
+            
+            }
+            else{
+            controladores.ControladorUsuarios.getInstancia().actualizarCliente((Cliente)user);
+            JOptionPane.showMessageDialog(null, "El usuario se ha actualizado correctamente" , null, WIDTH, null);
+            }
+            this.dispose();
+            
         } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage() , null, WIDTH, null);
             }
@@ -460,11 +463,13 @@ public class InformacionPerfil extends javax.swing.JDialog {
         this.cambiarEstado(true, true, true, true, true, true, true);
         this.limpiarCampos();
         this.perfiles_edit.setEnabled(false);
+        alta = true;
     }//GEN-LAST:event_altaPerfil
 
     private void modificarInfo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarInfo
         this.cambiarEstado(true, true, true, true, true, true, false);
         this.btn_new.setEnabled(false);
+        this.alta = false;
         this.cambiarBotones();
     }//GEN-LAST:event_modificarInfo
 

@@ -11,9 +11,9 @@ import java.sql.Statement;
 public class ManejadorBD {
     
     private final static String driver = "com.mysql.jdbc.Driver";
-    private final static String bd = "jdbc:mysql://localhost:3306/market";
-    private final static String usuario = "root";
-    private final static String password = "07504187";
+    private final static String bd = "jdbc:mysql://192.168.0.1:3306/market";
+    private final static String usuario = "random";
+    private final static String password = "random1";
     
     private Connection conexion;
     private Statement st;
@@ -210,6 +210,29 @@ public class ManejadorBD {
             ps.setString(6, "c");
             ps.setBinaryStream(7, user.getFotoFi());
             ps.executeUpdate();
+            ps.close();
+            
+        } catch (SQLException ex) {
+            throw ex;
+        }
+       
+    }
+    
+        public void actualizarCliente(dominio.Cliente user, String sql) throws SQLException, IOException{
+     
+        try {
+            java.sql.Date fec = new java.sql.Date(user.getFecha_nac().getTime());
+            
+            ps = conexion.prepareStatement(sql);
+            ps.setString(1, user.getNombre());
+            ps.setString(2, user.getApellido());
+            ps.setString(3, user.getNick()); 
+            ps.setDate(4, fec);
+            ps.setString(5, user.getEmail());
+            ps.setBinaryStream(6, user.getFotoFi());
+            ps.setInt(7, user.getId());
+            ps.execute();
+            
             ps.close();
             
         } catch (SQLException ex) {
