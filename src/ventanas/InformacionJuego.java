@@ -5,15 +5,17 @@ import controladores.ControladorCompras;
 import controladores.Controladorjuegos;
 import dominio.Categoria;
 import dominio.Cliente;
+import dominio.Comentario;
 import dominio.Juego;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 public class InformacionJuego extends javax.swing.JDialog {
 
-    private Juego j;
+    private Juego juego;
     private Controladorjuegos cj = Controladorjuegos.getInstancia();
     private ControladorCategorias cc = ControladorCategorias.getInstancia();
     private ControladorCompras ccomp = ControladorCompras.getInstancia();
@@ -29,20 +31,41 @@ public class InformacionJuego extends javax.swing.JDialog {
         this.compradores.setModel(modelo_compras);
         this.comentarios.setModel(modelo_coments);
     }
-
-    public void cargarInfoJuego(int id){
-        j = cj.verInfoJuego(id);
-        this.nombre.setText(j.getNombre());
-        this.tam.setText(String.valueOf(j.getSize()) + " KB");
-        this.precio.setText("U$S " + String.valueOf(j.getPrecio()));
-        this.desa.setModel(modelo_des);
-        modelo_des.addElement(j.getNick_des());
-        this.desc.setText(j.getDescripcion());
+    
+    public void cargarComentarios(int id){
+        ArrayList coments = cj.verComentariosJuego(id);
         
-        modelo_cats.clear();
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode(juego.getNombre());
+        modelo_coments.setRoot(root);
         
-        ArrayList cats = cc.verCategoriasPorJuego(id);
+        
+        
         int i = 0;
+        while (i < coments.size()){
+            Comentario c = (Comentario)coments.get(i);
+            
+            DefaultMutableTreeNode n = new DefaultMutableTreeNode(c.getId()+"-"+c.getTexto());
+            
+            System.out.println("id_com: "+c.getId()+" id_padre: "+c.getId_padre());
+            if (c.getId_padre() == 0){
+                root.add(n);
+            }
+            
+            i++;
+        }
+        modelo_coments.reload();
+        
+    }
+    
+    public void asignarHijos(Comentario c){
+        
+    }
+    
+    void cargarCategorias(int id){
+        modelo_cats.clear();
+        int i = 0;
+        ArrayList cats = cc.verCategoriasPorJuego(id);
+
         if (!cats.isEmpty()){
             while (i < cats.size()){
                 Categoria c;
@@ -51,10 +74,12 @@ public class InformacionJuego extends javax.swing.JDialog {
                 i++;
             }
         }
-        
+    }
+    
+    void cargarCompras(int id){
         modelo_compras.clear();
         ArrayList compras = ccomp.verComprasPorJuego(id);
-        i = 0;
+        int i = 0;
         if (!compras.isEmpty()){
             while(i < compras.size()){
                 Cliente c;
@@ -65,8 +90,23 @@ public class InformacionJuego extends javax.swing.JDialog {
         }
         else
             modelo_compras.addElement("El Juego no tiene compras");
+    }
+    
+    public void cargarFoto(int id){
+ 
+    }
 
-        //this.desa.setModel(new DefaultComboBoxModel().addElement());
+    public void cargarInfoJuego(int id){
+        juego = cj.verInfoJuego(id);
+        this.nombre.setText(juego.getNombre());
+        this.tam.setText(String.valueOf(juego.getSize()) + " KB");
+        this.precio.setText("U$S " + String.valueOf(juego.getPrecio()));
+        this.desa.setModel(modelo_des);
+        modelo_des.addElement(juego.getNick_des());
+        this.desc.setText(juego.getDescripcion());
+        this.cargarCategorias(juego.getId());
+        this.cargarCompras(juego.getId());
+        this.cargarComentarios(juego.getId());
     }
     
     @SuppressWarnings("unchecked")
@@ -287,12 +327,18 @@ public class InformacionJuego extends javax.swing.JDialog {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Comentarios", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        comentarios.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        comentarios.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        comentarios.setToolTipText("");
         comentarios.setAutoscrolls(true);
         jScrollPane4.setViewportView(comentarios);
 
         btn_comentario.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btn_comentario.setText("Nuevo Comentario");
+        btn_comentario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoComentario(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -372,11 +418,15 @@ public class InformacionJuego extends javax.swing.JDialog {
     private void ingresarCompra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarCompra
         NuevaCompra c = new NuevaCompra(null, true);
         c.txtJuego.setText(this.nombre.getText());
-        c.setJuegoComprar(j);
+        c.setJuegoComprar(juego);
         c.setVisible(true);
-        
-        
     }//GEN-LAST:event_ingresarCompra
+
+    private void nuevoComentario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoComentario
+        ComentarioNuevo cn = new ComentarioNuevo(null, true);
+        cn.setVisible(true);
+        cn.cargarJuegos();
+    }//GEN-LAST:event_nuevoComentario
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

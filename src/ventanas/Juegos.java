@@ -85,6 +85,11 @@ public class Juegos extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                cerrar(evt);
+            }
+        });
 
         btn_compra.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btn_compra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/shop-cart-add-icon16.png"))); // NOI18N
@@ -107,6 +112,11 @@ public class Juegos extends javax.swing.JDialog {
         });
 
         lista_juegos.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        lista_juegos.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "1", "2", "3", "4", "5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
         lista_juegos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lista_juegos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -116,6 +126,11 @@ public class Juegos extends javax.swing.JDialog {
         jScrollPane2.setViewportView(lista_juegos);
 
         lista_categorias.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        lista_categorias.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "1", "2", "3", "4", "5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
         lista_categorias.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lista_categorias.setVerifyInputWhenFocusTarget(false);
         lista_categorias.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -266,7 +281,6 @@ public class Juegos extends javax.swing.JDialog {
             c.txtJuego.setText(this.lista_juegos.getSelectedValue().toString());
             c.setJuegoComprar(Controladorjuegos.getInstancia().verInfoJuego(id_juego));     
             c.setVisible(true);
-    
     }//GEN-LAST:event_IngresarCompra
 
     private void NuevoJuego(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevoJuego
@@ -279,14 +293,19 @@ public class Juegos extends javax.swing.JDialog {
         if (!evt.getValueIsAdjusting()){
             try{
                 int fila_sel = this.lista_juegos.getSelectedIndex();
-                id_juego = (int)ids_j.get(fila_sel);
-                System.out.println("id juego: "+id_juego);
+                if (fila_sel != -1){
+                    id_juego = (int)ids_j.get(fila_sel);
+                }
             }
             catch(Exception ex){
                 System.out.println("error juego"+ex.toString());
             }
         }
     }//GEN-LAST:event_seleccionarJuego
+
+    private void cerrar(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_cerrar
+        
+    }//GEN-LAST:event_cerrar
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

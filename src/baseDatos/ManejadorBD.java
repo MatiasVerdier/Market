@@ -1,5 +1,6 @@
 package baseDatos;
 import dominio.Categoria;
+import dominio.Comentario;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,9 +12,9 @@ import java.sql.Statement;
 public class ManejadorBD {
     
     private final static String driver = "com.mysql.jdbc.Driver";
-    private final static String bd = "jdbc:mysql://192.168.0.1:3306/market";
-    private final static String usuario = "random";
-    private final static String password = "random1";
+    private final static String bd = "jdbc:mysql://localhost:3306/market";
+    private final static String usuario = "root";
+    private final static String password = "root";
     
     private Connection conexion;
     private Statement st;
@@ -283,12 +284,11 @@ public class ManejadorBD {
         }
 
     }
-    
+    /*---------------- seleccionar todos los comentarios de un juego ----------------------*/
     public ResultSet selectComentariosJuego(int id){
         ResultSet res;
         try{
-            String sql = "select c.*, r.id_padre from comentarios c, respuestas r where id_juego = "+id+
-                         " and c.id_comentario = r.id_com";
+            String sql = "select * from comentarios where id_juego = "+id;
             res = st.executeQuery(sql);
             return res;
         }catch(SQLException ex){
@@ -297,16 +297,50 @@ public class ManejadorBD {
         } 
     }
     
-    public ResultSet selectPadre(int id){
+    public ResultSet selectRespuestas(int id){
         ResultSet res;
         try{
-            String sql = "select id_padre from respuestas where id_com = "+id;
+            String sql = "select c.* from comentarios c, respuestas r where r.id_padre = "+id+
+                         " and c.id_comentario = r.id_com";
             res = st.executeQuery(sql);
             return res;
         }catch(SQLException ex){
-            System.out.println("select padre"+ex.toString());
+            System.out.println("select respuestas"+ex.toString());
             return null;
-        } 
+        }
+    }
+    
+    public ResultSet selectJuegos(){
+        ResultSet res;
+        try{
+            String sql = "select id_juego, nombre from juegos";
+            res = st.executeQuery(sql);
+            return res;
+        }catch(SQLException ex){
+            System.out.println("listar juegos"+ex.toString());
+            return null;
+        }
+    }
+    
+    public int insertComentario(Comentario c){
+        int res;
+        java.sql.Date fnac = new java.sql.Date(c.getFecha().getTime());
+        try{
+            String sql = "insert into comentarios (id_juego, texto, fecha, id_usuario, id_padre) "+
+                         " values (?,?,?,?)";
+            ps = conexion.prepareStatement(sql);
+            ps.setInt(1, c.getId_juego());
+            ps.setString(2, c.getTexto());
+            ps.setDate(3, fnac);
+            ps.setInt(4, c.getId_usu());
+            ps.setInt(5, c.getId_padre());
+            
+            res = ps.executeUpdate();
+            return res;
+        }catch(SQLException ex){
+            System.out.println("insert comentario "+ex.toString());
+            return -1;
+        }
     }
 }
 
