@@ -1,7 +1,6 @@
 //GEN-FIRST:event_altaPerfil
 package ventanas;//GEN-LAST:event_altaPerfil
 
-import clases.CustomImageIcon;
 import controladores.ControladorUsuarios;
 import dominio.Cliente;
 import javax.swing.ImageIcon;
@@ -9,7 +8,6 @@ import dominio.Desarrollador;
 import dominio.Usuario;
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.image.ImageFilter;
 import static java.awt.image.ImageObserver.WIDTH;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -163,6 +161,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
         btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/close_16.png"))); // NOI18N
         btn_cancelar.setText("Cancelar");
         btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelar(evt);
             }
@@ -189,6 +188,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
         radio_cli.setText("cliente");
         radio_cli.setEnabled(false);
         radio_cli.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radio_cliActionPerformed(evt);
             }
@@ -477,9 +477,8 @@ public class InformacionPerfil extends javax.swing.JDialog {
                 label_imagen.setIcon(new ImageIcon(icono));
                 label_imagen.updateUI(); 
                 
-            } catch (FileNotFoundException ex) {ex.printStackTrace();}
+            } catch (FileNotFoundException ex) {}
             catch (IOException ex){
-                ex.printStackTrace();
             } 
             //catch (IOException ex) {
               //  Logger.getLogger(InformacionPerfil.class.getName()).log(Level.SEVERE, null, ex);
