@@ -31,8 +31,8 @@ public class ControladorUsuarios {
         try {
             String sql = "insert into usuarios (nombre, apellido, nick, fecha_nacimiento, email, tipo,foto) values (?,?,?,?,?,?,?)";
             mbd.insertCliente(user, sql);
-        } catch (Exception ex) {
-            throw new Exception(ex);
+        } catch (SQLException | IOException ex) {
+            throw ex;
         }
     }
     
@@ -41,8 +41,8 @@ public class ControladorUsuarios {
             String sql = "update usuarios set nombre = ?, apellido = ?, nick = ?, fecha_nacimiento = ?, " +
                     "email = ?, foto = ? where id_usuario = ?;";
             mbd.actualizarCliente(user, sql);
-        } catch (Exception ex) {
-            throw new Exception(ex);
+        } catch (SQLException | IOException ex) {
+            throw ex;
         }
     }
       
