@@ -23,6 +23,7 @@ public class InformacionJuego extends javax.swing.JDialog {
     private DefaultListModel modelo_compras = new DefaultListModel();
     private DefaultTreeModel modelo_coments = new DefaultTreeModel(null, true);
     private DefaultComboBoxModel modelo_des = new DefaultComboBoxModel();
+    DefaultMutableTreeNode root;
     
     public InformacionJuego(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -34,31 +35,36 @@ public class InformacionJuego extends javax.swing.JDialog {
     
     public void cargarComentarios(int id){
         ArrayList coments = cj.verComentariosJuego(id);
-        
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode(juego.getNombre());
+        root = new DefaultMutableTreeNode(juego.getNombre());
         modelo_coments.setRoot(root);
-        
-        
         
         int i = 0;
         while (i < coments.size()){
             Comentario c = (Comentario)coments.get(i);
-            
-            DefaultMutableTreeNode n = new DefaultMutableTreeNode(c.getId()+"-"+c.getTexto());
-            
-            System.out.println("id_com: "+c.getId()+" id_padre: "+c.getId_padre());
-            if (c.getId_padre() == 0){
-                root.add(n);
-            }
-            
+            c.setRespuestas(cj.selectRespuestas(c.getId()));
+            asignarHijos(c);
+            modelo_coments.reload();
             i++;
         }
-        modelo_coments.reload();
-        
     }
     
     public void asignarHijos(Comentario c){
-        
+        ArrayList resp;
+        resp = c.getRespuestas();
+        DefaultMutableTreeNode n = new DefaultMutableTreeNode(c.getId()+"-"+c.getTexto());
+        int i = 0;
+        while (i < resp.size()){
+            Comentario com = (Comentario)resp.get(i);
+            System.out.println(c.getId()+"hijo"+com.getId());
+            DefaultMutableTreeNode h = new DefaultMutableTreeNode(com.getId()+"-"+com.getTexto() );
+            n.add(h);
+            modelo_coments.reload();
+            asignarHijos(com);
+            i++;
+        }
+        if (c.getId_padre() == 0){
+            root.add(n);
+        }
     }
     
     void cargarCategorias(int id){

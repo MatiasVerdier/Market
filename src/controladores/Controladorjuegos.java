@@ -2,15 +2,11 @@
 package controladores;
 
 import baseDatos.ManejadorBD;
-import dominio.Categoria;
-import dominio.Cliente;
 import dominio.Comentario;
 import dominio.Juego;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Controladorjuegos {
     
@@ -23,7 +19,20 @@ public class Controladorjuegos {
          return INSTANCIA;
     }
     
-    public void altaJuego(Juego j){
+    public void altaJuego(Juego juego, ArrayList cats) {
+        int i=0;
+        try {
+            String sql ="insert into juegos (nombre, descripcion, size, precio, id_desarrollador) values (?,?,?,?,?)";
+            int idj = mbd.insertJuego(juego, sql);
+            /*while(i< cats.size()){
+             Categoria c = (Categoria)cats.get(i);
+             mbd.insertCatJuego(idj, c.getId());
+             i++;
+            }*/
+            
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
         
     }
     
@@ -76,12 +85,12 @@ public class Controladorjuegos {
                 Comentario com = new Comentario();
                 com.setId(res.getInt("id_comentario"));
                 com.setTexto(res.getString("texto"));
+                com.setId_juego(res.getInt("id_juego"));
                 com.setFecha(res.getDate("fecha"));
                 com.setId_usu(res.getInt("id_usuario"));
                 com.setId_padre(res.getInt("id_padre"));
-                com.setRespuestas(this.selectRespuestas(com.getId()));
                 coments.add(com);
-                
+                //System.out.println(com.getTexto());
             }
             
             return coments;
@@ -105,6 +114,7 @@ public class Controladorjuegos {
                 com.setId_usu(res.getInt("id_usuario"));
                 com.setId_padre(res.getInt("id_padre"));
                 respuestas.add(com);
+                System.out.println(com.getTexto());
             }
             
             return respuestas;

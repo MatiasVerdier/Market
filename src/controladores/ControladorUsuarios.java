@@ -6,16 +6,14 @@ import dominio.Cliente;
 import dominio.Desarrollador;
 import dominio.Usuario;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 public class ControladorUsuarios {
     
@@ -28,8 +26,7 @@ public class ControladorUsuarios {
          return INSTANCIA;
     }
    
-    //Modificado 25/8 Matias R
-    //se da de alta un cliente
+    
     public void altaCliente(dominio.Cliente user) throws Exception{
         try {
             String sql = "insert into usuarios (nombre, apellido, nick, fecha_nacimiento, email, tipo,foto) values (?,?,?,?,?,?,?)";
@@ -182,5 +179,24 @@ public class ControladorUsuarios {
             System.out.println("ver info usuario "+ex.toString());
         }
         return u;
+    }
+    
+    public ArrayList listarDesarrolladores(){
+        try {
+            ArrayList users = new ArrayList();
+            
+            ResultSet res = mbd.selectTodosDes();
+            while(res.next()){
+                Desarrollador d = new Desarrollador();
+                d.setNick(res.getString("Nick"));
+                d.setId(res.getInt("id_usuario"));
+                //d.setWeb(res.getString("email"));
+                users.add(d);
+             }
+            return users;
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
     }
 }
