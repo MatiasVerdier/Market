@@ -96,5 +96,10 @@ public class Juego {
     public void setComentarios(ArrayList comentarios) {
         this.comentarios = comentarios;
     }
+
+    @Override
+    public String toString() {
+        return this.nombre;
+    }
     
 }

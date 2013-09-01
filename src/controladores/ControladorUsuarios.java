@@ -185,7 +185,7 @@ public class ControladorUsuarios {
         try {
             ArrayList users = new ArrayList();
             
-            ResultSet res = mbd.selectTodosDes();
+            ResultSet res = mbd.selectDevelopers();
             while(res.next()){
                 Desarrollador d = new Desarrollador();
                 d.setNick(res.getString("Nick"));

@@ -6,15 +6,14 @@ import dominio.Cliente;
 import dominio.Comentario;
 import dominio.Juego;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class ComentarioNuevo extends javax.swing.JDialog {
     
-    //DefaultComboBoxModel juegos = new DefaultComboBoxModel();
-    //DefaultComboBoxModel clientes = new DefaultComboBoxModel();
     private Controladorjuegos cj = Controladorjuegos.getInstancia();
     private ControladorUsuarios cu = ControladorUsuarios.getInstancia();
     
-    private ArrayList ids_juegos = new ArrayList();
+    private ArrayList ids_juegos = new ArrayList();;
     private ArrayList ids_clientes = new ArrayList();
     
     private int id_juego;
@@ -25,19 +24,29 @@ public class ComentarioNuevo extends javax.swing.JDialog {
         initComponents();
     }
     
-    public void cargarJuegos(){
+    public void cargarJuegos(int id){
+        this.ids_juegos.clear();
         this.combo_juegos.removeAllItems();
-        ArrayList jug = cj.listarJuegos();
-        int i = 0;
-        while (i < jug.size()){
-            Juego j = (Juego) jug.get(i);
-            combo_juegos.addItem(j.getNombre());
-            ids_juegos.add(j.getId());
-            i++;
+        if (id != 0){
+            Juego j = cj.buscarJuegoPorID(id);
+            this.combo_juegos.addItem(j);
+            this.ids_juegos.add(j.getId());
         }
+        else{
+            ArrayList jug = cj.listarJuegos();
+            int i = 0;
+            while (i < jug.size()){
+                Juego j = (Juego) jug.get(i);
+                combo_juegos.addItem(j.getNombre());
+                ids_juegos.add(j.getId());
+                i++;
+            } 
+        }
+        
     }
     
     public void cargarClientes(){
+        this.ids_clientes.clear();
         this.combo_clientes.removeAllItems();
         ArrayList cli = cu.listarClientes();
         int i = 0;
@@ -64,24 +73,15 @@ public class ComentarioNuevo extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
         combo_clientes = new javax.swing.JComboBox();
         fecha = new com.toedter.calendar.JDateChooser();
+        jLabel5 = new javax.swing.JLabel();
+        com_padre = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                cargarDatos(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel1.setText("Juego");
 
         combo_juegos.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        combo_juegos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        combo_juegos.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                seleccionarJuego(evt);
-            }
-        });
 
         jLabel2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel2.setText("Texto");
@@ -115,12 +115,11 @@ public class ComentarioNuevo extends javax.swing.JDialog {
         });
 
         combo_clientes.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        combo_clientes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        combo_clientes.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                seleccionarCliente(evt);
-            }
-        });
+
+        jLabel5.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabel5.setText("Responde a");
+
+        com_padre.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,37 +128,39 @@ public class ComentarioNuevo extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(com_padre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(combo_juegos, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(177, 177, 177))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(combo_clientes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(combo_clientes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel2))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 14, Short.MAX_VALUE))))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5});
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {combo_clientes, combo_juegos});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {com_padre, combo_clientes, combo_juegos});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
 
@@ -175,31 +176,26 @@ public class ComentarioNuevo extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(combo_juegos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(com_padre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
-                            .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1))))
+                    .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void cargarDatos(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_cargarDatos
-        this.cargarJuegos();
-        this.cargarClientes();
-    }//GEN-LAST:event_cargarDatos
 
     private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
         this.dispose();
@@ -207,33 +203,25 @@ public class ComentarioNuevo extends javax.swing.JDialog {
 
     private void altaComentario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaComentario
         Comentario nuevo = new Comentario();
+        id_juego = (int)ids_juegos.get(this.combo_juegos.getSelectedIndex());
+        id_cli = (int)ids_clientes.get(this.combo_clientes.getSelectedIndex());
         nuevo.setId_usu(id_cli);
         nuevo.setId_juego(id_juego);
         nuevo.setTexto(this.texto.getText());
         nuevo.setFecha(this.fecha.getDate());
+        nuevo.setId_padre(Integer.parseInt(this.com_padre.getText()));
+        int res = cj.altaComentario(nuevo);
+        if(res != -1){
+            JOptionPane.showMessageDialog(this, "Operacion exitosa", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "No se pudo ingresar el comentario", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_altaComentario
 
-    private void seleccionarCliente(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_seleccionarCliente
-        int lugar = this.combo_clientes.getSelectedIndex();
-        try{
-            id_cli = (int)ids_clientes.get(lugar);
-        }
-        catch(Exception ex){
-            System.out.println(ex.toString());
-        }
-    }//GEN-LAST:event_seleccionarCliente
-
-    private void seleccionarJuego(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_seleccionarJuego
-        int lugar = this.combo_juegos.getSelectedIndex();
-        try{
-            id_juego = (int)ids_juegos.get(lugar);
-        }
-        catch(Exception ex){
-            System.out.println(ex.toString());
-        }
-    }//GEN-LAST:event_seleccionarJuego
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField com_padre;
     private javax.swing.JComboBox combo_clientes;
     private javax.swing.JComboBox combo_juegos;
     private com.toedter.calendar.JDateChooser fecha;
@@ -243,6 +231,7 @@ public class ComentarioNuevo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea texto;
     // End of variables declaration//GEN-END:variables
