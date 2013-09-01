@@ -12,7 +12,7 @@ public class Comentario {
     private int id_usu;
     private int id_padre;
     
-    private ArrayList respuestas;
+    private ArrayList respuestas = new ArrayList();
 
     public ArrayList getRespuestas() {
         return respuestas;

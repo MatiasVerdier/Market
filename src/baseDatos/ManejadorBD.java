@@ -300,8 +300,7 @@ public class ManejadorBD {
     public ResultSet selectRespuestas(int id){
         ResultSet res;
         try{
-            String sql = "select c.* from comentarios c, respuestas r where r.id_padre = "+id+
-                         " and c.id_comentario = r.id_com";
+            String sql = "select * from comentarios where id_padre = "+id;
             res = st.executeQuery(sql);
             return res;
         }catch(SQLException ex){
@@ -341,6 +340,43 @@ public class ManejadorBD {
             System.out.println("insert comentario "+ex.toString());
             return -1;
         }
+    }
+    
+    public int insertJuego(dominio.Juego juego, String sql){
+            int r=0;
+        try {
+            
+            ps = conexion.prepareStatement(sql);
+            ps.setString(1, juego.getNombre());
+            ps.setString(2, juego.getDescripcion());
+            ps.setDouble(3, juego.getSize());
+            ps.setDouble(4, juego.getPrecio());
+            ps.setInt(5, juego.getId());
+            ps.executeUpdate();
+                String consulta = "select max(id_juego) from juegos";
+            ResultSet result;
+            result = st.executeQuery(consulta);
+            while(result.next()){
+                r = result.getInt(1);
+            }
+            return r;
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        return r;
+	}
+  }
+    
+    public ResultSet selectTodosDes(){
+        ResultSet res;
+        
+        String sql= "select id_usuario, nick from usuarios where tipo= 'd'";
+        try {
+            res=st.executeQuery(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            res=null;
+        }
+        return res;
     }
 }
 

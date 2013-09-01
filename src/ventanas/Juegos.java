@@ -85,11 +85,6 @@ public class Juegos extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                cerrar(evt);
-            }
-        });
 
         btn_compra.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btn_compra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/shop-cart-add-icon16.png"))); // NOI18N
@@ -302,10 +297,6 @@ public class Juegos extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_seleccionarJuego
-
-    private void cerrar(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_cerrar
-        
-    }//GEN-LAST:event_cerrar
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
