@@ -255,8 +255,9 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_arch_salirActionPerformed
 
     private void menu_compActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_compActionPerformed
-        // TODO add your handling code here:
-        NuevaCompra nc = new NuevaCompra(null,true);
+        ComentarioNuevo nc = new ComentarioNuevo(null,true);
+        nc.cargarJuegos(0);
+        nc.cargarClientes();
         nc.setVisible(true);
     }//GEN-LAST:event_menu_compActionPerformed
 

@@ -7,6 +7,8 @@ import dominio.Juego;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Controladorjuegos {
     
@@ -17,6 +19,21 @@ public class Controladorjuegos {
         if (INSTANCIA == null)
              INSTANCIA = new Controladorjuegos();
          return INSTANCIA;
+    }
+    
+    public Juego buscarJuegoPorID(int id){
+        try {
+            ResultSet res = mbd.SELECT("select id_juego, nombre from juegos where id_juego = "+id);
+            Juego j = new Juego();
+            while (res.next()){
+                j.setId(res.getInt("id_juego"));
+                j.setNombre(res.getString("nombre"));
+            }
+            return j;
+        } catch (SQLException ex) {
+            System.out.println("buscar juego por id "+ex.toString());
+            return null;
+        }
     }
     
     public void altaJuego(Juego juego, ArrayList cats) {
@@ -31,7 +48,7 @@ public class Controladorjuegos {
             }*/
             
         } catch (Exception ex) {
-            System.out.println(ex.toString());
+            System.out.println("alta juego "+ex.toString());
         }
         
     }
@@ -50,7 +67,7 @@ public class Controladorjuegos {
             
             return juegos;
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("listar juegos por ategoria "+ex.toString());
             return null;
         }
     }
@@ -71,7 +88,7 @@ public class Controladorjuegos {
             
             return j;
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("ver info juego "+ex.toString());
             return null;
         }
     }
@@ -95,7 +112,7 @@ public class Controladorjuegos {
             
             return coments;
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("ver comentarios juego "+ex.toString());
             return null;
         }
     }
@@ -119,7 +136,7 @@ public class Controladorjuegos {
             
             return respuestas;
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("select respuestas "+ex.toString());
             return null;
         }
     }
@@ -138,9 +155,21 @@ public class Controladorjuegos {
             
             return juegos;
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("listar juegos "+ex.toString());
             return null;
         }
-    } 
+    }
+    
+    public int altaComentario(Comentario c){
+        int res;
+        try{
+            res = mbd.insertComentario(c);
+        }
+        catch(Exception ex){
+            System.out.println("alta comentario "+ex.toString());
+            res = -1;
+        }
+        return res;
+    }
     
 }

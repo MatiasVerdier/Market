@@ -361,19 +361,25 @@ public class AltaJuego extends javax.swing.JDialog {
     }//GEN-LAST:event_abrirventana
 
     private void agregarCategoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarCategoria
-        Categoria cate = (Categoria)c.get(list_cat.getSelectedIndex());
-        modelo_catsJ.addElement(cate.getNombre());
-        cate = (Categoria)c.remove(list_cat.getSelectedIndex());
-        cj.add(cate);
-        modelo_cats.removeElementAt(list_cat.getSelectedIndex());
+        int sel = this.list_cat.getSelectedIndex();
+        if (sel != -1){
+            Categoria cate = (Categoria)c.get(sel);
+            modelo_catsJ.addElement(cate.getNombre());
+            cate = (Categoria)c.remove(sel);
+            cj.add(cate);
+            modelo_cats.removeElementAt(sel);
+        }
     }//GEN-LAST:event_agregarCategoria
 
     private void quitarCategoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarCategoria
-        Categoria cate= (Categoria)cj.get(list_catJ.getSelectedIndex());
-        modelo_cats.addElement(cate.getNombre());
-        cate = (Categoria)cj.remove(list_catJ.getSelectedIndex());
-        c.add(cate);
-        modelo_catsJ.removeElementAt(list_catJ.getSelectedIndex());
+        int sel = this.list_catJ.getSelectedIndex();
+        if (sel != -1){
+            Categoria cate= (Categoria)cj.get(sel);
+            modelo_cats.addElement(cate.getNombre());
+            cate = (Categoria)cj.remove(sel);
+            c.add(cate);
+            modelo_catsJ.removeElementAt(sel);
+        }
     }//GEN-LAST:event_quitarCategoria
 
     

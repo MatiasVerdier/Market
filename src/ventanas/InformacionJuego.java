@@ -25,6 +25,9 @@ public class InformacionJuego extends javax.swing.JDialog {
     private DefaultComboBoxModel modelo_des = new DefaultComboBoxModel();
     DefaultMutableTreeNode root;
     
+    private boolean click_comentario = false;
+    private boolean click_compra = false;
+    
     public InformacionJuego(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -35,7 +38,7 @@ public class InformacionJuego extends javax.swing.JDialog {
     
     public void cargarComentarios(int id){
         ArrayList coments = cj.verComentariosJuego(id);
-        root = new DefaultMutableTreeNode(juego.getNombre());
+        root = new DefaultMutableTreeNode(juego);
         modelo_coments.setRoot(root);
         
         int i = 0;
@@ -51,12 +54,12 @@ public class InformacionJuego extends javax.swing.JDialog {
     public void asignarHijos(Comentario c){
         ArrayList resp;
         resp = c.getRespuestas();
-        DefaultMutableTreeNode n = new DefaultMutableTreeNode(c.getId()+"-"+c.getTexto());
+        DefaultMutableTreeNode n = new DefaultMutableTreeNode(c);
         int i = 0;
         while (i < resp.size()){
             Comentario com = (Comentario)resp.get(i);
             System.out.println(c.getId()+"hijo"+com.getId());
-            DefaultMutableTreeNode h = new DefaultMutableTreeNode(com.getId()+"-"+com.getTexto() );
+            DefaultMutableTreeNode h = new DefaultMutableTreeNode(com);
             n.add(h);
             modelo_coments.reload();
             asignarHijos(com);
@@ -147,6 +150,13 @@ public class InformacionJuego extends javax.swing.JDialog {
         btn_salir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                actualizarDatos(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informacion Basica", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
@@ -423,6 +433,7 @@ public class InformacionJuego extends javax.swing.JDialog {
 
     private void ingresarCompra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarCompra
         NuevaCompra c = new NuevaCompra(null, true);
+        this.click_compra = true;
         c.txtJuego.setText(this.nombre.getText());
         c.setJuegoComprar(juego);
         c.setVisible(true);
@@ -430,9 +441,26 @@ public class InformacionJuego extends javax.swing.JDialog {
 
     private void nuevoComentario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoComentario
         ComentarioNuevo cn = new ComentarioNuevo(null, true);
+        this.click_comentario = true;
+        cn.cargarClientes();
+        cn.cargarJuegos(juego.getId());
         cn.setVisible(true);
-        cn.cargarJuegos();
+        
     }//GEN-LAST:event_nuevoComentario
+
+    private void actualizarDatos(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_actualizarDatos
+        if(this.click_compra){
+            this.cargarCompras(juego.getId());
+            this.click_compra = false;
+            //System.out.println("actualizar compras");
+        }
+        if(this.click_comentario){
+            this.cargarComentarios(juego.getId());
+            this.click_comentario = false;
+            //System.out.println("actualizar comentarios");
+        }
+        
+    }//GEN-LAST:event_actualizarDatos
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
