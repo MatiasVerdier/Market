@@ -9,10 +9,12 @@ import dominio.Desarrollador;
 import dominio.Usuario;
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.image.ImageFilter;
 import static java.awt.image.ImageObserver.WIDTH;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -170,8 +172,13 @@ public class InformacionPerfil extends javax.swing.JDialog {
         btn_aceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Apply.png"))); // NOI18N
         btn_aceptar.setText("Aceptar");
         btn_aceptar.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_aceptarconsulta(evt);
+                try {
+                    btn_aceptarconsulta(evt);
+                } catch (Exception ex) {
+                    Logger.getLogger(InformacionPerfil.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -192,6 +199,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
         radio_des.setText("desarrollador");
         radio_des.setEnabled(false);
         radio_des.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radio_desActionPerformed(evt);
             }
@@ -201,6 +209,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
 
         label_imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/user-icon.png"))); // NOI18N
         label_imagen.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cargarImagen(evt);
             }
@@ -236,6 +245,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
         btn_new.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/user_add_16.png"))); // NOI18N
         btn_new.setToolTipText("Nuevo Usuario");
         btn_new.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 altaPerfil(evt);
             }
@@ -245,6 +255,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
         perfiles_edit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/edit16.png"))); // NOI18N
         perfiles_edit.setToolTipText("Modificar Usuario");
         perfiles_edit.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modificarInfo(evt);
             }
@@ -375,7 +386,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
     }// </editor-fold>                        
 
     //Modificado 25/8 Matias R
-    private void btn_aceptarconsulta(java.awt.event.ActionEvent evt) {                                     
+    private void btn_aceptarconsulta(java.awt.event.ActionEvent evt) throws Exception {                                     
         Usuario user;
             if (alta == true && this.radio_cli.isSelected()){
             user = new Cliente();
@@ -409,14 +420,30 @@ public class InformacionPerfil extends javax.swing.JDialog {
             }
             this.dispose();
             
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
+                int err = ex.getErrorCode();
+                if (err == 1062){
+                    JOptionPane.showMessageDialog(null, "Ha ingresado un valor duplicado" , null, WIDTH, null);
+                }else if (err == 0){
+                    JOptionPane.showMessageDialog(null, "La imagen es demasiado grande" , null, WIDTH, null);
+                }
+                else{
                 JOptionPane.showMessageDialog(null, ex.getMessage() , null, WIDTH, null);
+                }
             }
         }else{
             try {
                 controladores.ControladorUsuarios.getInstancia().altaDesarrollador((Desarrollador)user);
-            } catch (Exception ex) {
+            } catch (SQLException ex) {
+                  int err = ex.getErrorCode();
+                if (err == 1062){
+                    JOptionPane.showMessageDialog(null, "Ha ingresado un valor duplicado" , null, WIDTH, null);
+                }else if (err == 0){
+                    JOptionPane.showMessageDialog(null, "La imagen es demasiado grande" , null, WIDTH, null);
+                }
+                else{
                 JOptionPane.showMessageDialog(null, ex.getMessage() , null, WIDTH, null);
+                }
             }
         }
         
@@ -436,13 +463,14 @@ public class InformacionPerfil extends javax.swing.JDialog {
 
     private void cargarImagen(java.awt.event.MouseEvent evt) {                              
         JFileChooser se = new JFileChooser();
-        se.setFileSelectionMode(JFileChooser.FILES_ONLY);       
+        se.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int estado = se.showOpenDialog(null);
         if(estado == JFileChooser.APPROVE_OPTION)
         {
             try {
                 
                 fis =  new FileInputStream(se.getSelectedFile());
+                
                 this.longitudBytes = (int)se.getSelectedFile().length();
                 
                 Image icono = ImageIO.read(se.getSelectedFile()).getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT);
