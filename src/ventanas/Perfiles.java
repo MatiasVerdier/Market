@@ -253,7 +253,7 @@ ArrayList usuarios = new ArrayList();
         InformacionPerfil ip = new InformacionPerfil(null, true);
         ip.cargarInfoPerfil(id_usu);
         ip.setVisible(true);
-        
+        cargarUsuarios();
     }//GEN-LAST:event_verInformacion
 
     private void nuevousuario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevousuario
@@ -265,6 +265,7 @@ ArrayList usuarios = new ArrayList();
 
     private void modificarUsuario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarUsuario
         InformacionPerfil ip = new InformacionPerfil(null, true);
+        ip.cargarInfoPerfil(id_usu);
         ip.cambiarEstado(true, true, true, true, true, true, false);
         ip.setVisible(true);
     }//GEN-LAST:event_modificarUsuario

@@ -1,5 +1,5 @@
-
-package ventanas;
+//GEN-FIRST:event_altaPerfil
+package ventanas;//GEN-LAST:event_altaPerfil
 
 import clases.CustomImageIcon;
 import controladores.ControladorUsuarios;
@@ -108,7 +108,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         tipo_perfil = new javax.swing.ButtonGroup();
@@ -372,10 +372,10 @@ public class InformacionPerfil extends javax.swing.JDialog {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
     //Modificado 25/8 Matias R
-    private void btn_aceptarconsulta(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarconsulta
+    private void btn_aceptarconsulta(java.awt.event.ActionEvent evt) {                                     
         Usuario user;
             if (alta == true && this.radio_cli.isSelected()){
             user = new Cliente();
@@ -420,21 +420,21 @@ public class InformacionPerfil extends javax.swing.JDialog {
             }
         }
         
-    }//GEN-LAST:event_btn_aceptarconsulta
+    }                                    
 
-    private void radio_cliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_cliActionPerformed
+    private void radio_cliActionPerformed(java.awt.event.ActionEvent evt) {                                          
       if(radio_cli.isSelected()){
           this.label_web.setVisible(false);
           this.txt_web.setEditable(false);
           this.txt_web.setVisible(false);
       }
-    }//GEN-LAST:event_radio_cliActionPerformed
+    }                                         
 
-    private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
+    private void cancelar(java.awt.event.ActionEvent evt) {                          
         this.dispose();
-    }//GEN-LAST:event_cancelar
+    }                         
 
-    private void cargarImagen(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarImagen
+    private void cargarImagen(java.awt.event.MouseEvent evt) {                              
         JFileChooser se = new JFileChooser();
         se.setFileSelectionMode(JFileChooser.FILES_ONLY);       
         int estado = se.showOpenDialog(null);
@@ -457,31 +457,31 @@ public class InformacionPerfil extends javax.swing.JDialog {
               //  Logger.getLogger(InformacionPerfil.class.getName()).log(Level.SEVERE, null, ex);
            // }
         }
-    }//GEN-LAST:event_cargarImagen
+    }                             
 
-    private void altaPerfil(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaPerfil
+    private void altaPerfil(java.awt.event.ActionEvent evt) {                            
         this.cambiarEstado(true, true, true, true, true, true, true);
         this.limpiarCampos();
         this.perfiles_edit.setEnabled(false);
         alta = true;
-    }//GEN-LAST:event_altaPerfil
+    }                           
 
-    private void modificarInfo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarInfo
+    private void modificarInfo(java.awt.event.ActionEvent evt) {                               
         this.cambiarEstado(true, true, true, true, true, true, false);
         this.btn_new.setEnabled(false);
         this.alta = false;
         this.cambiarBotones();
-    }//GEN-LAST:event_modificarInfo
+    }                              
 
-    private void radio_desActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_desActionPerformed
+    private void radio_desActionPerformed(java.awt.event.ActionEvent evt) {                                          
         if(radio_des.isSelected()){
             this.label_web.setVisible(true);
             this.txt_web.setEditable(true);
             this.txt_web.setVisible(true);
         } 
-    }//GEN-LAST:event_radio_desActionPerformed
+    }                                         
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton btn_aceptar;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_new;
@@ -506,5 +506,5 @@ public class InformacionPerfil extends javax.swing.JDialog {
     private javax.swing.JTextField txt_nick;
     private javax.swing.JTextField txt_nombre;
     private javax.swing.JTextField txt_web;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 }
