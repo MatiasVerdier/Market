@@ -1,12 +1,17 @@
 package ventanas;
 
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 
 public class Main extends javax.swing.JFrame {
 
     public Main() {
         initComponents();
+        Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/recursos/logo.jpg"));
+        setIconImage(icon);
+        setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -61,6 +66,11 @@ public class Main extends javax.swing.JFrame {
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/page_table_add_48.png"))); // NOI18N
         jButton4.setToolTipText("Agregar Categoria");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         menu_comp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/comment_add_48.png"))); // NOI18N
         menu_comp.setToolTipText("Añadir Comentario");
@@ -151,6 +161,11 @@ public class Main extends javax.swing.JFrame {
         menu_acerca.setText("Ayuda");
 
         jMenuItem6.setText("Acerca de");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         menu_acerca.add(jMenuItem6);
 
         jMenuBar1.add(menu_acerca);
@@ -260,6 +275,16 @@ public class Main extends javax.swing.JFrame {
         nc.cargarClientes();
         nc.setVisible(true);
     }//GEN-LAST:event_menu_compActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        NuevaCategoria ac = new NuevaCategoria(null, true);
+        ac.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        acercaDe ac = new acercaDe();
+        ac.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
 
     public static void main(String args[]) {

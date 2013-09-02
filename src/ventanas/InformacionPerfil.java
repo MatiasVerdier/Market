@@ -1,6 +1,6 @@
-//GEN-FIRST:event_altaPerfil
-package ventanas;//GEN-LAST:event_altaPerfil
+package ventanas;
 
+import clases.CustomImageIcon;
 import controladores.ControladorUsuarios;
 import dominio.Cliente;
 import javax.swing.ImageIcon;
@@ -13,6 +13,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -26,7 +29,9 @@ public class InformacionPerfil extends javax.swing.JDialog {
     
     public InformacionPerfil(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        
         initComponents();
+        txtEdad.setText("");
     }
     
     public void cargarInfoPerfil(int id){
@@ -55,7 +60,20 @@ public class InformacionPerfil extends javax.swing.JDialog {
             this.txt_email.setText(u.getEmail());
             this.calendarNacimiento.setDateFormatString("dd/MM/yyyy");
             this.calendarNacimiento.setDate(u.getFecha_nac());
+            try{
+            Integer ed;
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+                long today = calendarNacimiento.getDate().getTime();        
+            // Using DateFormat format method we can create a string 
+            // representation of a date with the defined format.
+            String reportDate = df.format(today);
+            ed = (edad(reportDate));
             
+            txtEdad.setText(ed.toString());
+        }catch(Exception ex){
+        
+        }
             if (u.getImagen() != null){
             int label_w = this.label_imagen.getWidth();
             int label_h = this.label_imagen.getHeight();
@@ -108,7 +126,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         tipo_perfil = new javax.swing.ButtonGroup();
@@ -135,6 +153,8 @@ public class InformacionPerfil extends javax.swing.JDialog {
         txt_web = new javax.swing.JTextField();
         label_web = new javax.swing.JLabel();
         calendarNacimiento = new com.toedter.calendar.JDateChooser();
+        jLabel8 = new javax.swing.JLabel();
+        txtEdad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -161,7 +181,6 @@ public class InformacionPerfil extends javax.swing.JDialog {
         btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/close_16.png"))); // NOI18N
         btn_cancelar.setText("Cancelar");
         btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelar(evt);
             }
@@ -171,13 +190,11 @@ public class InformacionPerfil extends javax.swing.JDialog {
         btn_aceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Apply.png"))); // NOI18N
         btn_aceptar.setText("Aceptar");
         btn_aceptar.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    btn_aceptarconsulta(evt);
-                } catch (Exception ex) {
-                    Logger.getLogger(InformacionPerfil.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            try {    btn_aceptarconsulta(evt);
+			}
+			catch (Exception ex){
+			}
             }
         });
 
@@ -188,7 +205,6 @@ public class InformacionPerfil extends javax.swing.JDialog {
         radio_cli.setText("cliente");
         radio_cli.setEnabled(false);
         radio_cli.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radio_cliActionPerformed(evt);
             }
@@ -199,7 +215,6 @@ public class InformacionPerfil extends javax.swing.JDialog {
         radio_des.setText("desarrollador");
         radio_des.setEnabled(false);
         radio_des.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radio_desActionPerformed(evt);
             }
@@ -209,7 +224,6 @@ public class InformacionPerfil extends javax.swing.JDialog {
 
         label_imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/user-icon.png"))); // NOI18N
         label_imagen.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cargarImagen(evt);
             }
@@ -245,7 +259,6 @@ public class InformacionPerfil extends javax.swing.JDialog {
         btn_new.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/user_add_16.png"))); // NOI18N
         btn_new.setToolTipText("Nuevo Usuario");
         btn_new.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 altaPerfil(evt);
             }
@@ -255,7 +268,6 @@ public class InformacionPerfil extends javax.swing.JDialog {
         perfiles_edit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/edit16.png"))); // NOI18N
         perfiles_edit.setToolTipText("Modificar Usuario");
         perfiles_edit.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modificarInfo(evt);
             }
@@ -269,6 +281,18 @@ public class InformacionPerfil extends javax.swing.JDialog {
 
         calendarNacimiento.setEnabled(false);
         calendarNacimiento.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        calendarNacimiento.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                calendarNacimientoInputMethodTextChanged(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+
+        txtEdad.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        txtEdad.setText("Edad");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -299,12 +323,16 @@ public class InformacionPerfil extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(calendarNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_ape, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel3))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(calendarNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txt_ape, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEdad, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
@@ -378,16 +406,20 @@ public class InformacionPerfil extends javax.swing.JDialog {
                                 .addComponent(label_edad))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(txt_web, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label_web)))))
+                                .addComponent(label_web)
+                                .addComponent(jLabel8)
+                                .addComponent(txtEdad)))))
                 .addContainerGap())
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>//GEN-END:initComponents
 
     //Modificado 25/8 Matias R
-    private void btn_aceptarconsulta(java.awt.event.ActionEvent evt) throws Exception {                                     
-        Usuario user;
+     private void btn_aceptarconsulta(java.awt.event.ActionEvent evt) throws Exception {                                     
+        try{
+            Usuario user;
+        
             if (alta == true && this.radio_cli.isSelected()){
             user = new Cliente();
             }else if(alta == true && this.radio_des.isSelected()){
@@ -446,69 +478,96 @@ public class InformacionPerfil extends javax.swing.JDialog {
                 }
             }
         }
+        }catch(Exception ex){
+         
+     }
         
     }                                    
 
-    private void radio_cliActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    private void radio_cliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_cliActionPerformed
       if(radio_cli.isSelected()){
           this.label_web.setVisible(false);
           this.txt_web.setEditable(false);
           this.txt_web.setVisible(false);
       }
-    }                                         
+    }//GEN-LAST:event_radio_cliActionPerformed
 
-    private void cancelar(java.awt.event.ActionEvent evt) {                          
+    private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
         this.dispose();
-    }                         
+    }//GEN-LAST:event_cancelar
 
-    private void cargarImagen(java.awt.event.MouseEvent evt) {                              
+    private void cargarImagen(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarImagen
         JFileChooser se = new JFileChooser();
-        se.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        se.setFileSelectionMode(JFileChooser.FILES_ONLY);       
         int estado = se.showOpenDialog(null);
         if(estado == JFileChooser.APPROVE_OPTION)
         {
             try {
                 
                 fis =  new FileInputStream(se.getSelectedFile());
-                
                 this.longitudBytes = (int)se.getSelectedFile().length();
                 
                 Image icono = ImageIO.read(se.getSelectedFile()).getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT);
                 label_imagen.setIcon(new ImageIcon(icono));
                 label_imagen.updateUI(); 
                 
-            } catch (FileNotFoundException ex) {}
+            } catch (FileNotFoundException ex) {ex.printStackTrace();}
             catch (IOException ex){
+                ex.printStackTrace();
             } 
             //catch (IOException ex) {
               //  Logger.getLogger(InformacionPerfil.class.getName()).log(Level.SEVERE, null, ex);
            // }
         }
-    }                             
+    }//GEN-LAST:event_cargarImagen
 
-    private void altaPerfil(java.awt.event.ActionEvent evt) {                            
+    public int edad(String fecha_nac) {     //fecha_nac debe tener el formato dd/MM/yyyy
+   
+    Date fechaActual = new Date();
+    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+    String hoy = formato.format(fechaActual);
+    String[] dat1 = fecha_nac.split("/");
+    String[] dat2 = hoy.split("/");
+    int anos = Integer.parseInt(dat2[2]) - Integer.parseInt(dat1[2]);
+    int mes = Integer.parseInt(dat2[1]) - Integer.parseInt(dat1[1]);
+    if (mes < 0) {
+      anos = anos - 1;
+    } else if (mes == 0) {
+      int dia = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
+      if (dia > 0) {
+        anos = anos - 1;
+      }
+    }
+    return anos;
+  }
+    
+    private void altaPerfil(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaPerfil
         this.cambiarEstado(true, true, true, true, true, true, true);
         this.limpiarCampos();
         this.perfiles_edit.setEnabled(false);
         alta = true;
-    }                           
+    }//GEN-LAST:event_altaPerfil
 
-    private void modificarInfo(java.awt.event.ActionEvent evt) {                               
+    private void modificarInfo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarInfo
         this.cambiarEstado(true, true, true, true, true, true, false);
         this.btn_new.setEnabled(false);
         this.alta = false;
         this.cambiarBotones();
-    }                              
+    }//GEN-LAST:event_modificarInfo
 
-    private void radio_desActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    private void radio_desActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_desActionPerformed
         if(radio_des.isSelected()){
             this.label_web.setVisible(true);
             this.txt_web.setEditable(true);
             this.txt_web.setVisible(true);
         } 
-    }                                         
+    }//GEN-LAST:event_radio_desActionPerformed
 
-    // Variables declaration - do not modify                     
+    private void calendarNacimientoInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_calendarNacimientoInputMethodTextChanged
+   
+    }//GEN-LAST:event_calendarNacimientoInputMethodTextChanged
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_aceptar;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_new;
@@ -520,6 +579,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel label_edad;
     private javax.swing.JLabel label_imagen;
     private javax.swing.JLabel label_web;
@@ -528,10 +588,11 @@ public class InformacionPerfil extends javax.swing.JDialog {
     private javax.swing.JRadioButton radio_cli;
     private javax.swing.JRadioButton radio_des;
     private javax.swing.ButtonGroup tipo_perfil;
+    private javax.swing.JLabel txtEdad;
     private javax.swing.JTextField txt_ape;
     private javax.swing.JTextField txt_email;
     private javax.swing.JTextField txt_nick;
     private javax.swing.JTextField txt_nombre;
     private javax.swing.JTextField txt_web;
-    // End of variables declaration                   
+    // End of variables declaration//GEN-END:variables
 }

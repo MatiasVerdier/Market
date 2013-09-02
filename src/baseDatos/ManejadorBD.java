@@ -14,9 +14,9 @@ import java.util.logging.Logger;
 public class ManejadorBD {
     
     private final static String driver = "com.mysql.jdbc.Driver";
-    private final static String bd = "jdbc:mysql://201.221.15.100:3306/market";
-    private final static String usuario = "random";
-    private final static String password = "random1";
+    private final static String bd = "jdbc:mysql://localhost:3306/market";
+    private final static String usuario = "root";
+    private final static String password = "root";
     
     private Connection conexion;
     private Statement st;
