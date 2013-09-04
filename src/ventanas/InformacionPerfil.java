@@ -455,9 +455,9 @@ public class InformacionPerfil extends javax.swing.JDialog {
         } catch (SQLException ex) {
                 int err = ex.getErrorCode();
                 if (err == 1062){
-                    JOptionPane.showMessageDialog(null, "Ha ingresado un valor duplicado" , null, WIDTH, null);
+                    JOptionPane.showMessageDialog(this, "Ha ingresado un valor duplicado" , "Error",JOptionPane.ERROR_MESSAGE);
                 }else if (err == 0){
-                    JOptionPane.showMessageDialog(null, "La imagen es demasiado grande" , null, WIDTH, null);
+                    JOptionPane.showMessageDialog(this, "La imagen es demasiado grande" , "Error", JOptionPane.ERROR_MESSAGE );
                 }
                 else{
                 JOptionPane.showMessageDialog(null, ex.getMessage() , null, WIDTH, null);

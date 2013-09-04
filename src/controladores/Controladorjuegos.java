@@ -2,7 +2,9 @@
 package controladores;
 
 import baseDatos.ManejadorBD;
+import dominio.Categoria;
 import dominio.Comentario;
+import dominio.Desarrollador;
 import dominio.Juego;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,19 +38,21 @@ public class Controladorjuegos {
         }
     }
     
-    public void altaJuego(Juego juego, ArrayList cats) {
+    public int altaJuego(Juego juego, ArrayList cats) {
+        int res = 0;
         int i=0;
         try {
             String sql ="insert into juegos (nombre, descripcion, size, precio, id_desarrollador) values (?,?,?,?,?)";
             int idj = mbd.insertJuego(juego, sql);
-            /*while(i< cats.size()){
+            while(i< cats.size()){
              Categoria c = (Categoria)cats.get(i);
-             mbd.insertCatJuego(idj, c.getId());
+             res = mbd.insertCatJuego(idj, c.getId());
              i++;
-            }*/
-            
+            }
+            return res;
         } catch (Exception ex) {
             System.out.println("alta juego "+ex.toString());
+            return -1;
         }
         
     }
@@ -84,7 +88,9 @@ public class Controladorjuegos {
             j.setDescripcion(res.getString("descripcion"));
             j.setPrecio(res.getDouble("precio"));
             j.setSize(res.getDouble("size"));
-            j.setNick_des(res.getString("nick"));
+            Desarrollador des = new Desarrollador();
+            des.setNick(res.getString("nick"));
+            j.setDes(des);
             
             return j;
         } catch (SQLException ex) {

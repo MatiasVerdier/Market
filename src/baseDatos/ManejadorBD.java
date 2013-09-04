@@ -16,7 +16,7 @@ public class ManejadorBD {
     private final static String driver = "com.mysql.jdbc.Driver";
     private final static String bd = "jdbc:mysql://localhost:3306/market";
     private final static String usuario = "root";
-    private final static String password = "root";
+    private final static String password = "admin";
     
     private Connection conexion;
     private Statement st;
@@ -359,7 +359,7 @@ public class ManejadorBD {
     }
     
     public int insertJuego(dominio.Juego juego, String sql){
-            int r=0;
+        int r=0;
         try {
             
             ps = conexion.prepareStatement(sql);
@@ -367,7 +367,9 @@ public class ManejadorBD {
             ps.setString(2, juego.getDescripcion());
             ps.setDouble(3, juego.getSize());
             ps.setDouble(4, juego.getPrecio());
-            ps.setInt(5, juego.getId());
+            //ps.setInt(5, juego.getId());
+            ps.setInt(5, juego.getDes().getId());
+            
             ps.executeUpdate();
                 String consulta = "select max(id_juego) from juegos";
             ResultSet result;
@@ -380,6 +382,22 @@ public class ManejadorBD {
             System.out.println("insert juego "+ex.toString());
         return r;
 	}
+  }
+    
+    public int insertCatJuego(int id_j, int id_c){
+        int res = 0;
+        try {
+            String sql ="insert into categorias_juegos (id_juego, id_categoria) values (?,?)";
+            sql ="INSERT INTO `market`.`categorias_juegos` (`id_juego`, `id_categoria`) VALUeS (" + id_j + ", " + id_c + ")";
+            ps = conexion.prepareStatement(sql);
+            /*ps.setInt(1, id_j);
+            ps.setInt(2, id_c);*/
+            res = ps.executeUpdate(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            res = -1;
+        }
+        return res;
   }
 }
 

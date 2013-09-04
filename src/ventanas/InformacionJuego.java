@@ -111,7 +111,7 @@ public class InformacionJuego extends javax.swing.JDialog {
         this.tam.setText(String.valueOf(juego.getSize()) + " KB");
         this.precio.setText("U$S " + String.valueOf(juego.getPrecio()));
         this.desa.setModel(modelo_des);
-        modelo_des.addElement(juego.getNick_des());
+        modelo_des.addElement(juego.getDes().getNick());
         this.desc.setText(juego.getDescripcion());
         this.cargarCategorias(juego.getId());
         this.cargarCompras(juego.getId());
@@ -189,6 +189,11 @@ public class InformacionJuego extends javax.swing.JDialog {
 
         desa.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         desa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        desa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                desaActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -461,6 +466,10 @@ public class InformacionJuego extends javax.swing.JDialog {
         }
         
     }//GEN-LAST:event_actualizarDatos
+
+    private void desaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_desaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

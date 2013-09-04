@@ -7,6 +7,7 @@ import dominio.Desarrollador;
 import dominio.Juego;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 public class AltaJuego extends javax.swing.JDialog {
     
@@ -334,8 +335,15 @@ public class AltaJuego extends javax.swing.JDialog {
         j.setSize(Double.parseDouble(this.txt_size.getText()));
         j.setPrecio(Double.parseDouble(this.txt_precio.getText()));
         Desarrollador des = (Desarrollador) listaUsuarios.get(combo_desa.getSelectedIndex());
-        j.setNick_des(des.getNick());
-        contjueg.altaJuego(j, cj);
+        j.setDes(des);
+        int res = contjueg.altaJuego(j, cj);
+        
+        if (res != -1){
+            JOptionPane.showMessageDialog(this, "Se inserto el juego", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        }
+        else
+            JOptionPane.showMessageDialog(this, "Error al insertar el juego", "Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_aceptar
 
     private void abrirventana(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_abrirventana
