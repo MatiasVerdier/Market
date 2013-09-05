@@ -8,8 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ManejadorBD {
     
@@ -201,7 +199,7 @@ public class ManejadorBD {
     public ResultSet selectComprasPorJuego(int id){
         ResultSet res;
         try {
-            String sql = "select u.nick from usuarios u, compras c "+
+            String sql = "select u.* from usuarios u, compras c "+
                     "where c.id_juego = "+id+" and c.id_usuario = u.id_usuario";
             res = st.executeQuery(sql);
         } catch (SQLException ex) {

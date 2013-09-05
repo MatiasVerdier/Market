@@ -12,6 +12,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 public class InformacionJuego extends javax.swing.JDialog {
 
@@ -190,11 +191,6 @@ public class InformacionJuego extends javax.swing.JDialog {
 
         desa.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         desa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        desa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                desaActionPerformed(evt);
-            }
-        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -352,6 +348,18 @@ public class InformacionJuego extends javax.swing.JDialog {
         comentarios.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         comentarios.setToolTipText("");
         comentarios.setAutoscrolls(true);
+        comentarios.addTreeExpansionListener(new javax.swing.event.TreeExpansionListener() {
+            public void treeCollapsed(javax.swing.event.TreeExpansionEvent evt) {
+            }
+            public void treeExpanded(javax.swing.event.TreeExpansionEvent evt) {
+                comentariosTreeExpanded(evt);
+            }
+        });
+        comentarios.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                comentariosValueChanged(evt);
+            }
+        });
         jScrollPane4.setViewportView(comentarios);
 
         btn_comentario.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -446,12 +454,27 @@ public class InformacionJuego extends javax.swing.JDialog {
     }//GEN-LAST:event_ingresarCompra
 
     private void nuevoComentario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoComentario
-        ComentarioNuevo cn = new ComentarioNuevo(null, true);
-        this.click_comentario = true;
-        cn.cargarClientes();
-        cn.cargarJuegos(juego.getId());
-        cn.setVisible(true);
         
+        ComentarioNuevo cn = new ComentarioNuevo(null, true);
+        cn.setCom_padre(0);
+        
+        TreePath path = this.comentarios.getSelectionPath();
+        DefaultMutableTreeNode n_root = (DefaultMutableTreeNode)modelo_coments.getRoot();
+        if (path != null){
+            DefaultMutableTreeNode n =  (DefaultMutableTreeNode) path.getLastPathComponent();
+            if (! n.getUserObject().equals(n_root.getUserObject())){
+                Comentario com = (Comentario) n.getUserObject();
+                int id_com = com.getId();
+                cn.setCom_padre(id_com);
+                System.out.println("id comnetario "+id_com);
+            }
+        }
+        
+        this.click_comentario = true;
+        
+        cn.cargarJuegos(juego.getId());
+        //cn.cargarClientes();
+        cn.setVisible(true);
     }//GEN-LAST:event_nuevoComentario
 
     private void actualizarDatos(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_actualizarDatos
@@ -468,9 +491,16 @@ public class InformacionJuego extends javax.swing.JDialog {
         
     }//GEN-LAST:event_actualizarDatos
 
-    private void desaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_desaActionPerformed
+    private void comentariosValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_comentariosValueChanged
+        
+    }//GEN-LAST:event_comentariosValueChanged
+
+    private void comentariosTreeExpanded(javax.swing.event.TreeExpansionEvent evt) {//GEN-FIRST:event_comentariosTreeExpanded
+//        TreePath path = this.comentarios.getSelectionPath();
+//        DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) path.getLastPathComponent();
+//        Comentario c = (Comentario) nodo.getUserObject();
+//        System.out.println(c);
+    }//GEN-LAST:event_comentariosTreeExpanded
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

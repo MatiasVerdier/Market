@@ -282,8 +282,10 @@ public class Juegos extends javax.swing.JDialog {
         int sel = this.lista_juegos.getSelectedIndex();
         if(sel != -1){
             InformacionJuego info_juego = new InformacionJuego(null, true);
+            this.setVisible(false);
             info_juego.cargarInfoJuego(id_juego);
             info_juego.setVisible(true);
+            this.setVisible(true);
         }
         else{
             JOptionPane.showMessageDialog(this, "Debe seleccionar un juego", "Error", JOptionPane.ERROR_MESSAGE);

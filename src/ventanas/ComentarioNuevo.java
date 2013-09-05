@@ -1,36 +1,55 @@
 package ventanas;
 
-import controladores.ControladorUsuarios;
+import controladores.ControladorCompras;
+//import controladores.ControladorUsuarios;
 import controladores.Controladorjuegos;
 import dominio.Cliente;
 import dominio.Comentario;
 import dominio.Juego;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 public class ComentarioNuevo extends javax.swing.JDialog {
     
     private Controladorjuegos cj = Controladorjuegos.getInstancia();
-    private ControladorUsuarios cu = ControladorUsuarios.getInstancia();
+    //private ControladorUsuarios cu = ControladorUsuarios.getInstancia();
     
-    private ArrayList ids_juegos = new ArrayList();;
-    private ArrayList ids_clientes = new ArrayList();
+    /* no se si respeta el diseño tener el controlador de compras aca  -Matias */
+    private ControladorCompras cc = ControladorCompras.getInstancia();
+    /*-------------------------------------------------------------------------*/
+    
+    private ArrayList ids_juegos;
+    private ArrayList ids_clientes;
+    
+    DefaultComboBoxModel modelo_juegos = new DefaultComboBoxModel();
+    
     
     private int id_juego;
     private int id_cli;
+    private int id_com_padre = 0;
 
     public ComentarioNuevo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.combo_juegos.setModel(modelo_juegos);
+        ids_juegos = new ArrayList();
+        ids_clientes = new ArrayList();
         this.setLocationRelativeTo(null);
     }
     
+    public void setCom_padre(int id_com){
+        this.id_com_padre = id_com;
+    }
+    
     public void cargarJuegos(int id){
+        System.out.println("paso por aca");
         this.ids_juegos.clear();
-        this.combo_juegos.removeAllItems();
+        //this.combo_juegos.removeAllItems();
         if (id != 0){
             Juego j = cj.buscarJuegoPorID(id);
-            this.combo_juegos.addItem(j);
+            //this.combo_juegos.addItem(j.getNombre());
+            this.modelo_juegos.addElement(j);
             this.ids_juegos.add(j.getId());
         }
         else{
@@ -38,8 +57,9 @@ public class ComentarioNuevo extends javax.swing.JDialog {
             int i = 0;
             while (i < jug.size()){
                 Juego j = (Juego) jug.get(i);
-                combo_juegos.addItem(j.getNombre());
-                ids_juegos.add(j.getId());
+                //this.combo_juegos.addItem(j.getNombre());
+                this.modelo_juegos.addElement(j);
+                this.ids_juegos.add(j.getId());
                 i++;
             } 
         }
@@ -49,7 +69,7 @@ public class ComentarioNuevo extends javax.swing.JDialog {
     public void cargarClientes(){
         this.ids_clientes.clear();
         this.combo_clientes.removeAllItems();
-        ArrayList cli = cu.listarClientes();
+        ArrayList cli = cc.verComprasPorJuego(id_juego);
         int i = 0;
         while (i < cli.size()){
             Cliente c = (Cliente)cli.get(i);
@@ -74,8 +94,6 @@ public class ComentarioNuevo extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
         combo_clientes = new javax.swing.JComboBox();
         fecha = new com.toedter.calendar.JDateChooser();
-        jLabel5 = new javax.swing.JLabel();
-        com_padre = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -83,6 +101,11 @@ public class ComentarioNuevo extends javax.swing.JDialog {
         jLabel1.setText("Juego");
 
         combo_juegos.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        combo_juegos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                seleccinarJuego(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel2.setText("Texto");
@@ -117,11 +140,6 @@ public class ComentarioNuevo extends javax.swing.JDialog {
 
         combo_clientes.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jLabel5.setText("Responde a");
-
-        com_padre.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -132,13 +150,9 @@ public class ComentarioNuevo extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
+                                .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(com_padre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -159,9 +173,9 @@ public class ComentarioNuevo extends javax.swing.JDialog {
                         .addGap(0, 14, Short.MAX_VALUE))))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4});
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {com_padre, combo_clientes, combo_juegos});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {combo_clientes, combo_juegos});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
 
@@ -170,16 +184,12 @@ public class ComentarioNuevo extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(combo_clientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(combo_juegos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(com_padre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3)
+                    .addComponent(combo_clientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -188,7 +198,7 @@ public class ComentarioNuevo extends javax.swing.JDialog {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1))
@@ -210,7 +220,8 @@ public class ComentarioNuevo extends javax.swing.JDialog {
         nuevo.setId_juego(id_juego);
         nuevo.setTexto(this.texto.getText());
         nuevo.setFecha(this.fecha.getDate());
-        nuevo.setId_padre(Integer.parseInt(this.com_padre.getText()));
+        nuevo.setId_padre(id_com_padre);
+        //nuevo.setId_padre(Integer.parseInt(this.com_padre.getText()));
         int res = cj.altaComentario(nuevo);
         if(res != -1){
             JOptionPane.showMessageDialog(this, "Operacion exitosa", "Exito", JOptionPane.INFORMATION_MESSAGE);
@@ -221,8 +232,13 @@ public class ComentarioNuevo extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_altaComentario
 
+    private void seleccinarJuego(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_seleccinarJuego
+            Juego j = (Juego)this.modelo_juegos.getSelectedItem();
+            id_juego = j.getId();
+            this.cargarClientes();
+    }//GEN-LAST:event_seleccinarJuego
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField com_padre;
     private javax.swing.JComboBox combo_clientes;
     private javax.swing.JComboBox combo_juegos;
     private com.toedter.calendar.JDateChooser fecha;
@@ -232,7 +248,6 @@ public class ComentarioNuevo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea texto;
     // End of variables declaration//GEN-END:variables

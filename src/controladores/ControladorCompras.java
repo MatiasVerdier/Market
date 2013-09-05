@@ -6,8 +6,6 @@ import dominio.Cliente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 
@@ -38,6 +36,7 @@ public class ControladorCompras {
             
             while(res.next()){
                 Cliente c = new Cliente();
+                c.setId(res.getInt("id_usuario"));
                 c.setNick(res.getString("nick"));
                 compras.add(c);
             }
