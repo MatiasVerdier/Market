@@ -9,6 +9,7 @@ public class Main extends javax.swing.JFrame {
 
     public Main() {
         initComponents();
+        this.setLocationRelativeTo(null);
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/recursos/logo.jpg"));
         setIconImage(icon);
         setVisible(true);
@@ -46,6 +47,13 @@ public class Main extends javax.swing.JFrame {
         setTitle("Market");
         setBounds(new java.awt.Rectangle(0, 0, 640, 480));
         setResizable(false);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/19_Games_48x48.png"))); // NOI18N
@@ -219,45 +227,55 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AdministrarPerfiles(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdministrarPerfiles
-        Perfiles p = new Perfiles(this, true);
+        Perfiles p = new Perfiles(null, true);
+        this.setVisible(false);
         p.setVisible(true);
-        p.setLocation(300, 200);
+        this.setVisible(true);
     }//GEN-LAST:event_AdministrarPerfiles
 
     private void menu_admin_pActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_admin_pActionPerformed
-        Perfiles p = new Perfiles(this, true);
+        Perfiles p = new Perfiles(null, true);
+        this.setVisible(false);
         p.setVisible(true);
-        p.setLocation(300, 200);
+        this.setVisible(true);
     }//GEN-LAST:event_menu_admin_pActionPerformed
 
     private void menu_alta_pActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_alta_pActionPerformed
-        InformacionPerfil ip = new InformacionPerfil(this, true);
+        InformacionPerfil ip = new InformacionPerfil(null, true);
+        this.setVisible(false);
         ip.limpiarCampos();
         ip.cambiarEstado(true, true, true, true, true, true, true);
         ip.setVisible(true);
-        
+        this.setVisible(true);
     }//GEN-LAST:event_menu_alta_pActionPerformed
 
     private void menu_admin_jActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_admin_jActionPerformed
-        Juegos j = new Juegos(this, true);
+        Juegos j = new Juegos(null, true);
+        this.setVisible(false);
         j.setLocation(300, 200);
         j.setVisible(true);
+        this.setVisible(true);
     }//GEN-LAST:event_menu_admin_jActionPerformed
 
     private void menu_alta_jActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_alta_jActionPerformed
         AltaJuego aj = new AltaJuego(null, true);
-        aj.setLocation(300, 200);
+        this.setVisible(false);
         aj.setVisible(true);
+        this.setVisible(true);
     }//GEN-LAST:event_menu_alta_jActionPerformed
 
     private void menu_alta_cActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_alta_cActionPerformed
         NuevaCategoria ac = new NuevaCategoria(null, true);
+        this.setVisible(false);
         ac.setVisible(true);
+        this.setVisible(true);
     }//GEN-LAST:event_menu_alta_cActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Juegos j = new Juegos(this, true);
+        Juegos j = new Juegos(null, true);
+        this.setVisible(false);
         j.setVisible(true);
+        this.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -271,20 +289,30 @@ public class Main extends javax.swing.JFrame {
 
     private void menu_compActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_compActionPerformed
         ComentarioNuevo nc = new ComentarioNuevo(null,true);
+        this.setVisible(false);
         nc.cargarJuegos(0);
         nc.cargarClientes();
         nc.setVisible(true);
+        this.setVisible(true);
     }//GEN-LAST:event_menu_compActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         NuevaCategoria ac = new NuevaCategoria(null, true);
+        this.setVisible(false);
         ac.setVisible(true);
+        this.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         acercaDe ac = new acercaDe();
+        this.setVisible(false);
         ac.setVisible(true);
+        this.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        
+    }//GEN-LAST:event_formWindowGainedFocus
 
 
     public static void main(String args[]) {

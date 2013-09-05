@@ -22,6 +22,7 @@ public class ComentarioNuevo extends javax.swing.JDialog {
     public ComentarioNuevo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     public void cargarJuegos(int id){

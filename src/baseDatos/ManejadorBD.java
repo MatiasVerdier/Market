@@ -16,7 +16,7 @@ public class ManejadorBD {
     private final static String driver = "com.mysql.jdbc.Driver";
     private final static String bd = "jdbc:mysql://localhost:3306/market";
     private final static String usuario = "root";
-    private final static String password = "admin";
+    private final static String password = "root";
     
     private Connection conexion;
     private Statement st;

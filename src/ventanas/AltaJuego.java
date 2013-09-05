@@ -22,6 +22,7 @@ public class AltaJuego extends javax.swing.JDialog {
     public AltaJuego(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
         this.list_cat.setModel(modelo_cats);
         this.list_catJ.setModel(modelo_catsJ);
     }

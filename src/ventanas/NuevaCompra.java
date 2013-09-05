@@ -27,6 +27,7 @@ private dominio.Juego juegoComprar;
     public NuevaCompra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
          listaUsuarios = controladores.ControladorUsuarios.getInstancia().listarClientes();
         for (Iterator it = listaUsuarios.iterator(); it.hasNext();) {
             Cliente cli  = (Cliente)it.next();

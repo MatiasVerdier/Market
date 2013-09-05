@@ -31,6 +31,7 @@ public class InformacionJuego extends javax.swing.JDialog {
     public InformacionJuego(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
         this.categorias.setModel(modelo_cats);
         this.compradores.setModel(modelo_compras);
         this.comentarios.setModel(modelo_coments);

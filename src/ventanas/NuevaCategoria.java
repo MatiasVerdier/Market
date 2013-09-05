@@ -20,6 +20,7 @@ public class NuevaCategoria extends javax.swing.JDialog {
     public NuevaCategoria(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")

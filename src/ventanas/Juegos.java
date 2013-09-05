@@ -29,6 +29,7 @@ public class Juegos extends javax.swing.JDialog {
     public Juegos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
         this.lista_categorias.setModel(modelo_cat);
         this.lista_juegos.setModel(modelo_juego);
         
