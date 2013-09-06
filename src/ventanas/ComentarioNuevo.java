@@ -53,7 +53,7 @@ public class ComentarioNuevo extends javax.swing.JDialog {
             this.ids_juegos.add(j.getId());
         }
         else{
-            ArrayList jug = cj.listarJuegos();
+            ArrayList jug = cj.listarJuegosConCompras();
             int i = 0;
             while (i < jug.size()){
                 Juego j = (Juego) jug.get(i);

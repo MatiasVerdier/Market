@@ -164,6 +164,28 @@ public class Controladorjuegos {
         }
     }
     
+        public ArrayList listarJuegosConCompras(){
+        try {
+            ArrayList juegos = new ArrayList();
+            
+            String sql = "select id_juego, nombre from juegos where id_juego in "+
+                         "(select id_juego from compras)";
+            
+            ResultSet res = mbd.SELECT(sql);
+            while(res.next()){
+                Juego j = new Juego();
+                j.setId(res.getInt("id_juego"));
+                j.setNombre(res.getString("nombre"));
+                juegos.add(j);
+            }
+            
+            return juegos;
+        } catch (SQLException ex) {
+            System.out.println("listar juegos "+ex.toString());
+            return null;
+        }
+    } 
+    
     public int altaComentario(Comentario c){
         int res;
         try{
