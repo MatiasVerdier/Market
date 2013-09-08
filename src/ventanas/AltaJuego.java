@@ -109,7 +109,9 @@ public class AltaJuego extends javax.swing.JDialog {
         txt_nom.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
 
         txt_desc.setColumns(20);
+        txt_desc.setLineWrap(true);
         txt_desc.setRows(5);
+        txt_desc.setWrapStyleWord(true);
         jScrollPane1.setViewportView(txt_desc);
 
         combo_desa.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N

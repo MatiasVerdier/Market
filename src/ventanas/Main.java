@@ -47,13 +47,6 @@ public class Main extends javax.swing.JFrame {
         setTitle("Market");
         setBounds(new java.awt.Rectangle(0, 0, 640, 480));
         setResizable(false);
-        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
-            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
-                formWindowGainedFocus(evt);
-            }
-            public void windowLostFocus(java.awt.event.WindowEvent evt) {
-            }
-        });
 
         jButton2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/19_Games_48x48.png"))); // NOI18N
@@ -90,6 +83,11 @@ public class Main extends javax.swing.JFrame {
 
         menu_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/help_48.png"))); // NOI18N
         menu_login.setToolTipText("Ayuda");
+        menu_login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_loginActionPerformed(evt);
+            }
+        });
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/exit.png"))); // NOI18N
         jButton7.setToolTipText("Salir");
@@ -304,28 +302,28 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        acercaDe ac = new acercaDe();
+        acerca ac = new acerca(null, true);
         this.setVisible(false);
         ac.setVisible(true);
         this.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
-    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+    private void menu_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_loginActionPerformed
         
-    }//GEN-LAST:event_formWindowGainedFocus
+    }//GEN-LAST:event_menu_loginActionPerformed
 
 
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Main app = new Main();
-                app.setLayout(new GridLayout(2,3));
-                app.setLocation(500, 300);
-                app.setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                Main main = new Main();
+//                main.setLayout(new GridLayout(2,3));
+//                main.setLocationRelativeTo(null);
+//                main.setVisible(true);
+//            }
+//        });
+//    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem arch_salir;
     private javax.swing.JMenu carga_datos;

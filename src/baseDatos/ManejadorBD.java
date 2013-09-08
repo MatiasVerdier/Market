@@ -11,10 +11,12 @@ import java.sql.Statement;
 
 public class ManejadorBD {
     
-    private final static String driver = "com.mysql.jdbc.Driver";
-    private final static String bd = "jdbc:mysql://localhost:3306/market";
-    private final static String usuario = "root";
-    private final static String password = "root";
+    private static String driver = "com.mysql.jdbc.Driver";
+    private static String bd = "market";
+    private static String host = "localhost";
+    private static String puerto = "3306";
+    private static String usuario = "root";
+    private static String password = "root";
     
     private Connection conexion;
     private Statement st;
@@ -28,11 +30,53 @@ public class ManejadorBD {
         }
         return instancia;
     }
+
+    public static String getBd() {
+        return bd;
+    }
+
+    public static void setBd(String bd) {
+        ManejadorBD.bd = bd;
+    }
+
+    public static String getHost() {
+        return host;
+    }
+
+    public static void setHost(String host) {
+        ManejadorBD.host = host;
+    }
+
+    public static String getPuerto() {
+        return puerto;
+    }
+
+    public static void setPuerto(String puerto) {
+        ManejadorBD.puerto = puerto;
+    }
+
+    public static String getUsuario() {
+        return usuario;
+    }
+
+    public static void setUsuario(String usuario) {
+        ManejadorBD.usuario = usuario;
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+    public static void setPassword(String password) {
+        ManejadorBD.password = password;
+    }
+    
     /*--------------------- se establece la conexion -------------------*/
     private ManejadorBD() {
         try{
             Class.forName(driver);
-            conexion = DriverManager.getConnection(bd, usuario, password);
+            String url = "jdbc:mysql://"+host+":"+puerto+"/"+bd;
+            conexion = DriverManager.getConnection(url, usuario, password);
             st = conexion.createStatement();
             System.out.println("Conexion exitosa");
         }
