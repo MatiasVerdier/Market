@@ -12,11 +12,12 @@ import java.sql.Statement;
 public class ManejadorBD {
     
     private static String driver = "com.mysql.jdbc.Driver";
-    private static String bd = "";
-    private static String host = "";
-    private static String puerto = "";
-    private static String usuario = "";
-    private static String password = "";
+    private String bd;
+    private String host;
+    private String puerto;
+    private String usuario;
+    private String password;
+    private String url;
     
     private Connection conexion;
     private Statement st;
@@ -31,51 +32,51 @@ public class ManejadorBD {
         return instancia;
     }
 
-    public static String getBd() {
+    public String getBd() {
         return bd;
     }
 
-    public static void setBd(String bd) {
-        ManejadorBD.bd = bd;
+    public void setBd(String bd) {
+        this.bd = bd;
     }
 
-    public static String getHost() {
+    public String getHost() {
         return host;
     }
 
-    public static void setHost(String host) {
-        ManejadorBD.host = host;
+    public void setHost(String host) {
+        this.host = host;
     }
 
-    public static String getPuerto() {
+    public String getPuerto() {
         return puerto;
     }
 
-    public static void setPuerto(String puerto) {
-        ManejadorBD.puerto = puerto;
+    public void setPuerto(String puerto) {
+        this.puerto = puerto;
     }
 
-    public static String getUsuario() {
+    public String getUsuario() {
         return usuario;
     }
 
-    public static void setUsuario(String usuario) {
-        ManejadorBD.usuario = usuario;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public static String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public static void setPassword(String password) {
-        ManejadorBD.password = password;
+    public void setPassword(String password) {
+        this.password = password;
     }
-    
+
     /*--------------------- se establece la conexion -------------------*/
-    private ManejadorBD() {
+    public void conectar(){
+        this.url = "jdbc:mysql://"+host+":"+puerto+"/"+bd;
         try{
             Class.forName(driver);
-            String url = "jdbc:mysql://"+host+":"+puerto+"/"+bd;
             conexion = DriverManager.getConnection(url, usuario, password);
             st = conexion.createStatement();
             System.out.println("Conexion exitosa");
@@ -83,6 +84,14 @@ public class ManejadorBD {
         catch(ClassNotFoundException | SQLException ex){
             System.out.println(ex.toString());
         }
+    }
+
+    private ManejadorBD(){
+        this.bd = "";
+        this.host = "";
+        this.puerto = "";
+        this.usuario = "";
+        this.password = "";
     }
     
     public java.sql.Statement getStatement(){

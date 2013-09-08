@@ -215,13 +215,21 @@ public class ConfBD extends javax.swing.JFrame {
             FileInputStream fis = new FileInputStream("src/baseDatos/confBD/"+sel);
             conf.load(fis);
 
-            ManejadorBD.setHost(conf.getProperty("bd"));
-            ManejadorBD.setHost(conf.getProperty("host"));
-            ManejadorBD.setPuerto(conf.getProperty("puerto"));
-            ManejadorBD.setUsuario(conf.getProperty("user"));
-            ManejadorBD.setPassword(conf.getProperty("pass"));
-
             ManejadorBD mbd = ManejadorBD.getInstancia();
+            
+//            System.out.println("pass "+conf.getProperty("pass"));
+//            System.out.println("bd "+conf.getProperty("bd"));
+//            System.out.println("host "+conf.getProperty("host"));
+//            System.out.println("puerto "+conf.getProperty("puerto"));
+//            System.out.println("user "+conf.getProperty("user"));
+            
+            mbd.setBd(conf.getProperty("bd").toString());
+            mbd.setHost(conf.getProperty("host").toString());
+            mbd.setPuerto(conf.getProperty("puerto").toString());
+            mbd.setUsuario(conf.getProperty("user").toString());
+            mbd.setPassword(conf.getProperty("pass").toString());
+            
+            mbd.conectar();
             Main main = new Main();
             this.setVisible(false);
             main.setVisible(true);

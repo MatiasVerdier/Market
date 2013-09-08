@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class ControladorCompras {
     private static ControladorCompras INSTANCIA = null;
     private ManejadorBD mbd = ManejadorBD.getInstancia();
+    
       
     public void altaCompra(dominio.Compra c) throws SQLException{
         String sql = "insert into compras values (?,?,?)";
@@ -21,6 +22,11 @@ public class ControladorCompras {
             throw ex;
         }
     }
+
+    private ControladorCompras() {
+        //mbd.conectar();
+    }
+    
     
     public static ControladorCompras getInstancia(){
         if (INSTANCIA == null)

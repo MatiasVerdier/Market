@@ -25,8 +25,12 @@ public class ControladorUsuarios {
              INSTANCIA = new ControladorUsuarios();
          return INSTANCIA;
     }
-   
+
+    private ControladorUsuarios() {
+        //mbd.conectar();
+    }
     
+
     public void altaCliente(dominio.Cliente user) throws Exception{
         try {
             String sql = "insert into usuarios (nombre, apellido, nick, fecha_nacimiento, email, tipo,foto) values (?,?,?,?,?,?,?)";
