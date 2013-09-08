@@ -12,11 +12,11 @@ import java.sql.Statement;
 public class ManejadorBD {
     
     private static String driver = "com.mysql.jdbc.Driver";
-    private static String bd = "market";
-    private static String host = "localhost";
-    private static String puerto = "3306";
-    private static String usuario = "root";
-    private static String password = "root";
+    private static String bd = "";
+    private static String host = "";
+    private static String puerto = "";
+    private static String usuario = "";
+    private static String password = "";
     
     private Connection conexion;
     private Statement st;
