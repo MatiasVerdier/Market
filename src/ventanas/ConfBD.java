@@ -21,6 +21,11 @@ public class ConfBD extends javax.swing.JFrame {
         this.combo_conf.setModel(modelo_conf);
         this.setLocationRelativeTo(null);
         this.setSize(380, 120);
+        
+        File carpeta = new File("src/baseDatos/confBD");
+        if (!carpeta.exists()){
+            carpeta.mkdir();
+        }
         cargarConfiguraciones();
     }
     
