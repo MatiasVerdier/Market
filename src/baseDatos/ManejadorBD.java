@@ -12,9 +12,9 @@ import java.sql.Statement;
 public class ManejadorBD {
     
     private final static String driver = "com.mysql.jdbc.Driver";
-    private final static String bd = "jdbc:mysql://localhost:3306/market";
-    private final static String usuario = "root";
-    private final static String password = "root";
+    private final static String bd = "jdbc:mysql://192.168.0.1:3306/market";
+    private final static String usuario = "random";
+    private final static String password = "random1";
     
     private Connection conexion;
     private Statement st;

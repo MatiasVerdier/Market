@@ -407,6 +407,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
             controladores.ControladorUsuarios.getInstancia().actualizarCliente((Cliente)user);
             JOptionPane.showMessageDialog(null, "El usuario se ha actualizado correctamente" , null, WIDTH, null);
             }
+            
             this.dispose();
             
         } catch (Exception ex) {
