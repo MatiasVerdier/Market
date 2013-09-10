@@ -15,12 +15,13 @@ import javax.swing.JOptionPane;
 public class ConfBD extends javax.swing.JFrame {
     
     private DefaultComboBoxModel modelo_conf = new DefaultComboBoxModel();
+    private int ancho = 410, alto = 110;
     
     public ConfBD() {
         initComponents();
         this.combo_conf.setModel(modelo_conf);
         this.setLocationRelativeTo(null);
-        this.setSize(380, 120);
+        this.setSize(ancho, alto);
         
         File carpeta = new File("src/baseDatos/confBD");
         if (!carpeta.exists()){
@@ -69,7 +70,10 @@ public class ConfBD extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Conectarse a Base de Datos");
+        setResizable(false);
 
+        nueva.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        nueva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/add_16.png"))); // NOI18N
         nueva.setText("Nueva");
         nueva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +81,7 @@ public class ConfBD extends javax.swing.JFrame {
             }
         });
 
+        conectar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         conectar.setText("Conectar");
         conectar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,6 +89,8 @@ public class ConfBD extends javax.swing.JFrame {
             }
         });
 
+        guardar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/04_Save_16x16.png"))); // NOI18N
         guardar.setText("Guardar");
         guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,6 +98,8 @@ public class ConfBD extends javax.swing.JFrame {
             }
         });
 
+        cancelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/close_16.png"))); // NOI18N
         cancelar.setText("Cancelar");
         cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,14 +140,6 @@ public class ConfBD extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(host, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(puerto))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(base))
@@ -146,30 +147,40 @@ public class ConfBD extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(user))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(pass))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(combo_conf, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(conectar)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(nueva))
-                                .addComponent(jLabel1))
-                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pass))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(guardar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cancelar)))
+                        .addComponent(cancelar))
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(host, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(combo_conf, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(conectar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(nueva)
+                            .addComponent(puerto, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel2, jLabel3, jLabel4, jLabel5});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {conectar, nueva});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cancelar, guardar});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,7 +221,7 @@ public class ConfBD extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaActionPerformed
-        this.setSize(380, 280);
+        this.setSize(ancho, alto+160);
     }//GEN-LAST:event_nuevaActionPerformed
 
     private void conectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conectarActionPerformed
@@ -268,7 +279,7 @@ public class ConfBD extends javax.swing.JFrame {
                 conf.store(new FileOutputStream(n), "archivo configuracion");
                 archivo_conf.close();
                 this.cargarConfiguraciones();
-                this.setSize(380, 110);
+                this.setSize(ancho, alto);
             } catch (IOException ex) {
                 System.err.println(ex.toString());
             }
@@ -277,7 +288,7 @@ public class ConfBD extends javax.swing.JFrame {
     }//GEN-LAST:event_guardar_conf
 
     private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
-        this.setSize(380, 110);
+        this.setSize(ancho, alto);
     }//GEN-LAST:event_cancelar
 
  

@@ -435,14 +435,10 @@ public class ManejadorBD {
   }
     
     public int insertCatJuego(int id_j, int id_c){
-        int res = 0;
+        int res;
         try {
-            String sql ="insert into categorias_juegos (id_juego, id_categoria) values (?,?)";
-            sql ="INSERT INTO `market`.`categorias_juegos` (`id_juego`, `id_categoria`) VALUeS (" + id_j + ", " + id_c + ")";
-            ps = conexion.prepareStatement(sql);
-            /*ps.setInt(1, id_j);
-            ps.setInt(2, id_c);*/
-            res = ps.executeUpdate(sql);
+            String sql ="insert into categorias_juegos (id_juego, id_categoria) values (" + id_j + ", " + id_c + ")";
+            res = st.executeUpdate(sql);
         } catch (SQLException ex) {
             System.out.println(ex.toString());
             res = -1;
