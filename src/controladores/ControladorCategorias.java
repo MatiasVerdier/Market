@@ -14,6 +14,11 @@ public class ControladorCategorias {
              INSTANCIA = new ControladorCategorias();
          return INSTANCIA;
     }
+
+    private ControladorCategorias() {
+        //mbd.conectar();
+    }
+    
     
     public int altaCategoria(Categoria c){
         String sql = "insert into categorias (nombre) values (?)";

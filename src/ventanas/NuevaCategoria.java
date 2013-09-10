@@ -20,6 +20,7 @@ public class NuevaCategoria extends javax.swing.JDialog {
     public NuevaCategoria(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -40,11 +41,6 @@ public class NuevaCategoria extends javax.swing.JDialog {
         jLabel1.setText("Nombre:");
 
         txt_cat.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        txt_cat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_catActionPerformed(evt);
-            }
-        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -157,18 +153,16 @@ public class NuevaCategoria extends javax.swing.JDialog {
         Categoria c = new Categoria();
         c.setNombre(this.txt_cat.getText());
         int res = cc.altaCategoria(c);
-        if (res == 1)
+        if (res == 1){
             JOptionPane.showMessageDialog(null, "Operacion Exitosa", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        }
         else{
             if (res == 1062)//clave unica duplicada
                 JOptionPane.showMessageDialog(null, "El nombre ya existe", "Error", JOptionPane.ERROR_MESSAGE);//, new ImageIcon(getClass().getResource("/recursos/Error.png")));
         }
     
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void txt_catActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_catActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_catActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel foto;

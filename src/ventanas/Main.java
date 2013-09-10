@@ -1,12 +1,18 @@
 package ventanas;
 
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 
 public class Main extends javax.swing.JFrame {
 
     public Main() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/recursos/logo.jpg"));
+        setIconImage(icon);
+        setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -61,6 +67,11 @@ public class Main extends javax.swing.JFrame {
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/page_table_add_48.png"))); // NOI18N
         jButton4.setToolTipText("Agregar Categoria");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         menu_comp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/comment_add_48.png"))); // NOI18N
         menu_comp.setToolTipText("Añadir Comentario");
@@ -72,6 +83,11 @@ public class Main extends javax.swing.JFrame {
 
         menu_login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/help_48.png"))); // NOI18N
         menu_login.setToolTipText("Ayuda");
+        menu_login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_loginActionPerformed(evt);
+            }
+        });
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/exit.png"))); // NOI18N
         jButton7.setToolTipText("Salir");
@@ -151,6 +167,11 @@ public class Main extends javax.swing.JFrame {
         menu_acerca.setText("Ayuda");
 
         jMenuItem6.setText("Acerca de");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         menu_acerca.add(jMenuItem6);
 
         jMenuBar1.add(menu_acerca);
@@ -204,46 +225,55 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AdministrarPerfiles(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdministrarPerfiles
-        Perfiles p = new Perfiles(this, true);
+        Perfiles p = new Perfiles(null, true);
+        this.setVisible(false);
         p.setVisible(true);
-        p.setLocation(300, 200);
+        this.setVisible(true);
     }//GEN-LAST:event_AdministrarPerfiles
 
     private void menu_admin_pActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_admin_pActionPerformed
-        Perfiles p = new Perfiles(this, true);
+        Perfiles p = new Perfiles(null, true);
+        this.setVisible(false);
         p.setVisible(true);
-        p.setLocation(300, 200);
+        this.setVisible(true);
     }//GEN-LAST:event_menu_admin_pActionPerformed
 
     private void menu_alta_pActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_alta_pActionPerformed
-        InformacionPerfil ip = new InformacionPerfil(this, true);
+        InformacionPerfil ip = new InformacionPerfil(null, true);
+        this.setVisible(false);
         ip.limpiarCampos();
         ip.cambiarEstado(true, true, true, true, true, true, true);
         ip.setVisible(true);
-        
+        this.setVisible(true);
     }//GEN-LAST:event_menu_alta_pActionPerformed
 
     private void menu_admin_jActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_admin_jActionPerformed
-        Juegos j = new Juegos(this, true);
+        Juegos j = new Juegos(null, true);
+        this.setVisible(false);
         j.setLocation(300, 200);
         j.setVisible(true);
+        this.setVisible(true);
     }//GEN-LAST:event_menu_admin_jActionPerformed
 
     private void menu_alta_jActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_alta_jActionPerformed
         AltaJuego aj = new AltaJuego(null, true);
-        aj.setLocation(300, 200);
+        this.setVisible(false);
         aj.setVisible(true);
+        this.setVisible(true);
     }//GEN-LAST:event_menu_alta_jActionPerformed
 
     private void menu_alta_cActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_alta_cActionPerformed
         NuevaCategoria ac = new NuevaCategoria(null, true);
+        this.setVisible(false);
         ac.setVisible(true);
+        this.setVisible(true);
     }//GEN-LAST:event_menu_alta_cActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Juegos j = new Juegos(this, true);
-        j.setVisible(true);
+        Juegos j = new Juegos(null, true);
         this.setVisible(false);
+        j.setVisible(true);
+        this.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -256,23 +286,44 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_arch_salirActionPerformed
 
     private void menu_compActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_compActionPerformed
-        // TODO add your handling code here:
-        NuevaCompra nc = new NuevaCompra(null,true);
+        ComentarioNuevo nc = new ComentarioNuevo(null,true);
+        this.setVisible(false);
+        nc.cargarJuegos(0);
+        nc.cargarClientes();
         nc.setVisible(true);
+        this.setVisible(true);
     }//GEN-LAST:event_menu_compActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        NuevaCategoria ac = new NuevaCategoria(null, true);
+        this.setVisible(false);
+        ac.setVisible(true);
+        this.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Main app = new Main();
-                app.setLayout(new GridLayout(2,3));
-                app.setLocation(500, 300);
-                app.setVisible(true);
-            }
-        });
-    }
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        acerca ac = new acerca(null, true);
+        this.setVisible(false);
+        ac.setVisible(true);
+        this.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void menu_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_loginActionPerformed
+        
+    }//GEN-LAST:event_menu_loginActionPerformed
+
+
+//    public static void main(String args[]) {
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                Main main = new Main();
+//                main.setLayout(new GridLayout(2,3));
+//                main.setLocationRelativeTo(null);
+//                main.setVisible(true);
+//            }
+//        });
+//    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem arch_salir;
     private javax.swing.JMenu carga_datos;

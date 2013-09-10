@@ -11,28 +11,74 @@ import java.sql.Statement;
 
 public class ManejadorBD {
     
-    private final static String driver = "com.mysql.jdbc.Driver";
-    private final static String bd = "jdbc:mysql://192.168.0.1:3306/market";
-    private final static String usuario = "random";
-    private final static String password = "random1";
+
+    private static String driver = "com.mysql.jdbc.Driver";
+    private String bd;
+    private String host;
+    private String puerto;
+    private String usuario;
+    private String password;
+    private String url;
     
     private Connection conexion;
     private Statement st;
     private PreparedStatement ps;
     
     private static ManejadorBD instancia = null;
-    
     public static ManejadorBD getInstancia(){
         if(instancia == null){
             instancia = new ManejadorBD();
         }
         return instancia;
     }
+
+    public String getBd() {
+        return bd;
+    }
+
+    public void setBd(String bd) {
+       bd = bd;
+    }
+
+    public String getHost() {
+        return host;
+    }
+    
+    public String getUsuario() {
+        return usuario;
+    }   
+        
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getPuerto() {
+        return puerto;
+    }
+
+    public void setPuerto(String puerto) {
+        this.puerto = puerto;
+    }
+
     /*--------------------- se establece la conexion -------------------*/
-    private ManejadorBD() {
+    public void conectar(){
+        this.url = "jdbc:mysql://"+host+":"+puerto+"/"+bd;
         try{
             Class.forName(driver);
-            conexion = DriverManager.getConnection(bd, usuario, password);
+            conexion = DriverManager.getConnection(url, usuario, password);
             st = conexion.createStatement();
             System.out.println("Conexion exitosa");
         }
@@ -40,10 +86,31 @@ public class ManejadorBD {
             System.out.println(ex.toString());
         }
     }
+
+    private ManejadorBD(){
+        this.bd = "";
+        this.host = "";
+        this.puerto = "";
+        this.usuario = "";
+        this.password = "";
+    }
     
     public java.sql.Statement getStatement(){
         return st;
     }
+    
+    public ResultSet SELECT(String consulta){
+        try {
+            ResultSet res;
+            res = st.executeQuery(consulta);
+            return res;
+        } catch (SQLException ex) {
+            System.out.println("SELECT: "+ex.toString());
+            return null;
+        }
+    }
+    
+    
     /******************* INSERTAR CATEGORIA *****************/
     public int insertCategorias(Categoria c, String sql){
         int res = 0;
@@ -81,7 +148,7 @@ public class ManejadorBD {
             String sql = "select id_categoria, nombre from categorias";
             res = st.executeQuery(sql);
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("mbd-select categorias"+ex.toString());
             res = null;
         }
         return res;
@@ -94,7 +161,7 @@ public class ManejadorBD {
             String sql = "select id_usuario, nick from usuarios";
              res = st.executeQuery(sql);
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("mbd-select usuarios "+ex.toString());
             res = null;
         }
         return res;
@@ -107,7 +174,7 @@ public class ManejadorBD {
             String sql = "select * from usuarios where id_usuario = "+id;
             res = st.executeQuery(sql);
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("select info usuario "+ex.toString());
             res = null;
         }
         return res;
@@ -121,7 +188,7 @@ public class ManejadorBD {
             String sql = "select id_usuario, nick from usuarios where tipo = 'c'";
              res = st.executeQuery(sql);
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("select clientes "+ex.toString());
             res = null;
         }
         return res;
@@ -134,7 +201,7 @@ public class ManejadorBD {
             String sql = "select id_usuario, nick from usuarios where tipo = 'd'";
              res = st.executeQuery(sql);
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("select developers "+ex.toString());
             res = null;
         }
         return res;
@@ -147,7 +214,7 @@ public class ManejadorBD {
             String sql = "select id_usuario, nick from usuarios where nick like '%" + bs + "%'";
              res = st.executeQuery(sql);
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("buscar "+ex.toString());
             res = null;
         }
         return res;
@@ -162,7 +229,7 @@ public class ManejadorBD {
                     " and cj.id_juego = j.id_juego";
             res = st.executeQuery(sql);
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("juegos por categoria "+ex.toString());
             res = null;
         }
         return res;
@@ -176,7 +243,7 @@ public class ManejadorBD {
             String sql = "select j.*, u.nick from juegos j, usuarios u where j.id_desarrollador = u.id_usuario and j.id_juego ="+id;
             res = st.executeQuery(sql);
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("info basica juego "+ex.toString());
             res = null;
         }
         return res;
@@ -186,11 +253,11 @@ public class ManejadorBD {
     public ResultSet selectComprasPorJuego(int id){
         ResultSet res;
         try {
-            String sql = "select u.nick from usuarios u, compras c "+
+            String sql = "select u.* from usuarios u, compras c "+
                     "where c.id_juego = "+id+" and c.id_usuario = u.id_usuario";
             res = st.executeQuery(sql);
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("compras juego "+ex.toString());
             res = null;
         }
         return res;
@@ -300,8 +367,7 @@ public class ManejadorBD {
     public ResultSet selectRespuestas(int id){
         ResultSet res;
         try{
-            String sql = "select c.* from comentarios c, respuestas r where r.id_padre = "+id+
-                         " and c.id_comentario = r.id_com";
+            String sql = "select * from comentarios where id_padre = "+id;
             res = st.executeQuery(sql);
             return res;
         }catch(SQLException ex){
@@ -327,7 +393,7 @@ public class ManejadorBD {
         java.sql.Date fnac = new java.sql.Date(c.getFecha().getTime());
         try{
             String sql = "insert into comentarios (id_juego, texto, fecha, id_usuario, id_padre) "+
-                         " values (?,?,?,?)";
+                         " values (?,?,?,?,?)";
             ps = conexion.prepareStatement(sql);
             ps.setInt(1, c.getId_juego());
             ps.setString(2, c.getTexto());
@@ -336,12 +402,55 @@ public class ManejadorBD {
             ps.setInt(5, c.getId_padre());
             
             res = ps.executeUpdate();
-            return res;
+            
         }catch(SQLException ex){
             System.out.println("insert comentario "+ex.toString());
-            return -1;
+            res = -1;
         }
+        return res;
     }
+    
+    public int insertJuego(dominio.Juego juego, String sql){
+        int r=0;
+        try {
+            
+            ps = conexion.prepareStatement(sql);
+            ps.setString(1, juego.getNombre());
+            ps.setString(2, juego.getDescripcion());
+            ps.setDouble(3, juego.getSize());
+            ps.setDouble(4, juego.getPrecio());
+            //ps.setInt(5, juego.getId());
+            ps.setInt(5, juego.getDes().getId());
+            
+            ps.executeUpdate();
+                String consulta = "select max(id_juego) from juegos";
+            ResultSet result;
+            result = st.executeQuery(consulta);
+            while(result.next()){
+                r = result.getInt(1);
+            }
+            return r;
+        } catch (SQLException ex) {
+            System.out.println("insert juego "+ex.toString());
+        return r;
+	}
+  }
+    
+    public int insertCatJuego(int id_j, int id_c){
+        int res = 0;
+        try {
+            String sql ="insert into categorias_juegos (id_juego, id_categoria) values (?,?)";
+            sql ="INSERT INTO `market`.`categorias_juegos` (`id_juego`, `id_categoria`) VALUeS (" + id_j + ", " + id_c + ")";
+            ps = conexion.prepareStatement(sql);
+            /*ps.setInt(1, id_j);
+            ps.setInt(2, id_c);*/
+            res = ps.executeUpdate(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            res = -1;
+        }
+        return res;
+  }
 }
 
 

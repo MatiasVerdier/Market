@@ -12,7 +12,7 @@ public class Comentario {
     private int id_usu;
     private int id_padre;
     
-    private ArrayList respuestas;
+    private ArrayList respuestas = new ArrayList();
 
     public ArrayList getRespuestas() {
         return respuestas;
@@ -69,4 +69,10 @@ public class Comentario {
     public void setId_juego(int id_juego) {
         this.id_juego = id_juego;
     }
+
+    @Override
+    public String toString() {
+        return this.id+"-"+this.texto;
+    }
+    
 }

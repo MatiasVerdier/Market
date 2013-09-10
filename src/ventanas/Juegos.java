@@ -7,6 +7,7 @@ import dominio.Categoria;
 import dominio.Juego;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 public class Juegos extends javax.swing.JDialog {
     
@@ -19,12 +20,16 @@ public class Juegos extends javax.swing.JDialog {
     DefaultListModel modelo_cat = new DefaultListModel();
     DefaultListModel modelo_juego = new DefaultListModel();
     
+    private boolean click_new_cat = false;
+    private boolean clic_new_juego = false;
+    
     private int id_cat;
     private int id_juego;
 
     public Juegos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
         this.lista_categorias.setModel(modelo_cat);
         this.lista_juegos.setModel(modelo_juego);
         
@@ -85,9 +90,11 @@ public class Juegos extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                cerrar(evt);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                actualizarDatos(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
             }
         });
 
@@ -248,6 +255,7 @@ public class Juegos extends javax.swing.JDialog {
 
     private void nuevaCategoria(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaCategoria
         NuevaCategoria nc = new NuevaCategoria(null, true);
+        this.click_new_cat = true;
         nc.setVisible(true);
         nc.setLocation(300, 200);
     }//GEN-LAST:event_nuevaCategoria
@@ -271,20 +279,35 @@ public class Juegos extends javax.swing.JDialog {
     }//GEN-LAST:event_seleccionarCategoria
 
     private void verInfoJuego(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verInfoJuego
-        InformacionJuego info_juego = new InformacionJuego(null, true);
-        info_juego.cargarInfoJuego(id_juego);
-        info_juego.setVisible(true);
+        int sel = this.lista_juegos.getSelectedIndex();
+        if(sel != -1){
+            InformacionJuego info_juego = new InformacionJuego(null, true);
+            this.setVisible(false);
+            info_juego.cargarInfoJuego(id_juego);
+            info_juego.setVisible(true);
+            this.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un juego", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_verInfoJuego
 
     private void IngresarCompra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarCompra
+        int sel = this.lista_juegos.getSelectedIndex();
+        if(sel != -1){
             NuevaCompra c = new NuevaCompra(null, true);
             c.txtJuego.setText(this.lista_juegos.getSelectedValue().toString());
             c.setJuegoComprar(Controladorjuegos.getInstancia().verInfoJuego(id_juego));     
             c.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un juego", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_IngresarCompra
 
     private void NuevoJuego(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevoJuego
         AltaJuego j = new AltaJuego(null, true);
+        this.clic_new_juego = true;
         j.setVisible(true);
         j.setLocation(300, 200);
     }//GEN-LAST:event_NuevoJuego
@@ -303,9 +326,17 @@ public class Juegos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_seleccionarJuego
 
-    private void cerrar(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_cerrar
+    private void actualizarDatos(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_actualizarDatos
+        if(this.click_new_cat){
+            this.cargarCategorias();
+            this.click_new_cat = false;
+        }
         
-    }//GEN-LAST:event_cerrar
+        if(this.clic_new_juego){
+            this.CargarJuegos(id_cat);
+            this.clic_new_juego = false;
+        }
+    }//GEN-LAST:event_actualizarDatos
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

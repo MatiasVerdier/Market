@@ -19,9 +19,11 @@ public class Perfiles extends javax.swing.JDialog {
     public Perfiles(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
         this.cargarUsuarios();
         if (this.lista_perfiles.getSelectedIndex() == -1){
             this.btn_info_perfil.setEnabled(false);
+            this.btn_modificar.setEnabled(false);
         }
     }
 ArrayList usuarios = new ArrayList();    
@@ -66,8 +68,8 @@ ArrayList usuarios = new ArrayList();
         btn_info_perfil = new javax.swing.JButton();
         btn_buscar = new javax.swing.JButton();
         campo_busqueda = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_modificar = new javax.swing.JButton();
+        btn_nuevo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administrar Perfiles");
@@ -155,19 +157,19 @@ ArrayList usuarios = new ArrayList();
         campo_busqueda.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         campo_busqueda.setToolTipText("Buscar");
 
-        jButton1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/edit16.png"))); // NOI18N
-        jButton1.setToolTipText("Modificar Usuario");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_modificar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btn_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/edit16.png"))); // NOI18N
+        btn_modificar.setToolTipText("Modificar Usuario");
+        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modificarUsuario(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/user_add_16.png"))); // NOI18N
-        jButton2.setToolTipText("Nuevo Usuario");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_nuevo.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btn_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/user_add_16.png"))); // NOI18N
+        btn_nuevo.setToolTipText("Nuevo Usuario");
+        btn_nuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nuevousuario(evt);
             }
@@ -189,9 +191,9 @@ ArrayList usuarios = new ArrayList();
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2)
+                                .addComponent(btn_nuevo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1))
+                                .addComponent(btn_modificar))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,8 +220,8 @@ ArrayList usuarios = new ArrayList();
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btn_modificar)
+                    .addComponent(btn_nuevo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -251,23 +253,29 @@ ArrayList usuarios = new ArrayList();
 
     private void verInformacion(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verInformacion
         InformacionPerfil ip = new InformacionPerfil(null, true);
+        this.setVisible(false);
         ip.cargarInfoPerfil(id_usu);
         ip.setVisible(true);
         cargarUsuarios();
+        this.setVisible(true);
     }//GEN-LAST:event_verInformacion
 
     private void nuevousuario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevousuario
         InformacionPerfil ip = new InformacionPerfil(null, true);
+        this.setVisible(false);
         ip.limpiarCampos();
         ip.cambiarEstado(true, true, true, true, true, true, true);
         ip.setVisible(true);
+        this.setVisible(true);
     }//GEN-LAST:event_nuevousuario
 
     private void modificarUsuario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarUsuario
         InformacionPerfil ip = new InformacionPerfil(null, true);
+        this.setVisible(false);
         ip.cargarInfoPerfil(id_usu);
         ip.cambiarEstado(true, true, true, true, true, true, false);
         ip.setVisible(true);
+        this.setVisible(true);
     }//GEN-LAST:event_modificarUsuario
 
     private void seleccionarUsuario(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_seleccionarUsuario
@@ -275,8 +283,12 @@ ArrayList usuarios = new ArrayList();
         lugar = this.lista_perfiles.getSelectedIndex();
         if (lugar != -1){
             id_usu = (int)ids.get(lugar);
-            if (! this.btn_info_perfil.isEnabled())
-                this.btn_info_perfil.setEnabled(true);
+            this.btn_info_perfil.setEnabled(true);
+            this.btn_modificar.setEnabled(true); 
+        }
+        else{
+            this.btn_info_perfil.setEnabled(false);
+            this.btn_modificar.setEnabled(false);
         }
     }//GEN-LAST:event_seleccionarUsuario
 
@@ -316,7 +328,6 @@ ArrayList usuarios = new ArrayList();
             ids.clear();
             while (i < usuarios.size()){
              
-                
                 Usuario user;
                 user = (Usuario)usuarios.get(i);
                 i++;
@@ -325,7 +336,6 @@ ArrayList usuarios = new ArrayList();
               
             }
         } 
-        
     }//GEN-LAST:event_radio_clientesMouseClicked
 
     private void radio_todosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_todosActionPerformed
@@ -377,11 +387,11 @@ ArrayList usuarios = new ArrayList();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_info_perfil;
+    private javax.swing.JButton btn_modificar;
+    private javax.swing.JButton btn_nuevo;
     private javax.swing.JButton btn_salir;
     private javax.swing.JTextField campo_busqueda;
     private javax.swing.ButtonGroup filtros;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;

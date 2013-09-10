@@ -10,7 +10,17 @@ public class Juego {
     private String descripcion;
     private double size;
     private double precio;
-    private String nick_des;
+    private Desarrollador des;
+
+    public Desarrollador getDes() {
+        return des;
+    }
+
+    public void setDes(Desarrollador des) {
+        this.des = des;
+    }
+    
+    
     private FileInputStream portada;
     
     private ArrayList categorias;
@@ -57,13 +67,7 @@ public class Juego {
         this.precio = precio;
     }
 
-    public String getNick_des() {
-        return nick_des;
-    }
-
-    public void setNick_des(String nick_des) {
-        this.nick_des = nick_des;
-    }
+    
 
     public FileInputStream getPortada() {
         return portada;
@@ -95,6 +99,11 @@ public class Juego {
 
     public void setComentarios(ArrayList comentarios) {
         this.comentarios = comentarios;
+    }
+
+    @Override
+    public String toString() {
+        return this.nombre;
     }
     
 }

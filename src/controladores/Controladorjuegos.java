@@ -3,27 +3,60 @@ package controladores;
 
 import baseDatos.ManejadorBD;
 import dominio.Categoria;
-import dominio.Cliente;
 import dominio.Comentario;
+import dominio.Desarrollador;
 import dominio.Juego;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Controladorjuegos {
     
     private static Controladorjuegos INSTANCIA = null;
     private ManejadorBD mbd = ManejadorBD.getInstancia();
     
+    
     public static Controladorjuegos getInstancia(){
         if (INSTANCIA == null)
              INSTANCIA = new Controladorjuegos();
          return INSTANCIA;
     }
+
+    private Controladorjuegos() {
+        //mbd.conectar();
+    }
     
-    public void altaJuego(Juego j){
+    public Juego buscarJuegoPorID(int id){
+        try {
+            ResultSet res = mbd.SELECT("select id_juego, nombre from juegos where id_juego = "+id);
+            Juego j = new Juego();
+            while (res.next()){
+                j.setId(res.getInt("id_juego"));
+                j.setNombre(res.getString("nombre"));
+            }
+            return j;
+        } catch (SQLException ex) {
+            System.out.println("buscar juego por id "+ex.toString());
+            return null;
+        }
+    }
+    
+    public int altaJuego(Juego juego, ArrayList cats) {
+        int res = 0;
+        int i=0;
+        try {
+            String sql ="insert into juegos (nombre, descripcion, size, precio, id_desarrollador) values (?,?,?,?,?)";
+            int idj = mbd.insertJuego(juego, sql);
+            while(i< cats.size()){
+             Categoria c = (Categoria)cats.get(i);
+             res = mbd.insertCatJuego(idj, c.getId());
+             i++;
+            }
+            return res;
+        } catch (Exception ex) {
+            System.out.println("alta juego "+ex.toString());
+            return -1;
+        }
         
     }
     
@@ -41,7 +74,7 @@ public class Controladorjuegos {
             
             return juegos;
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("listar juegos por ategoria "+ex.toString());
             return null;
         }
     }
@@ -58,11 +91,13 @@ public class Controladorjuegos {
             j.setDescripcion(res.getString("descripcion"));
             j.setPrecio(res.getDouble("precio"));
             j.setSize(res.getDouble("size"));
-            j.setNick_des(res.getString("nick"));
+            Desarrollador des = new Desarrollador();
+            des.setNick(res.getString("nick"));
+            j.setDes(des);
             
             return j;
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("ver info juego "+ex.toString());
             return null;
         }
     }
@@ -76,17 +111,17 @@ public class Controladorjuegos {
                 Comentario com = new Comentario();
                 com.setId(res.getInt("id_comentario"));
                 com.setTexto(res.getString("texto"));
+                com.setId_juego(res.getInt("id_juego"));
                 com.setFecha(res.getDate("fecha"));
                 com.setId_usu(res.getInt("id_usuario"));
                 com.setId_padre(res.getInt("id_padre"));
-                com.setRespuestas(this.selectRespuestas(com.getId()));
                 coments.add(com);
-                
+                //System.out.println(com.getTexto());
             }
             
             return coments;
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("ver comentarios juego "+ex.toString());
             return null;
         }
     }
@@ -105,11 +140,12 @@ public class Controladorjuegos {
                 com.setId_usu(res.getInt("id_usuario"));
                 com.setId_padre(res.getInt("id_padre"));
                 respuestas.add(com);
+                System.out.println(com.getTexto());
             }
             
             return respuestas;
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("select respuestas "+ex.toString());
             return null;
         }
     }
@@ -128,9 +164,43 @@ public class Controladorjuegos {
             
             return juegos;
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("listar juegos "+ex.toString());
+            return null;
+        }
+    }
+    
+        public ArrayList listarJuegosConCompras(){
+        try {
+            ArrayList juegos = new ArrayList();
+            
+            String sql = "select id_juego, nombre from juegos where id_juego in "+
+                         "(select id_juego from compras)";
+            
+            ResultSet res = mbd.SELECT(sql);
+            while(res.next()){
+                Juego j = new Juego();
+                j.setId(res.getInt("id_juego"));
+                j.setNombre(res.getString("nombre"));
+                juegos.add(j);
+            }
+            
+            return juegos;
+        } catch (SQLException ex) {
+            System.out.println("listar juegos "+ex.toString());
             return null;
         }
     } 
+    
+    public int altaComentario(Comentario c){
+        int res;
+        try{
+            res = mbd.insertComentario(c);
+        }
+        catch(Exception ex){
+            System.out.println("alta comentario "+ex.toString());
+            res = -1;
+        }
+        return res;
+    }
     
 }

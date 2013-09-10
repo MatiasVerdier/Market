@@ -6,14 +6,13 @@ import dominio.Cliente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 
 public class ControladorCompras {
     private static ControladorCompras INSTANCIA = null;
     private ManejadorBD mbd = ManejadorBD.getInstancia();
+    
       
     public void altaCompra(dominio.Compra c) throws SQLException{
         String sql = "insert into compras values (?,?,?)";
@@ -23,6 +22,11 @@ public class ControladorCompras {
             throw ex;
         }
     }
+
+    private ControladorCompras() {
+        //mbd.conectar();
+    }
+    
     
     public static ControladorCompras getInstancia(){
         if (INSTANCIA == null)
@@ -38,6 +42,7 @@ public class ControladorCompras {
             
             while(res.next()){
                 Cliente c = new Cliente();
+                c.setId(res.getInt("id_usuario"));
                 c.setNick(res.getString("nick"));
                 compras.add(c);
             }
