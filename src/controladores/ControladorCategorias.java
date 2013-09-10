@@ -28,8 +28,8 @@ public class ControladorCategorias {
     public ArrayList listarCategorias(){
         try {
             ArrayList categorias = new ArrayList();
-            
-            ResultSet res = mbd.selectTodasCategorias();
+            String consulta = "select id_categoria, nombre from categorias";
+            ResultSet res = mbd.SELECT(consulta);
             while(res.next()){
                 Categoria cat = new Categoria();
                 cat.setNombre(res.getString("nombre"));
@@ -49,8 +49,9 @@ public class ControladorCategorias {
     public ArrayList verCategoriasPorJuego(int id){
         try {
             ArrayList cats = new ArrayList();
-            
-            ResultSet res = mbd.selectCategoriasPorJuego(id);
+            String sql = "select c.id_categoria, c.nombre from categorias c, categorias_juegos cj "+
+                        "where cj.id_juego = "+id+" and c.id_categoria = cj.id_categoria";
+            ResultSet res = mbd.SELECT(sql);
             
             while(res.next()){
                 Categoria c = new Categoria();

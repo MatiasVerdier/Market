@@ -37,8 +37,10 @@ public class ControladorCompras {
         public ArrayList verComprasPorJuego(int id){
         try {
             ArrayList compras = new ArrayList();
+            String sql = "select u.* from usuarios u, compras c "+
+                    "where c.id_juego = "+id+" and c.id_usuario = u.id_usuario";
             
-            ResultSet res = mbd.selectComprasPorJuego(id);
+            ResultSet res = mbd.SELECT(sql);
             
             while(res.next()){
                 Cliente c = new Cliente();

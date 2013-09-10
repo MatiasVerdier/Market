@@ -63,8 +63,11 @@ public class Controladorjuegos {
     public ArrayList listarJuegosPorCategoria(int id_cat){
         try {
             ArrayList juegos = new ArrayList();
+            String sql = "select j.id_juego, j.nombre from juegos j, categorias_juegos cj "+
+                    "where cj.id_categoria = "+id_cat+
+                    " and cj.id_juego = j.id_juego";
             
-            ResultSet res = mbd.selectJuegosPorCategotia(id_cat);
+            ResultSet res = mbd.SELECT(sql);
             while(res.next()){
                 Juego j = new Juego();
                 j.setNombre(res.getString("nombre"));
@@ -82,8 +85,9 @@ public class Controladorjuegos {
     public Juego verInfoJuego(int id){
         try {
             Juego j = new Juego();
-            
-            ResultSet res = mbd.selectInfoBasicaJuego(id);
+            String sql = "select j.*, u.nick from juegos j, usuarios u "+
+                         "where j.id_desarrollador = u.id_usuario and j.id_juego ="+id;
+            ResultSet res = mbd.SELECT(sql);
             res.next();
             
             j.setId(res.getInt("id_juego"));
@@ -105,8 +109,8 @@ public class Controladorjuegos {
     public ArrayList verComentariosJuego(int id){
         try {
             ArrayList coments = new ArrayList();
-            
-            ResultSet res = mbd.selectComentariosJuego(id);
+            String sql = "select * from comentarios where id_juego = "+id;
+            ResultSet res = mbd.SELECT(sql);
             while(res.next()){
                 Comentario com = new Comentario();
                 com.setId(res.getInt("id_comentario"));
@@ -129,8 +133,8 @@ public class Controladorjuegos {
     public ArrayList selectRespuestas(int id){
         try {
             ArrayList respuestas = new ArrayList();
-            
-            ResultSet res = mbd.selectRespuestas(id);
+            String sql = "select * from comentarios where id_padre = "+id;
+            ResultSet res = mbd.SELECT(sql);
             while(res.next()){
                 Comentario com = new Comentario();
                 com.setId(res.getInt("id_comentario"));
@@ -153,8 +157,8 @@ public class Controladorjuegos {
     public ArrayList listarJuegos(){
         try {
             ArrayList juegos = new ArrayList();
-            
-            ResultSet res = mbd.selectJuegos();
+            String sql = "select id_juego, nombre from juegos";
+            ResultSet res = mbd.SELECT(sql);
             while(res.next()){
                 Juego j = new Juego();
                 j.setId(res.getInt("id_juego"));
