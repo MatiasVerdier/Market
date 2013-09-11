@@ -37,7 +37,7 @@ public class ManejadorBD {
     }
 
     public void setBd(String bd) {
-       bd = bd;
+       this.bd = bd;
     }
 
     public String getHost() {
@@ -75,7 +75,7 @@ public class ManejadorBD {
 
     /*--------------------- se establece la conexion -------------------*/
     public void conectar(){
-        this.url = "jdbc:mysql://201.221.15.100:3306/market";
+        this.url = "jdbc:mysql://"+host+":"+puerto+"/"+bd;
         try{
             Class.forName(driver);
             conexion = DriverManager.getConnection(url, usuario, password);
