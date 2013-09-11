@@ -91,8 +91,8 @@ public class ControladorUsuarios {
     public ArrayList listarClientes(){
         try {
             ArrayList usuarios = new ArrayList();
-            
-            ResultSet res = mbd.selectTodosClientes();
+            String sql = "select id_usuario, nick from usuarios where tipo = 'c'";
+            ResultSet res = mbd.SELECT(sql);
             while(res.next()){
                 Cliente c = new Cliente();
                 c.setNick(res.getString("nick"));
@@ -108,30 +108,31 @@ public class ControladorUsuarios {
     }
      
     ////// Filtrar por Clientes     
-    public ArrayList listarDevelopers(){
-        try {
-            ArrayList usuarios = new ArrayList();
-            
-            ResultSet res = mbd.selectDevelopers();
-            while(res.next()){
-                Desarrollador d = new Desarrollador();
-                d.setNick(res.getString("nick"));
-                d.setId(res.getInt("id_usuario"));
-                usuarios.add(d);
-            }
-            
-            return usuarios;
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-            return null;
-        }
-    }
+//    public ArrayList listarDevelopers(){
+//        try {
+//            ArrayList usuarios = new ArrayList();
+//            
+//            ResultSet res = mbd.selectDevelopers();
+//            while(res.next()){
+//                Desarrollador d = new Desarrollador();
+//                d.setNick(res.getString("nick"));
+//                d.setId(res.getInt("id_usuario"));
+//                usuarios.add(d);
+//            }
+//            
+//            return usuarios;
+//        } catch (SQLException ex) {
+//            System.out.println(ex.toString());
+//            return null;
+//        }
+//    }
     
 ////// Filtrar por Clientes     
     public ArrayList listarbusqueda(String bs){
         try {
             ArrayList usuarios = new ArrayList();
-            ResultSet res = mbd.selectBuscar(bs);
+            String sql = "select id_usuario, nick from usuarios where nick like '%" + bs + "%'";
+            ResultSet res = mbd.SELECT(sql);
             while(res.next()){
                 Usuario u = new Usuario();
                 u.setNick(res.getString("nick"));
@@ -152,8 +153,8 @@ public class ControladorUsuarios {
     public ArrayList listarUsuarios(){
         try {
             ArrayList usuarios = new ArrayList();
-            
-            ResultSet res = mbd.selectTodosUsuarios();
+            String sql = "select id_usuario, nick from usuarios";
+            ResultSet res = mbd.SELECT(sql);
             while(res.next()){
                 Usuario u = new Usuario();
                 u.setNick(res.getString("nick"));
@@ -172,8 +173,8 @@ public class ControladorUsuarios {
         Usuario u = null;
          clases.CustomImageIcon ii;
         try{
-
-            ResultSet res = mbd.selectInfoUsuario(id);
+            String sql = "select * from usuarios where id_usuario = "+id;
+            ResultSet res = mbd.SELECT(sql);
             while(res.next()){
                 if (res.getString("tipo").equals("d")){
                     Desarrollador d = new Desarrollador();
@@ -214,8 +215,8 @@ public class ControladorUsuarios {
     public ArrayList listarDesarrolladores(){
         try {
             ArrayList users = new ArrayList();
-            
-            ResultSet res = mbd.selectDevelopers();
+            String sql = "select id_usuario, nick from usuarios where tipo = 'd'";
+            ResultSet res = mbd.SELECT(sql);
             while(res.next()){
                 Desarrollador d = new Desarrollador();
                 d.setNick(res.getString("Nick"));

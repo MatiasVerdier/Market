@@ -365,7 +365,7 @@ ArrayList usuarios = new ArrayList();
 
     private void radio_desMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radio_desMouseClicked
             usuarios.clear();
-            usuarios = cu.listarDevelopers();
+            usuarios = cu.listarDesarrolladores();
        
         if (usuarios != null){
             

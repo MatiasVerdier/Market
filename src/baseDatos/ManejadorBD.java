@@ -110,7 +110,6 @@ public class ManejadorBD {
         }
     }
     
-    
     /******************* INSERTAR CATEGORIA *****************/
     public int insertCategorias(Categoria c, String sql){
         int res = 0;
@@ -142,126 +141,126 @@ public class ManejadorBD {
     }
     
     /*----------------- LISTAR CATEGORIAS ------------------------*/
-    public ResultSet selectTodasCategorias(){
-        ResultSet res;
-        try {
-            String sql = "select id_categoria, nombre from categorias";
-            res = st.executeQuery(sql);
-        } catch (SQLException ex) {
-            System.out.println("mbd-select categorias"+ex.toString());
-            res = null;
-        }
-        return res;
-    }
+//    public ResultSet selectTodasCategorias(){
+//        ResultSet res;
+//        try {
+//            String sql = "select id_categoria, nombre from categorias";
+//            res = st.executeQuery(sql);
+//        } catch (SQLException ex) {
+//            System.out.println("mbd-select categorias"+ex.toString());
+//            res = null;
+//        }
+//        return res;
+//    }
     
     /*-------------------- LISTAR USUARIOS -------------------------*/
-    public ResultSet selectTodosUsuarios(){
-        ResultSet res;
-        try {
-            String sql = "select id_usuario, nick from usuarios";
-             res = st.executeQuery(sql);
-        } catch (SQLException ex) {
-            System.out.println("mbd-select usuarios "+ex.toString());
-            res = null;
-        }
-        return res;
-    }
+//    public ResultSet selectTodosUsuarios(){
+//        ResultSet res;
+//        try {
+//            String sql = "select id_usuario, nick from usuarios";
+//             res = st.executeQuery(sql);
+//        } catch (SQLException ex) {
+//            System.out.println("mbd-select usuarios "+ex.toString());
+//            res = null;
+//        }
+//        return res;
+//    }
     
     /*------------- RETORNA INFORMACION DEL USUARIO -------------------*/
-    public ResultSet selectInfoUsuario(int id){
-        ResultSet res;
-        try {
-            String sql = "select * from usuarios where id_usuario = "+id;
-            res = st.executeQuery(sql);
-        } catch (SQLException ex) {
-            System.out.println("select info usuario "+ex.toString());
-            res = null;
-        }
-        return res;
-    }
+//    public ResultSet selectInfoUsuario(int id){
+//        ResultSet res;
+//        try {
+//            String sql = "select * from usuarios where id_usuario = "+id;
+//            res = st.executeQuery(sql);
+//        } catch (SQLException ex) {
+//            System.out.println("select info usuario "+ex.toString());
+//            res = null;
+//        }
+//        return res;
+//    }
     
     
     /*------------------- SELECCIONAR CLIENTES ----------------------*/
-    public ResultSet selectTodosClientes(){
-        ResultSet res;
-        try {
-            String sql = "select id_usuario, nick from usuarios where tipo = 'c'";
-             res = st.executeQuery(sql);
-        } catch (SQLException ex) {
-            System.out.println("select clientes "+ex.toString());
-            res = null;
-        }
-        return res;
-    }
+//    public ResultSet selectTodosClientes(){
+//        ResultSet res;
+//        try {
+//            String sql = "select id_usuario, nick from usuarios where tipo = 'c'";
+//             res = st.executeQuery(sql);
+//        } catch (SQLException ex) {
+//            System.out.println("select clientes "+ex.toString());
+//            res = null;
+//        }
+//        return res;
+//    }
     
      /*------------------- SELECCIONAR DESARROLLADORES ----------------------*/
-    public ResultSet selectDevelopers(){
-        ResultSet res;
-        try {
-            String sql = "select id_usuario, nick from usuarios where tipo = 'd'";
-             res = st.executeQuery(sql);
-        } catch (SQLException ex) {
-            System.out.println("select developers "+ex.toString());
-            res = null;
-        }
-        return res;
-    }
+//    public ResultSet selectDevelopers(){
+//        ResultSet res;
+//        try {
+//            String sql = "select id_usuario, nick from usuarios where tipo = 'd'";
+//             res = st.executeQuery(sql);
+//        } catch (SQLException ex) {
+//            System.out.println("select developers "+ex.toString());
+//            res = null;
+//        }
+//        return res;
+//    }
     
     /*------------------- SELECCIONAR POR FILTRO DE BUSQUEDA ----------------------*/
-    public ResultSet selectBuscar(String bs){
-        ResultSet res;
-        try {
-            String sql = "select id_usuario, nick from usuarios where nick like '%" + bs + "%'";
-             res = st.executeQuery(sql);
-        } catch (SQLException ex) {
-            System.out.println("buscar "+ex.toString());
-            res = null;
-        }
-        return res;
-    }
+//    public ResultSet selectBuscar(String bs){
+//        ResultSet res;
+//        try {
+//            String sql = "select id_usuario, nick from usuarios where nick like '%" + bs + "%'";
+//             res = st.executeQuery(sql);
+//        } catch (SQLException ex) {
+//            System.out.println("buscar "+ex.toString());
+//            res = null;
+//        }
+//        return res;
+//    }
     
     /*------------- MUESTRA LOS JUEGOS DE UNA DETERMINADA CATEGORIA --------------*/
-    public ResultSet selectJuegosPorCategotia(int id_cat){
-        ResultSet res;
-        try {
-            String sql = "select j.id_juego, j.nombre from juegos j, categorias_juegos cj "+
-                    "where cj.id_categoria = "+id_cat+
-                    " and cj.id_juego = j.id_juego";
-            res = st.executeQuery(sql);
-        } catch (SQLException ex) {
-            System.out.println("juegos por categoria "+ex.toString());
-            res = null;
-        }
-        return res;
-    }
+//    public ResultSet selectJuegosPorCategotia(int id_cat){
+//        ResultSet res;
+//        try {
+//            String sql = "select j.id_juego, j.nombre from juegos j, categorias_juegos cj "+
+//                    "where cj.id_categoria = "+id_cat+
+//                    " and cj.id_juego = j.id_juego";
+//            res = st.executeQuery(sql);
+//        } catch (SQLException ex) {
+//            System.out.println("juegos por categoria "+ex.toString());
+//            res = null;
+//        }
+//        return res;
+//    }
     
     
     /*------------ RETORNA INFORMACION BASICA DEL JUEGO -------------------*/
-    public ResultSet selectInfoBasicaJuego(int id){
-        ResultSet res;
-        try {
-            String sql = "select j.*, u.nick from juegos j, usuarios u where j.id_desarrollador = u.id_usuario and j.id_juego ="+id;
-            res = st.executeQuery(sql);
-        } catch (SQLException ex) {
-            System.out.println("info basica juego "+ex.toString());
-            res = null;
-        }
-        return res;
-    }
+//    public ResultSet selectInfoBasicaJuego(int id){
+//        ResultSet res;
+//        try {
+//            String sql = "select j.*, u.nick from juegos j, usuarios u where j.id_desarrollador = u.id_usuario and j.id_juego ="+id;
+//            res = st.executeQuery(sql);
+//        } catch (SQLException ex) {
+//            System.out.println("info basica juego "+ex.toString());
+//            res = null;
+//        }
+//        return res;
+//    }
     
     /*------------ RETORNA LAS COMPRAS DE UN JUEGO ------------*/
-    public ResultSet selectComprasPorJuego(int id){
-        ResultSet res;
-        try {
-            String sql = "select u.* from usuarios u, compras c "+
-                    "where c.id_juego = "+id+" and c.id_usuario = u.id_usuario";
-            res = st.executeQuery(sql);
-        } catch (SQLException ex) {
-            System.out.println("compras juego "+ex.toString());
-            res = null;
-        }
-        return res;
-    }
+//    public ResultSet selectComprasPorJuego(int id){
+//        ResultSet res;
+//        try {
+//            String sql = "select u.* from usuarios u, compras c "+
+//                    "where c.id_juego = "+id+" and c.id_usuario = u.id_usuario";
+//            res = st.executeQuery(sql);
+//        } catch (SQLException ex) {
+//            System.out.println("compras juego "+ex.toString());
+//            res = null;
+//        }
+//        return res;
+//    }
 
     //---------- Insertar nuevo Usuario------------- //Modificado 25/8 Matias R
     public void insertCliente(dominio.Cliente user, String sql) throws SQLException, IOException{
@@ -405,59 +404,59 @@ public class ManejadorBD {
         return res;
     }
   /*-------- RETORNA LAS CATEGORIAS A LAS QUE PERTENECE UN JUEGO ------*/
-    public ResultSet selectCategoriasPorJuego(int id){
-        ResultSet res;
-        try{
-            String sql = "select c.id_categoria, c.nombre from categorias c, categorias_juegos cj "+
-                        "where cj.id_juego = ? and c.id_categoria = cj.id_categoria";
-            
-            ps = conexion.prepareStatement(sql);
-            ps.setInt(1, id);
-            res = ps.executeQuery();
-            return res;
-            
-        }catch(SQLException ex){
-            System.out.println("select categorias por juego "+ex.toString());
-            return null;
-        }
-
-    }
+//    public ResultSet selectCategoriasPorJuego(int id){
+//        ResultSet res;
+//        try{
+//            String sql = "select c.id_categoria, c.nombre from categorias c, categorias_juegos cj "+
+//                        "where cj.id_juego = ? and c.id_categoria = cj.id_categoria";
+//            
+//            ps = conexion.prepareStatement(sql);
+//            ps.setInt(1, id);
+//            res = ps.executeQuery();
+//            return res;
+//            
+//        }catch(SQLException ex){
+//            System.out.println("select categorias por juego "+ex.toString());
+//            return null;
+//        }
+//
+//    }
     /*---------------- seleccionar todos los comentarios de un juego ----------------------*/
-    public ResultSet selectComentariosJuego(int id){
-        ResultSet res;
-        try{
-            String sql = "select * from comentarios where id_juego = "+id;
-            res = st.executeQuery(sql);
-            return res;
-        }catch(SQLException ex){
-            System.out.println("select comentarios juego "+ex.toString());
-            return null;
-        } 
-    }
+//    public ResultSet selectComentariosJuego(int id){
+//        ResultSet res;
+//        try{
+//            String sql = "select * from comentarios where id_juego = "+id;
+//            res = st.executeQuery(sql);
+//            return res;
+//        }catch(SQLException ex){
+//            System.out.println("select comentarios juego "+ex.toString());
+//            return null;
+//        } 
+//    }
     
-    public ResultSet selectRespuestas(int id){
-        ResultSet res;
-        try{
-            String sql = "select * from comentarios where id_padre = "+id;
-            res = st.executeQuery(sql);
-            return res;
-        }catch(SQLException ex){
-            System.out.println("select respuestas"+ex.toString());
-            return null;
-        }
-    }
+//    public ResultSet selectRespuestas(int id){
+//        ResultSet res;
+//        try{
+//            String sql = "select * from comentarios where id_padre = "+id;
+//            res = st.executeQuery(sql);
+//            return res;
+//        }catch(SQLException ex){
+//            System.out.println("select respuestas"+ex.toString());
+//            return null;
+//        }
+//    }
     
-    public ResultSet selectJuegos(){
-        ResultSet res;
-        try{
-            String sql = "select id_juego, nombre from juegos";
-            res = st.executeQuery(sql);
-            return res;
-        }catch(SQLException ex){
-            System.out.println("listar juegos"+ex.toString());
-            return null;
-        }
-    }
+//    public ResultSet selectJuegos(){
+//        ResultSet res;
+//        try{
+//            String sql = "select id_juego, nombre from juegos";
+//            res = st.executeQuery(sql);
+//            return res;
+//        }catch(SQLException ex){
+//            System.out.println("listar juegos"+ex.toString());
+//            return null;
+//        }
+//    }
     
     public int insertComentario(Comentario c){
         int res;
@@ -508,14 +507,10 @@ public class ManejadorBD {
   }
     
     public int insertCatJuego(int id_j, int id_c){
-        int res = 0;
+        int res;
         try {
-            String sql ="insert into categorias_juegos (id_juego, id_categoria) values (?,?)";
-            sql ="INSERT INTO `market`.`categorias_juegos` (`id_juego`, `id_categoria`) VALUeS (" + id_j + ", " + id_c + ")";
-            ps = conexion.prepareStatement(sql);
-            /*ps.setInt(1, id_j);
-            ps.setInt(2, id_c);*/
-            res = ps.executeUpdate(sql);
+            String sql ="insert into categorias_juegos (id_juego, id_categoria) values (" + id_j + ", " + id_c + ")";
+            res = st.executeUpdate(sql);
         } catch (SQLException ex) {
             System.out.println(ex.toString());
             res = -1;
