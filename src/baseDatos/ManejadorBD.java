@@ -75,7 +75,7 @@ public class ManejadorBD {
 
     /*--------------------- se establece la conexion -------------------*/
     public void conectar(){
-        this.url = "jdbc:mysql://"+host+":"+puerto+"/"+bd;
+        this.url = "jdbc:mysql://201.221.15.100:3306/market";
         try{
             Class.forName(driver);
             conexion = DriverManager.getConnection(url, usuario, password);
@@ -286,7 +286,8 @@ public class ManejadorBD {
        
     }
     
-        public void actualizarCliente(dominio.Cliente user, String sql) throws SQLException, IOException{
+    
+    public void actualizarCliente(dominio.Cliente user, String sql) throws SQLException, IOException{
      
         try {
             java.sql.Date fec = new java.sql.Date(user.getFecha_nac().getTime());
@@ -298,6 +299,75 @@ public class ManejadorBD {
             ps.setDate(4, fec);
             ps.setString(5, user.getEmail());
             ps.setBinaryStream(6, user.getFotoFi());
+            ps.setInt(7, user.getId());
+            ps.execute();
+            
+            ps.close();
+            
+        } catch (SQLException ex) {
+            throw ex;
+        }
+       
+    }
+        
+    public void actualizarClienteSinFoto(dominio.Cliente user, String sql) throws SQLException, IOException{
+     
+        try {
+            java.sql.Date fec = new java.sql.Date(user.getFecha_nac().getTime());
+            
+            ps = conexion.prepareStatement(sql);
+            ps.setString(1, user.getNombre());
+            ps.setString(2, user.getApellido());
+            ps.setString(3, user.getNick()); 
+            ps.setDate(4, fec);
+            ps.setString(5, user.getEmail());
+            ps.setInt(6, user.getId());
+            ps.execute();
+            
+            ps.close();
+            
+        } catch (SQLException ex) {
+            throw ex;
+        }
+       
+    }
+        
+        public void modificarDesarrolladorConFoto(dominio.Desarrollador user, String sql) throws SQLException, IOException{
+     
+        try {
+            java.sql.Date fec = new java.sql.Date(user.getFecha_nac().getTime());
+            
+            ps = conexion.prepareStatement(sql);
+            ps.setString(1, user.getNombre());
+            ps.setString(2, user.getApellido());
+            ps.setString(3, user.getNick()); 
+            ps.setDate(4, fec);
+            ps.setString(5, user.getEmail());
+            ps.setBinaryStream(6, user.getFotoFi());
+            ps.setString(7, user.getWeb());
+            ps.setInt(8, user.getId());
+            ps.execute();
+            
+            ps.close();
+            
+        } catch (SQLException ex) {
+            throw ex;
+        }
+       
+    }
+        
+         public void modificarDesarrollador(dominio.Desarrollador user, String sql) throws SQLException, IOException{
+     
+        try {
+            java.sql.Date fec = new java.sql.Date(user.getFecha_nac().getTime());
+            
+            ps = conexion.prepareStatement(sql);
+            ps.setString(1, user.getNombre());
+            ps.setString(2, user.getApellido());
+            ps.setString(3, user.getNick()); 
+            ps.setDate(4, fec);
+            ps.setString(5, user.getEmail());
+            ps.setString(6, user.getWeb());
             ps.setInt(7, user.getId());
             ps.execute();
             
@@ -321,6 +391,7 @@ public class ManejadorBD {
             ps.setString(3, user.getNick()); 
             ps.setDate(4, fec);
             ps.setString(5, user.getEmail());
+            ps.setString(6, user.getWeb());
             ps.setString(6, user.getWeb());
             ps.setString(7, "d");
             res = ps.executeUpdate();

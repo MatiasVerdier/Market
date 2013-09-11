@@ -42,9 +42,17 @@ public class ControladorUsuarios {
     
       public void actualizarCliente(dominio.Cliente user) throws Exception{
         try {
+            if(user.getFotoFi() == null){
+            String sql = "update usuarios set nombre = ?, apellido = ?, nick = ?, fecha_nacimiento = ?, " +
+                    "email = ? where id_usuario = ?;";
+            mbd.actualizarClienteSinFoto(user, sql);
+            }else{
             String sql = "update usuarios set nombre = ?, apellido = ?, nick = ?, fecha_nacimiento = ?, " +
                     "email = ?, foto = ? where id_usuario = ?;";
-            mbd.actualizarCliente(user, sql);
+            mbd.actualizarCliente(user, sql);    
+            }
+                
+            
         } catch (SQLException | IOException ex) {
             throw ex;
         }
@@ -55,6 +63,24 @@ public class ControladorUsuarios {
         try {
             String sql = "insert into usuarios (nombre, apellido, nick, fecha_nacimiento, email, sitio_web, tipo, foto) values (?,?,?,?,?,?,?,?)";
              mbd.insertDesarrollador(user, sql);
+        } catch (Exception ex) {
+            //Logger.getLogger(ControladorUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            throw new Exception(ex);
+        }
+    }
+    
+     public void modificarDesarrollador(dominio.Desarrollador user) throws Exception{
+        try {
+            if(user.getFotoFi() == null){
+                String sql = "update usuarios set nombre = ?, apellido = ?, nick = ?, fecha_nacimiento = ?, " +
+                "email = ?, sitio_web = ? where id_usuario = ?;";
+                mbd.modificarDesarrollador(user, sql);
+            }else{
+                String sql = "update usuarios set nombre = ?, apellido = ?, nick = ?, fecha_nacimiento = ?, " +
+                "email = ?, foto = ?, sitio_web = ? where id_usuario = ?;";
+                mbd.modificarDesarrolladorConFoto(user, sql);
+            
+            }
         } catch (Exception ex) {
             //Logger.getLogger(ControladorUsuarios.class.getName()).log(Level.SEVERE, null, ex);
             throw new Exception(ex);

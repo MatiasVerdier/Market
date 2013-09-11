@@ -437,6 +437,10 @@ public class InformacionPerfil extends javax.swing.JDialog {
         user.setFecha_nac(calendarNacimiento.getDate());
         user.setEmail(this.txt_email.getText());
         user.setFoto(fis);
+        if (user instanceof Desarrollador){
+            Desarrollador des= (Desarrollador)user;
+            des.setWeb(this.txt_web.getText());
+        }
         
        
         if(radio_cli.isSelected()){
@@ -467,7 +471,16 @@ public class InformacionPerfil extends javax.swing.JDialog {
             }
         }else{
             try {
+                if(alta == true){
                 controladores.ControladorUsuarios.getInstancia().altaDesarrollador((Desarrollador)user);
+                JOptionPane.showMessageDialog(null, "El usuario se ha actualizado correctamente" , null, WIDTH, null);
+            
+                }else
+                {controladores.ControladorUsuarios.getInstancia().modificarDesarrollador((Desarrollador)user);
+                 JOptionPane.showMessageDialog(null, "El usuario se ha actualizado correctamente" , null, WIDTH, null);
+               
+                }
+                this.dispose();
             } catch (SQLException ex) {
                   int err = ex.getErrorCode();
                 if (err == 1062){
