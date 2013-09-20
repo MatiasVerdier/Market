@@ -7,7 +7,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -244,8 +247,11 @@ public class ConfBD extends javax.swing.JFrame {
             mbd.setPuerto(conf.getProperty("puerto").toString());
             mbd.setUsuario(conf.getProperty("user").toString());
             mbd.setPassword(conf.getProperty("pass").toString());
-            
-            mbd.conectar();
+            try {
+                mbd.conectar();
+            } catch (SQLException ex) {
+                System.err.println(ex.toString());
+            }
             Main main = new Main();
             this.setVisible(false);
             main.setVisible(true);

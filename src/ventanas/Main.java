@@ -9,6 +9,7 @@ public class Main extends javax.swing.JFrame {
 
     public Main() {
         initComponents();
+        this.setLayout(new GridLayout(2,3));
         this.setLocationRelativeTo(null);
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/recursos/logo.jpg"));
         setIconImage(icon);

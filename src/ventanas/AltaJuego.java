@@ -5,7 +5,10 @@ import controladores.Controladorjuegos;
 import dominio.Categoria;
 import dominio.Desarrollador;
 import dominio.Juego;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -339,35 +342,39 @@ public class AltaJuego extends javax.swing.JDialog {
         j.setPrecio(Double.parseDouble(this.txt_precio.getText()));
         Desarrollador des = (Desarrollador) listaUsuarios.get(combo_desa.getSelectedIndex());
         j.setDes(des);
-        int res = contjueg.altaJuego(j, cj);
-        
-        if (res != -1){
+        try {
+            contjueg.altaJuego(j, cj);
             JOptionPane.showMessageDialog(this, "Se inserto el juego", "Exito", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
-        }
-        else
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al insertar el juego", "Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(AltaJuego.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_aceptar
 
     private void abrirventana(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_abrirventana
-        listaUsuarios = controladores.ControladorUsuarios.getInstancia().listarDesarrolladores();
-        for (int i=0; i<listaUsuarios.size(); i++)
-        {
-            Desarrollador des = (Desarrollador)listaUsuarios.get(i);
-            combo_desa.addItem(des.getNick());
-        }   
- //--------------------------lista categorias--------------------------//
-        modelo_catsJ.clear();
-        modelo_cats.clear();
-        
-        int i=0;
-        if (!c.isEmpty()){
-            while (i<c.size()){
-                 Categoria cat;
-                 cat = (Categoria)c.get(i);
-                 modelo_cats.addElement(cat.getNombre());
-                 i++;
+        try {
+            listaUsuarios = controladores.ControladorUsuarios.getInstancia().listar("des");
+            for (int i=0; i<listaUsuarios.size(); i++)
+            {
+                Desarrollador des = (Desarrollador)listaUsuarios.get(i);
+                combo_desa.addItem(des.getNick());
+            }   
+     //--------------------------lista categorias--------------------------//
+            modelo_catsJ.clear();
+            modelo_cats.clear();
+            
+            int i=0;
+            if (!c.isEmpty()){
+                while (i<c.size()){
+                     Categoria cat;
+                     cat = (Categoria)c.get(i);
+                     modelo_cats.addElement(cat.getNombre());
+                     i++;
+                }
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(AltaJuego.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_abrirventana
 

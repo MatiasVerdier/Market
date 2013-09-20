@@ -6,6 +6,7 @@ import controladores.Controladorjuegos;
 import dominio.Cliente;
 import dominio.Comentario;
 import dominio.Juego;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -47,21 +48,29 @@ public class ComentarioNuevo extends javax.swing.JDialog {
         this.ids_juegos.clear();
         //this.combo_juegos.removeAllItems();
         if (id != 0){
-            Juego j = cj.buscarJuegoPorID(id);
-            //this.combo_juegos.addItem(j.getNombre());
-            this.modelo_juegos.addElement(j);
-            this.ids_juegos.add(j.getId());
-        }
-        else{
-            ArrayList jug = cj.listarJuegosConCompras();
-            int i = 0;
-            while (i < jug.size()){
-                Juego j = (Juego) jug.get(i);
+            try {
+                Juego j = cj.buscarJuegoPorID(id);
                 //this.combo_juegos.addItem(j.getNombre());
                 this.modelo_juegos.addElement(j);
                 this.ids_juegos.add(j.getId());
-                i++;
-            } 
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Error: "+ex.getErrorCode(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else{
+            try {
+                ArrayList jug = cj.listarJuegosConCompras();
+                int i = 0;
+                while (i < jug.size()){
+                    Juego j = (Juego) jug.get(i);
+                    //this.combo_juegos.addItem(j.getNombre());
+                    this.modelo_juegos.addElement(j);
+                    this.ids_juegos.add(j.getId());
+                    i++; 
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Error: "+ex.getErrorCode(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
         
     }
@@ -213,22 +222,22 @@ public class ComentarioNuevo extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelar
 
     private void altaComentario(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaComentario
-        Comentario nuevo = new Comentario();
-        id_juego = (int)ids_juegos.get(this.combo_juegos.getSelectedIndex());
-        id_cli = (int)ids_clientes.get(this.combo_clientes.getSelectedIndex());
-        nuevo.setId_usu(id_cli);
-        nuevo.setId_juego(id_juego);
-        nuevo.setTexto(this.texto.getText());
-        nuevo.setFecha(this.fecha.getDate());
-        nuevo.setId_padre(id_com_padre);
-        //nuevo.setId_padre(Integer.parseInt(this.com_padre.getText()));
-        int res = cj.altaComentario(nuevo);
-        if(res != -1){
-            JOptionPane.showMessageDialog(this, "Operacion exitosa", "Exito", JOptionPane.INFORMATION_MESSAGE);
+        try {
+            Comentario nuevo = new Comentario();
+            id_juego = (int)ids_juegos.get(this.combo_juegos.getSelectedIndex());
+            id_cli = (int)ids_clientes.get(this.combo_clientes.getSelectedIndex());
+            nuevo.setId_usu(id_cli);
+            nuevo.setId_juego(id_juego);
+            nuevo.setTexto(this.texto.getText());
+            nuevo.setFecha(this.fecha.getDate());
+            nuevo.setId_padre(id_com_padre);
+            //nuevo.setId_padre(Integer.parseInt(this.com_padre.getText()));
+            int res = cj.altaComentario(nuevo);
+            JOptionPane.showMessageDialog(this, "Se dio de alta el comentario", "Exito", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "No se pudo ingresar el comentario", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error: "+ex.getErrorCode(), "Error", JOptionPane.ERROR_MESSAGE);
+            System.err.println(ex.toString());
         }
     }//GEN-LAST:event_altaComentario
 

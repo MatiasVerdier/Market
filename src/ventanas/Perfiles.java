@@ -4,7 +4,10 @@ import controladores.ControladorUsuarios;
 import dominio.Cliente;
 import dominio.Usuario;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -34,22 +37,25 @@ ArrayList usuarios = new ArrayList();
         
       
         if(radio_todos.isSelected()){
-        
-            usuarios.clear();
-            usuarios = cu.listarUsuarios();
-       
-        if (usuarios != null){
-            
-            int i = 0;
-            modelo_usuarios.clear();
-            while (i < usuarios.size()){
-                Usuario user;
-                user = (Usuario)usuarios.get(i);
-                i++;
-                modelo_usuarios.addElement(user.getNick());
-                ids.add(user.getId());
+            try {
+                usuarios.clear();
+                usuarios = cu.listar("");
+           
+            if (usuarios != null){
+                
+                int i = 0;
+                modelo_usuarios.clear();
+                while (i < usuarios.size()){
+                    Usuario user;
+                    user = (Usuario)usuarios.get(i);
+                    i++;
+                    modelo_usuarios.addElement(user.getNick());
+                    ids.add(user.getId());
+                }
             }
-        }
+            } catch (SQLException ex) {
+                Logger.getLogger(Perfiles.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
 }
     @SuppressWarnings("unchecked")
@@ -293,49 +299,55 @@ ArrayList usuarios = new ArrayList();
     }//GEN-LAST:event_seleccionarUsuario
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-
-        String bs = this.campo_busqueda.getText();
-            usuarios.clear();
-            usuarios = cu.listarbusqueda(bs);
-       
-        if (!usuarios.isEmpty()){
-            
-            int i = 0;
-            modelo_usuarios.clear();
-            ids.clear();
-            while (i < usuarios.size()){
-                Usuario user;
-                user = (Usuario)usuarios.get(i);
-                i++;
-                modelo_usuarios.addElement(user.getNick());
-                ids.add(user.getId());
+        try {
+            String bs = this.campo_busqueda.getText();
+                usuarios.clear();
+                usuarios = cu.buscar(bs);
+           
+            if (!usuarios.isEmpty()){
+                
+                int i = 0;
+                modelo_usuarios.clear();
+                ids.clear();
+                while (i < usuarios.size()){
+                    Usuario user;
+                    user = (Usuario)usuarios.get(i);
+                    i++;
+                    modelo_usuarios.addElement(user.getNick());
+                    ids.add(user.getId());
+                }
+            } else{
+                modelo_usuarios.clear();
+                ids.clear();
+                JOptionPane.showMessageDialog(this, "No se encontro ningun usuario.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else{
-            modelo_usuarios.clear();
-            ids.clear();
-            JOptionPane.showMessageDialog(this, "No se encontro ningun usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            Logger.getLogger(Perfiles.class.getName()).log(Level.SEVERE, null, ex);
         }  
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void radio_clientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radio_clientesMouseClicked
-        
-        usuarios.clear();
-        usuarios = cu.listarClientes();
-       
-        if (usuarios != null){
-            int i = 0;
-            modelo_usuarios.clear();
-            ids.clear();
-            while (i < usuarios.size()){
-             
-                Usuario user;
-                user = (Usuario)usuarios.get(i);
-                i++;
-                modelo_usuarios.addElement(user.getNick());
-                ids.add(user.getId());
+        try {
+            usuarios.clear();
+            usuarios = cu.listar("cli");
+           
+            if (usuarios != null){
+                int i = 0;
+                modelo_usuarios.clear();
+                ids.clear();
+                while (i < usuarios.size()){
+                 
+                    Usuario user;
+                    user = (Usuario)usuarios.get(i);
+                    i++;
+                    modelo_usuarios.addElement(user.getNick());
+                    ids.add(user.getId());
               
+                }
             }
-        } 
+        } catch (SQLException ex) { 
+            Logger.getLogger(Perfiles.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_radio_clientesMouseClicked
 
     private void radio_todosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_todosActionPerformed
@@ -343,9 +355,9 @@ ArrayList usuarios = new ArrayList();
     }//GEN-LAST:event_radio_todosActionPerformed
 
     private void radio_todosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radio_todosMouseClicked
-
+        try {
             usuarios.clear();
-            usuarios = cu.listarUsuarios();
+            usuarios = cu.listar("");
        
         if (usuarios != null){
             
@@ -360,12 +372,16 @@ ArrayList usuarios = new ArrayList();
                 ids.add(user.getId());
             }
         }
+        } catch (SQLException ex) {
+            Logger.getLogger(Perfiles.class.getName()).log(Level.SEVERE, null, ex);
+        }
       
     }//GEN-LAST:event_radio_todosMouseClicked
 
     private void radio_desMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radio_desMouseClicked
+        try {
             usuarios.clear();
-            usuarios = cu.listarDesarrolladores();
+            usuarios = cu.listar("des");
        
         if (usuarios != null){
             
@@ -380,6 +396,9 @@ ArrayList usuarios = new ArrayList();
                 ids.add(user.getId());
             }
         }  
+        } catch (SQLException ex) {
+            Logger.getLogger(Perfiles.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
     }//GEN-LAST:event_radio_desMouseClicked

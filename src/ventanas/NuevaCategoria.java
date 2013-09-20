@@ -2,26 +2,32 @@
 package ventanas;
 
 import controladores.ControladorCategorias;
+import clases.ManejoImagenes;
 import dominio.Categoria;
 import java.awt.Image;
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 public class NuevaCategoria extends javax.swing.JDialog {
     
     private ControladorCategorias cc = ControladorCategorias.getInstancia();
+    private ManejoImagenes mi = ManejoImagenes.getInstancia();
+    private String path_imagen;
 
     public NuevaCategoria(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();
-        this.setLocationRelativeTo(null);
-    }
+            initComponents();
+            this.setLocationRelativeTo(null);
+        }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -31,7 +37,7 @@ public class NuevaCategoria extends javax.swing.JDialog {
         txt_cat = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         foto = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        aceptar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -61,12 +67,12 @@ public class NuevaCategoria extends javax.swing.JDialog {
             .addComponent(foto, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
         );
 
-        jButton1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Apply.png"))); // NOI18N
-        jButton1.setText("Aceptar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        aceptar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        aceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Apply.png"))); // NOI18N
+        aceptar.setText("Aceptar");
+        aceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                aceptarActionPerformed(evt);
             }
         });
 
@@ -95,13 +101,13 @@ public class NuevaCategoria extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(aceptar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {aceptar, jButton2});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,7 +121,7 @@ public class NuevaCategoria extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(aceptar))
                 .addContainerGap())
         );
 
@@ -124,24 +130,21 @@ public class NuevaCategoria extends javax.swing.JDialog {
 
     private void cargarImagen(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarImagen
         JFileChooser select = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter(".JPG, .GIF & .PNG","png", "jpg", "gif");
+        select.setFileFilter(filtro);
         select.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int estado = select.showOpenDialog(null);
         if(estado == JFileChooser.APPROVE_OPTION){
-            try {
-                
-                FileInputStream fis =  new FileInputStream(select.getSelectedFile());
-                int longitudBytes = (int)select.getSelectedFile().length();
-                
-                Image icono = ImageIO.read(select.getSelectedFile()).getScaledInstance(foto.getWidth(), foto.getHeight(), Image.SCALE_DEFAULT);
-                foto.setIcon(new ImageIcon(icono));
-                foto.updateUI(); 
-                
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
+            path_imagen = select.getSelectedFile().getPath();
+            ImageIcon image = new ImageIcon(path_imagen);
+            if(image.getIconHeight() > foto.getHeight() || image.getIconWidth() > foto.getWidth()){
+                ImageIcon imageResize = new ImageIcon(image.getImage().getScaledInstance(foto.getWidth(), foto.getHeight(), Image.SCALE_DEFAULT));
+                foto.setIcon(imageResize);
             }
-            catch (IOException ex){
-                ex.printStackTrace();
+            else{
+                foto.setIcon(image);
             }
+            foto.updateUI();
         }
     }//GEN-LAST:event_cargarImagen
 
@@ -149,24 +152,38 @@ public class NuevaCategoria extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         Categoria c = new Categoria();
         c.setNombre(this.txt_cat.getText());
-        int res = cc.altaCategoria(c);
-        if (res == 1){
-            JOptionPane.showMessageDialog(null, "Operacion Exitosa", "Exito", JOptionPane.INFORMATION_MESSAGE);
+        String nombreImagen = c.getNombre().toLowerCase()+".png";
+        String ubicacion = "C:\\imagenes prog\\categorias\\"+nombreImagen;
+        File img = new File(path_imagen);
+        File destino = new File(ubicacion);
+        c.setImagen(nombreImagen);
+        try {
+            mi.copiar(img, destino);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(NuevaCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(NuevaCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int res;
+        try {
+            res = cc.altaCategoria(c);
+            System.out.println("id: "+res);
+            JOptionPane.showMessageDialog(this, "Operacion Exitosa ID:"+res, "Exito", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
+        } catch (SQLException ex) {
+            if (ex.getErrorCode() == 1062)
+                JOptionPane.showMessageDialog(this, "El nombre ya existe", "Error", JOptionPane.ERROR_MESSAGE);
+            System.err.println(ex.toString());
         }
-        else{
-            if (res == 1062)//clave unica duplicada
-                JOptionPane.showMessageDialog(null, "El nombre ya existe", "Error", JOptionPane.ERROR_MESSAGE);//, new ImageIcon(getClass().getResource("/recursos/Error.png")));
-        }
-    
-    }//GEN-LAST:event_jButton1ActionPerformed
+                
+    }//GEN-LAST:event_aceptarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton aceptar;
     private javax.swing.JLabel foto;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

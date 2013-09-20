@@ -7,9 +7,11 @@ import dominio.Categoria;
 import dominio.Cliente;
 import dominio.Comentario;
 import dominio.Juego;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
@@ -39,17 +41,21 @@ public class InformacionJuego extends javax.swing.JDialog {
     }
     
     public void cargarComentarios(int id){
-        ArrayList coments = cj.verComentariosJuego(id);
-        root = new DefaultMutableTreeNode(juego);
-        modelo_coments.setRoot(root);
-        
-        int i = 0;
-        while (i < coments.size()){
-            Comentario c = (Comentario)coments.get(i);
-            c.setRespuestas(cj.selectRespuestas(c.getId()));
-            asignarHijos(c);
-            modelo_coments.reload();
-            i++;
+        try {
+            ArrayList coments = cj.verComentariosJuego(id);
+            root = new DefaultMutableTreeNode(juego);
+            modelo_coments.setRoot(root);
+            
+            int i = 0;
+            while (i < coments.size()){
+                Comentario c = (Comentario)coments.get(i);
+                c.setRespuestas(cj.selectRespuestas(c.getId()));
+                asignarHijos(c);
+                modelo_coments.reload();
+                i++;
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error: "+ex.getErrorCode(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -108,16 +114,20 @@ public class InformacionJuego extends javax.swing.JDialog {
     }
 
     public void cargarInfoJuego(int id){
-        juego = cj.verInfoJuego(id);
-        this.nombre.setText(juego.getNombre());
-        this.tam.setText(String.valueOf(juego.getSize()) + " KB");
-        this.precio.setText("U$S " + String.valueOf(juego.getPrecio()));
-        this.desa.setModel(modelo_des);
-        modelo_des.addElement(juego.getDes().getNick());
-        this.desc.setText(juego.getDescripcion());
-        this.cargarCategorias(juego.getId());
-        this.cargarCompras(juego.getId());
-        this.cargarComentarios(juego.getId());
+        try {
+            juego = cj.verInfoJuego(id);
+            this.nombre.setText(juego.getNombre());
+            this.tam.setText(String.valueOf(juego.getSize()) + " KB");
+            this.precio.setText("U$S " + String.valueOf(juego.getPrecio()));
+            this.desa.setModel(modelo_des);
+            modelo_des.addElement(juego.getDes().getNick());
+            this.desc.setText(juego.getDescripcion());
+            this.cargarCategorias(juego.getId());
+            this.cargarCompras(juego.getId());
+            this.cargarComentarios(juego.getId());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error: "+ex.getErrorCode(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     @SuppressWarnings("unchecked")

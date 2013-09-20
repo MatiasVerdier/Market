@@ -1,15 +1,14 @@
 package ventanas;
 
 import dominio.Cliente;
+import dominio.Compra;
 import dominio.Juego;
-import dominio.Usuario;
 import static java.awt.image.ImageObserver.WIDTH;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class NuevaCompra extends javax.swing.JDialog {
@@ -26,13 +25,17 @@ private dominio.Juego juegoComprar;
 
     public NuevaCompra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+    try {
         initComponents();
         this.setLocationRelativeTo(null);
-         listaUsuarios = controladores.ControladorUsuarios.getInstancia().listarClientes();
+         listaUsuarios = controladores.ControladorUsuarios.getInstancia().listar("c");
         for (Iterator it = listaUsuarios.iterator(); it.hasNext();) {
             Cliente cli  = (Cliente)it.next();
             comboClientes.addItem(cli.getNick());
         }
+    } catch (SQLException ex) {
+        Logger.getLogger(NuevaCompra.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
 
     @SuppressWarnings("unchecked")
@@ -161,7 +164,7 @@ private dominio.Juego juegoComprar;
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
     try {
         Cliente cli = (Cliente)listaUsuarios.get(comboClientes.getSelectedIndex());
-        dominio.Compra compra = new dominio.Compra(juegoComprar,cli, dateFechaCompra.getDate());
+        Compra compra = new Compra(juegoComprar,cli, dateFechaCompra.getDate());
         if(dateFechaCompra.getDate() == null) throw new Exception("No se ha ingresado una fecha de compra");
                     
         controladores.ControladorCompras.getInstancia().altaCompra(compra);

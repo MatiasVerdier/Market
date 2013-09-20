@@ -5,7 +5,10 @@ import controladores.ControladorCategorias;
 import controladores.Controladorjuegos;
 import dominio.Categoria;
 import dominio.Juego;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -56,18 +59,22 @@ public class Juegos extends javax.swing.JDialog {
     }
     
     private void CargarJuegos(int id_cat){
-        ids_j.clear();
-        modelo_juego.clear();
-        ArrayList juegos = cj.listarJuegosPorCategoria(id_cat);
-        if (juegos != null){
-            int i = 0;
-            while (i < juegos.size()){
-                Juego j;
-                j = (Juego)juegos.get(i);
-                modelo_juego.addElement(j.getNombre());
-                ids_j.add(j.getId());
-                i++;
+        try {
+            ids_j.clear();
+            modelo_juego.clear();
+            ArrayList juegos = cj.listarJuegosPorCategoria(id_cat);
+            if (juegos != null){
+                int i = 0;
+                while (i < juegos.size()){
+                    Juego j;
+                    j = (Juego)juegos.get(i);
+                    modelo_juego.addElement(j.getNombre());
+                    ids_j.add(j.getId());
+                    i++;
+                }
             }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error: "+ex.getErrorCode(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     @SuppressWarnings("unchecked")
@@ -295,10 +302,14 @@ public class Juegos extends javax.swing.JDialog {
     private void IngresarCompra(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarCompra
         int sel = this.lista_juegos.getSelectedIndex();
         if(sel != -1){
-            NuevaCompra c = new NuevaCompra(null, true);
-            c.txtJuego.setText(this.lista_juegos.getSelectedValue().toString());
-            c.setJuegoComprar(Controladorjuegos.getInstancia().verInfoJuego(id_juego));     
-            c.setVisible(true);
+            try {
+                NuevaCompra c = new NuevaCompra(null, true);
+                c.txtJuego.setText(this.lista_juegos.getSelectedValue().toString());
+                c.setJuegoComprar(cj.verInfoJuego(id_juego));
+                c.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(Juegos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else{
             JOptionPane.showMessageDialog(this, "Debe seleccionar un juego", "Error", JOptionPane.ERROR_MESSAGE);
@@ -331,7 +342,6 @@ public class Juegos extends javax.swing.JDialog {
             this.cargarCategorias();
             this.click_new_cat = false;
         }
-        
         if(this.clic_new_juego){
             this.CargarJuegos(id_cat);
             this.clic_new_juego = false;

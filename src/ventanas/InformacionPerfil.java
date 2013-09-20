@@ -1,30 +1,21 @@
 package ventanas;
 
-import clases.CustomImageIcon;
 import controladores.ControladorUsuarios;
 import dominio.Cliente;
 import javax.swing.ImageIcon;
 import dominio.Desarrollador;
 import dominio.Usuario;
 import java.awt.Color;
-import java.awt.Image;
 import static java.awt.image.ImageObserver.WIDTH;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.*;
+
 public class InformacionPerfil extends javax.swing.JDialog {
     private boolean alta = true;
     private ControladorUsuarios cu = ControladorUsuarios.getInstancia();
-    private FileInputStream fis;
-    private int longitudBytes;
     Usuario u;
     
     public InformacionPerfil(java.awt.Frame parent, boolean modal) {
@@ -36,7 +27,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
     }
     
     public void cargarInfoPerfil(int id){
-   
+        try {   
             this.btn_aceptar.setVisible(false);
             this.btn_cancelar.setText("Salir");
             this.cambiarColor(Color.WHITE);
@@ -65,7 +56,7 @@ public class InformacionPerfil extends javax.swing.JDialog {
             Integer ed;
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-                long today = calendarNacimiento.getDate().getTime();        
+            long today = calendarNacimiento.getDate().getTime();        
             // Using DateFormat format method we can create a string 
             // representation of a date with the defined format.
             String reportDate = df.format(today);
@@ -73,18 +64,12 @@ public class InformacionPerfil extends javax.swing.JDialog {
             
             txtEdad.setText(ed.toString());
         }catch(Exception ex){
-        
+            JOptionPane.showMessageDialog(this, "Error: "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-            if (u.getImagen() != null){
-            int label_w = this.label_imagen.getWidth();
-            int label_h = this.label_imagen.getHeight();
-                   
-            Image img = u.getImagen().getImage().getScaledInstance(label_w, label_h, Image.SCALE_DEFAULT);  
-            label_imagen.setIcon(new ImageIcon(img));
-            }else
-            {
-                label_imagen.setIcon( new ImageIcon(getClass().getResource("/recursos/user-icon.png")));
-            }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error: "+ex.getErrorCode(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     public void cambiarEstado(boolean nom, boolean ape, boolean fnac, boolean nick, boolean email, boolean web, boolean radio){
@@ -422,37 +407,38 @@ public class InformacionPerfil extends javax.swing.JDialog {
             Usuario user;
         
             if (alta == true && this.radio_cli.isSelected()){
-            user = new Cliente();
-            }else if(alta == true && this.radio_des.isSelected()){
-            user= new Desarrollador();
-            Desarrollador des = (Desarrollador) user;
-            des.setWeb(this.txt_web.getText());
-        }else{
-                 user = u;
+                user = new Cliente();
             }
+            else 
+                if(alta == true && this.radio_des.isSelected()){
+                    user= new Desarrollador();
+                    Desarrollador des = (Desarrollador) user;
+                    des.setWeb(this.txt_web.getText());
+                }
+                else{
+                    user = u;
+                }
         
         user.setNombre(this.txt_nombre.getText());
         user.setApellido(this.txt_ape.getText());
         user.setNick(this.txt_nick.getText());
         user.setFecha_nac(calendarNacimiento.getDate());
         user.setEmail(this.txt_email.getText());
-        user.setFoto(fis);
+//        user.setFoto(fis);
         if (user instanceof Desarrollador){
             Desarrollador des= (Desarrollador)user;
             des.setWeb(this.txt_web.getText());
         }
-        
        
         if(radio_cli.isSelected()){
         try {
             if (alta == true){
-            controladores.ControladorUsuarios.getInstancia().altaCliente((Cliente)user);
+            controladores.ControladorUsuarios.getInstancia().altaUsuario((Cliente)user);
             JOptionPane.showMessageDialog(null, "El usuario se ha agregado correctamente" , null, WIDTH, null);
-            
             
             }
             else{
-            controladores.ControladorUsuarios.getInstancia().actualizarCliente((Cliente)user);
+            controladores.ControladorUsuarios.getInstancia().actualizarUsuario((Cliente)user);
             JOptionPane.showMessageDialog(null, "El usuario se ha actualizado correctamente" , null, WIDTH, null);
             }
             
@@ -472,11 +458,11 @@ public class InformacionPerfil extends javax.swing.JDialog {
         }else{
             try {
                 if(alta == true){
-                controladores.ControladorUsuarios.getInstancia().altaDesarrollador((Desarrollador)user);
+                controladores.ControladorUsuarios.getInstancia().altaUsuario((Desarrollador)user);
                 JOptionPane.showMessageDialog(null, "El usuario se ha actualizado correctamente" , null, WIDTH, null);
             
                 }else
-                {controladores.ControladorUsuarios.getInstancia().modificarDesarrollador((Desarrollador)user);
+                {controladores.ControladorUsuarios.getInstancia().actualizarUsuario((Desarrollador)user);
                  JOptionPane.showMessageDialog(null, "El usuario se ha actualizado correctamente" , null, WIDTH, null);
                
                 }
@@ -494,17 +480,16 @@ public class InformacionPerfil extends javax.swing.JDialog {
             }
         }
         }catch(Exception ex){
-         
-     }
-        
+            JOptionPane.showMessageDialog(this, "Error: "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }                                    
 
     private void radio_cliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_cliActionPerformed
-      if(radio_cli.isSelected()){
+        if(radio_cli.isSelected()){
           this.label_web.setVisible(false);
           this.txt_web.setEditable(false);
           this.txt_web.setVisible(false);
-      }
+        }
     }//GEN-LAST:event_radio_cliActionPerformed
 
     private void cancelar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelar
@@ -515,24 +500,8 @@ public class InformacionPerfil extends javax.swing.JDialog {
         JFileChooser se = new JFileChooser();
         se.setFileSelectionMode(JFileChooser.FILES_ONLY);       
         int estado = se.showOpenDialog(null);
-        if(estado == JFileChooser.APPROVE_OPTION)
-        {
-            try {
-                
-                fis =  new FileInputStream(se.getSelectedFile());
-                this.longitudBytes = (int)se.getSelectedFile().length();
-                
-                Image icono = ImageIO.read(se.getSelectedFile()).getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT);
-                label_imagen.setIcon(new ImageIcon(icono));
-                label_imagen.updateUI(); 
-                
-            } catch (FileNotFoundException ex) {ex.printStackTrace();}
-            catch (IOException ex){
-                ex.printStackTrace();
-            } 
-            //catch (IOException ex) {
-              //  Logger.getLogger(InformacionPerfil.class.getName()).log(Level.SEVERE, null, ex);
-           // }
+        if(estado == JFileChooser.APPROVE_OPTION){
+            
         }
     }//GEN-LAST:event_cargarImagen
 
@@ -543,17 +512,17 @@ public class InformacionPerfil extends javax.swing.JDialog {
     String hoy = formato.format(fechaActual);
     String[] dat1 = fecha_nac.split("/");
     String[] dat2 = hoy.split("/");
-    int anos = Integer.parseInt(dat2[2]) - Integer.parseInt(dat1[2]);
+    int years = Integer.parseInt(dat2[2]) - Integer.parseInt(dat1[2]);
     int mes = Integer.parseInt(dat2[1]) - Integer.parseInt(dat1[1]);
     if (mes < 0) {
-      anos = anos - 1;
+      years = years - 1;
     } else if (mes == 0) {
       int dia = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
       if (dia > 0) {
-        anos = anos - 1;
+        years = years - 1;
       }
     }
-    return anos;
+    return years;
   }
     
     private void altaPerfil(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaPerfil
