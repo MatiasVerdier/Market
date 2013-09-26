@@ -7,11 +7,13 @@ import dominio.Categoria;
 import dominio.Cliente;
 import dominio.Comentario;
 import dominio.Juego;
+import dominio.Version;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
@@ -26,6 +28,7 @@ public class InformacionJuego extends javax.swing.JDialog {
     private DefaultListModel modelo_compras = new DefaultListModel();
     private DefaultTreeModel modelo_coments = new DefaultTreeModel(null, true);
     private DefaultComboBoxModel modelo_des = new DefaultComboBoxModel();
+    DefaultTableModel modelo_vers;
     DefaultMutableTreeNode root;
     
     private boolean click_comentario = false;
@@ -38,6 +41,7 @@ public class InformacionJuego extends javax.swing.JDialog {
         this.categorias.setModel(modelo_cats);
         this.compradores.setModel(modelo_compras);
         this.comentarios.setModel(modelo_coments);
+        this.modelo_vers = (DefaultTableModel)this.tabla_vers.getModel();
     }
     
     public void cargarComentarios(int id){
@@ -125,6 +129,15 @@ public class InformacionJuego extends javax.swing.JDialog {
             this.cargarCategorias(juego.getId());
             this.cargarCompras(juego.getId());
             this.cargarComentarios(juego.getId());
+            
+            int i = 0;
+            while (i < juego.getVersiones().size()){
+                Version v = juego.getVersiones().get(i);
+                this.modelo_vers.setValueAt(v.getNro_version(), i, 0);
+                this.modelo_vers.setValueAt(v.getSize(), i, 1);
+                i++;
+            }
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error: "+ex.getErrorCode(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -162,7 +175,7 @@ public class InformacionJuego extends javax.swing.JDialog {
         btn_salir = new javax.swing.JButton();
         panel_versiones = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tabla_vers = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -419,7 +432,7 @@ public class InformacionJuego extends javax.swing.JDialog {
 
         panel_versiones.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Versiones", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tabla_vers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -445,7 +458,7 @@ public class InformacionJuego extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane6.setViewportView(jTable2);
+        jScrollPane6.setViewportView(tabla_vers);
 
         javax.swing.GroupLayout panel_versionesLayout = new javax.swing.GroupLayout(panel_versiones);
         panel_versiones.setLayout(panel_versionesLayout);
@@ -596,7 +609,6 @@ public class InformacionJuego extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextField nombre;
     private javax.swing.JPanel panel_categorias;
     private javax.swing.JPanel panel_comentarios;
@@ -604,6 +616,7 @@ public class InformacionJuego extends javax.swing.JDialog {
     private javax.swing.JPanel panel_info_basica;
     private javax.swing.JPanel panel_versiones;
     private javax.swing.JTextField precio;
+    private javax.swing.JTable tabla_vers;
     private javax.swing.JTextField tam;
     // End of variables declaration//GEN-END:variables
 }
