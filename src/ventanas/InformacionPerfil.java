@@ -6,15 +6,17 @@ import javax.swing.ImageIcon;
 import dominio.Desarrollador;
 import dominio.Usuario;
 import java.awt.Color;
+import java.awt.Image;
 import static java.awt.image.ImageObserver.WIDTH;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class InformacionPerfil extends javax.swing.JDialog {
     private boolean alta = true;
+    private String path_imagen = "";
     private ControladorUsuarios cu = ControladorUsuarios.getInstancia();
     Usuario u;
     
@@ -52,20 +54,31 @@ public class InformacionPerfil extends javax.swing.JDialog {
             this.txt_email.setText(u.getEmail());
             this.calendarNacimiento.setDateFormatString("dd/MM/yyyy");
             this.calendarNacimiento.setDate(u.getFecha_nac());
-            try{
-            Integer ed;
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-
-            long today = calendarNacimiento.getDate().getTime();        
-            // Using DateFormat format method we can create a string 
-            // representation of a date with the defined format.
-            String reportDate = df.format(today);
-            ed = (edad(reportDate));
+            txtEdad.setText(String.valueOf(u.getEdad()));
             
-            txtEdad.setText(ed.toString());
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(this, "Error: "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            
+            if (! u.getImg().equals("")){
+                int ancho = this.label_imagen.getWidth();
+                int alto = this.label_imagen.getHeight();
+                
+                try{
+                    ImageIcon img = new ImageIcon(new URL(u.getImg()));
+                    if (img.getIconHeight() > alto || img.getIconWidth() > ancho){
+                        ImageIcon img_reducida = new ImageIcon(img.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
+                        label_imagen.setIcon(img_reducida);
+                    }
+                    else{
+                        label_imagen.setIcon(img);
+                    }
+                }
+                catch(MalformedURLException ex){
+                    JOptionPane.showMessageDialog(this, "Error: "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            
+            }
+            else {
+                label_imagen.setIcon( new ImageIcon(getClass().getResource("/recursos/user-icon.png")));
+            }
             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error: "+ex.getErrorCode(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -424,7 +437,6 @@ public class InformacionPerfil extends javax.swing.JDialog {
         user.setNick(this.txt_nick.getText());
         user.setFecha_nac(calendarNacimiento.getDate());
         user.setEmail(this.txt_email.getText());
-//        user.setFoto(fis);
         if (user instanceof Desarrollador){
             Desarrollador des= (Desarrollador)user;
             des.setWeb(this.txt_web.getText());
@@ -498,32 +510,45 @@ public class InformacionPerfil extends javax.swing.JDialog {
 
     private void cargarImagen(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarImagen
         JFileChooser se = new JFileChooser();
-        se.setFileSelectionMode(JFileChooser.FILES_ONLY);       
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("jpg, png, gif","png", "jpg", "gif");
+        se.setFileFilter(filtro);
+        se.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int ancho = label_imagen.getHeight();
+        int alto = label_imagen.getWidth();
+        
         int estado = se.showOpenDialog(null);
         if(estado == JFileChooser.APPROVE_OPTION){
-            
+            path_imagen = se.getSelectedFile().getPath();
+            ImageIcon img_original = new ImageIcon(se.getSelectedFile().getPath());
+            if(img_original.getIconHeight() > ancho || img_original.getIconWidth() > alto){
+                ImageIcon img_reducida = new ImageIcon(img_original.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
+                label_imagen.setIcon(img_reducida);
+            }
+            else{
+                label_imagen.setIcon(img_original);
+            }
         }
     }//GEN-LAST:event_cargarImagen
 
-    public int edad(String fecha_nac) {     //fecha_nac debe tener el formato dd/MM/yyyy
-   
-    Date fechaActual = new Date();
-    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-    String hoy = formato.format(fechaActual);
-    String[] dat1 = fecha_nac.split("/");
-    String[] dat2 = hoy.split("/");
-    int years = Integer.parseInt(dat2[2]) - Integer.parseInt(dat1[2]);
-    int mes = Integer.parseInt(dat2[1]) - Integer.parseInt(dat1[1]);
-    if (mes < 0) {
-      years = years - 1;
-    } else if (mes == 0) {
-      int dia = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
-      if (dia > 0) {
-        years = years - 1;
-      }
-    }
-    return years;
-  }
+//    public int edad(String fecha_nac) {     //fecha_nac debe tener el formato dd/MM/yyyy
+//   
+//    Date fechaActual = new Date();
+//    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+//    String hoy = formato.format(fechaActual);
+//    String[] dat1 = fecha_nac.split("/");
+//    String[] dat2 = hoy.split("/");
+//    int years = Integer.parseInt(dat2[2]) - Integer.parseInt(dat1[2]);
+//    int mes = Integer.parseInt(dat2[1]) - Integer.parseInt(dat1[1]);
+//    if (mes < 0) {
+//      years = years - 1;
+//    } else if (mes == 0) {
+//      int dia = Integer.parseInt(dat2[0]) - Integer.parseInt(dat1[0]);
+//      if (dia > 0) {
+//        years = years - 1;
+//      }
+//    }
+//    return years;
+//  }
     
     private void altaPerfil(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaPerfil
         this.cambiarEstado(true, true, true, true, true, true, true);
