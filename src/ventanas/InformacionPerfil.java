@@ -16,6 +16,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class InformacionPerfil extends javax.swing.JDialog {
     private boolean alta = true;
+    private final String servidor = "http://progapli2013.comule.com/";
+    private final String carpeta = "imagenes/perfiles/";
     private String path_imagen = "";
     private ControladorUsuarios cu = ControladorUsuarios.getInstancia();
     Usuario u;
@@ -62,7 +64,8 @@ public class InformacionPerfil extends javax.swing.JDialog {
                 int alto = this.label_imagen.getHeight();
                 
                 try{
-                    ImageIcon img = new ImageIcon(new URL(u.getImg()));
+                    System.out.println(servidor+carpeta+u.getImg());
+                    ImageIcon img = new ImageIcon(new URL(servidor+carpeta+u.getImg()));
                     if (img.getIconHeight() > alto || img.getIconWidth() > ancho){
                         ImageIcon img_reducida = new ImageIcon(img.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
                         label_imagen.setIcon(img_reducida);
