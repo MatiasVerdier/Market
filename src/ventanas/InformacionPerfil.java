@@ -417,84 +417,34 @@ public class InformacionPerfil extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    //Modificado 25/8 Matias R
      private void btn_aceptarconsulta(java.awt.event.ActionEvent evt) throws Exception {                                     
         try{
-            Usuario user;
-        
-            if (alta == true && this.radio_cli.isSelected()){
-                user = new Cliente();
+            Usuario user = new Usuario();
+            if(this.radio_des.isSelected()){
+                Desarrollador des = new Desarrollador();
+                des.setTipo("d");
+                des.setWeb(this.txt_web.getText());
+                user = des;
             }
-            else 
-                if(alta == true && this.radio_des.isSelected()){
-                    user= new Desarrollador();
-                    Desarrollador des = (Desarrollador) user;
-                    des.setWeb(this.txt_web.getText());
-                }
-                else{
-                    user = u;
-                }
-        
-        user.setNombre(this.txt_nombre.getText());
-        user.setApellido(this.txt_ape.getText());
-        user.setNick(this.txt_nick.getText());
-        user.setFecha_nac(calendarNacimiento.getDate());
-        user.setEmail(this.txt_email.getText());
-        if (user instanceof Desarrollador){
-            Desarrollador des= (Desarrollador)user;
-            des.setWeb(this.txt_web.getText());
-        }
-       
-        if(radio_cli.isSelected()){
-        try {
-            if (alta == true){
-            controladores.ControladorUsuarios.getInstancia().altaUsuario((Cliente)user);
-            JOptionPane.showMessageDialog(null, "El usuario se ha agregado correctamente" , null, WIDTH, null);
+            else if (this.radio_cli.isSelected())
+                user.setTipo("c");
+                
+            user.setNombre(this.txt_nombre.getText());
+            user.setApellido(this.txt_ape.getText());
+            user.setNick(this.txt_nick.getText());
+            user.setFecha_nac(calendarNacimiento.getDate());
+            user.setEmail(this.txt_email.getText());
             
+            if (alta == true){
+                controladores.ControladorUsuarios.getInstancia().altaUsuario((Cliente)user);
+                JOptionPane.showMessageDialog(null, "El usuario se ha agregado correctamente" , null, WIDTH, null);
             }
             else{
-            controladores.ControladorUsuarios.getInstancia().actualizarUsuario((Cliente)user);
-            JOptionPane.showMessageDialog(null, "El usuario se ha actualizado correctamente" , null, WIDTH, null);
-            }
-            
-            this.dispose();
-            
-        } catch (SQLException ex) {
-                int err = ex.getErrorCode();
-                if (err == 1062){
-                    JOptionPane.showMessageDialog(this, "Ha ingresado un valor duplicado" , "Error",JOptionPane.ERROR_MESSAGE);
-                }else if (err == 0){
-                    JOptionPane.showMessageDialog(this, "La imagen es demasiado grande" , "Error", JOptionPane.ERROR_MESSAGE );
-                }
-                else{
-                JOptionPane.showMessageDialog(null, ex.getMessage() , null, WIDTH, null);
-                }
-            }
-        }else{
-            try {
-                if(alta == true){
-                controladores.ControladorUsuarios.getInstancia().altaUsuario((Desarrollador)user);
+                controladores.ControladorUsuarios.getInstancia().actualizarUsuario((Cliente)user);
                 JOptionPane.showMessageDialog(null, "El usuario se ha actualizado correctamente" , null, WIDTH, null);
-            
-                }else
-                {controladores.ControladorUsuarios.getInstancia().actualizarUsuario((Desarrollador)user);
-                 JOptionPane.showMessageDialog(null, "El usuario se ha actualizado correctamente" , null, WIDTH, null);
-               
-                }
-                this.dispose();
-            } catch (SQLException ex) {
-                  int err = ex.getErrorCode();
-                if (err == 1062){
-                    JOptionPane.showMessageDialog(null, "Ha ingresado un valor duplicado" , null, WIDTH, null);
-                }else if (err == 0){
-                    JOptionPane.showMessageDialog(null, "La imagen es demasiado grande" , null, WIDTH, null);
-                }
-                else{
-                JOptionPane.showMessageDialog(null, ex.getMessage() , null, WIDTH, null);
-                }
             }
         }
-        }catch(Exception ex){
+        catch(Exception ex){
             JOptionPane.showMessageDialog(this, "Error: "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }                                    
