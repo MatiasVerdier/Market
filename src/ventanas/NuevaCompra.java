@@ -1,8 +1,8 @@
 package ventanas;
 
-import dominio.Cliente;
 import dominio.Compra;
 import dominio.Juego;
+import dominio.Usuario;
 import static java.awt.image.ImageObserver.WIDTH;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ private dominio.Juego juegoComprar;
         this.setLocationRelativeTo(null);
          listaUsuarios = controladores.ControladorUsuarios.getInstancia().listar("c");
         for (Iterator it = listaUsuarios.iterator(); it.hasNext();) {
-            Cliente cli  = (Cliente)it.next();
+            Usuario cli  = (Usuario)it.next();
             comboClientes.addItem(cli.getNick());
         }
     } catch (SQLException ex) {
@@ -163,7 +163,7 @@ private dominio.Juego juegoComprar;
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
     try {
-        Cliente cli = (Cliente)listaUsuarios.get(comboClientes.getSelectedIndex());
+        Usuario cli = (Usuario)listaUsuarios.get(comboClientes.getSelectedIndex());
         Compra compra = new Compra(juegoComprar,cli, dateFechaCompra.getDate());
         if(dateFechaCompra.getDate() == null) throw new Exception("No se ha ingresado una fecha de compra");
                     
