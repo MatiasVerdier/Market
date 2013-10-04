@@ -171,9 +171,11 @@ private dominio.Juego juegoComprar;
         JOptionPane.showMessageDialog(null, "La compra ha sido completada exitosamente" , "Correcto", WIDTH, null);
         this.dispose();
     } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage() , "Error", WIDTH, null);
+        System.err.println("SQLException "+ex.getMessage());
+        JOptionPane.showMessageDialog(null, ex.getMessage() , "Error", WIDTH, null);
     } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage() , "Error", WIDTH, null);
+        System.err.println("Exception "+ex.getMessage());
+        JOptionPane.showMessageDialog(null, ex.getMessage() , "Error", WIDTH, null);
     }
         
         
