@@ -131,8 +131,9 @@ public class InformacionJuego extends javax.swing.JDialog {
             this.cargarComentarios(juego.getId());
             
             int i = 0;
-            while (i < juego.getVersiones().size()){
-                Version v = juego.getVersiones().get(i);
+            ArrayList<Version> versiones= controladores.ControladorVersiones.getInstancia().listarVersiones(juego.getId(), ' ');
+            while (i < versiones.size()){
+                Version v = versiones.get(i);
                 this.modelo_vers.setValueAt(v.getNro_version(), i, 0);
                 this.modelo_vers.setValueAt(v.getSize(), i, 1);
                 i++;
