@@ -1,6 +1,7 @@
 package ventanas;
 
 import controladores.ControladorCategorias;
+import controladores.ControladorComentarios;
 import controladores.ControladorCompras;
 import controladores.Controladorjuegos;
 import dominio.Categoria;
@@ -46,14 +47,14 @@ public class InformacionJuego extends javax.swing.JDialog {
     
     public void cargarComentarios(int id){
         try {
-            ArrayList coments = cj.verComentariosJuego(id);
+            ArrayList coments = ControladorComentarios.getInstancia().verComentariosJuego(id);
             root = new DefaultMutableTreeNode(juego);
             modelo_coments.setRoot(root);
             
             int i = 0;
             while (i < coments.size()){
                 Comentario c = (Comentario)coments.get(i);
-                c.setRespuestas(cj.selectRespuestas(c.getId()));
+                c.setRespuestas(ControladorComentarios.getInstancia().obtenerHijos(c.getId()));
                 asignarHijos(c);
                 modelo_coments.reload();
                 i++;
