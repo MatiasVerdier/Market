@@ -243,7 +243,7 @@ public class Main extends javax.swing.JFrame {
         InformacionPerfil ip = new InformacionPerfil(null, true);
         this.setVisible(false);
         ip.limpiarCampos();
-        ip.cambiarEstado(true, true, true, true, true, true, true);
+        ip.cambiarEstado(true, true, true, true, true, true, true, true);
         ip.setVisible(true);
         this.setVisible(true);
     }//GEN-LAST:event_menu_alta_pActionPerformed

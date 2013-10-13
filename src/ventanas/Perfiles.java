@@ -270,7 +270,7 @@ ArrayList usuarios = new ArrayList();
         InformacionPerfil ip = new InformacionPerfil(null, true);
         this.setVisible(false);
         ip.limpiarCampos();
-        ip.cambiarEstado(true, true, true, true, true, true, true);
+        ip.cambiarEstado(true, true ,true , true, true, true, true, true);
         ip.setVisible(true);
         this.setVisible(true);
     }//GEN-LAST:event_nuevousuario
@@ -279,7 +279,7 @@ ArrayList usuarios = new ArrayList();
         InformacionPerfil ip = new InformacionPerfil(null, true);
         this.setVisible(false);
         ip.cargarInfoPerfil(id_usu);
-        ip.cambiarEstado(true, true, true, true, true, true, false);
+        ip.cambiarEstado(true, true, true, true, true, true, true, false);
         ip.setVisible(true);
         this.setVisible(true);
     }//GEN-LAST:event_modificarUsuario
