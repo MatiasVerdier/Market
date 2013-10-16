@@ -46,7 +46,7 @@ public class InformacionJuego extends javax.swing.JDialog {
     }
     
     public void cargarComentarios(int id){
-        try {
+        try{
             ArrayList coments = ControladorComentarios.getInstancia().verComentariosJuego(id);
             root = new DefaultMutableTreeNode(juego);
             modelo_coments.setRoot(root);

@@ -310,7 +310,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void menu_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_loginActionPerformed
-        
+        Versiones v = new Versiones(this, true);
+        v.setVisible(true);
     }//GEN-LAST:event_menu_loginActionPerformed
 
 

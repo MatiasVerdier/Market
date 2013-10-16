@@ -1,11 +1,88 @@
 package ventanas;
 
-public class Versiones extends javax.swing.JFrame {
+import controladores.ControladorVersiones;
+import dominio.Version;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
-    public Versiones() {
-        initComponents();
+
+
+public class Versiones extends javax.swing.JDialog {
+ControladorVersiones cv = ControladorVersiones.getInstancia();
+ArrayList versiones= new ArrayList();    
+    
+
+    public Versiones(java.awt.Frame parent, boolean modal) 
+    {
+      super (parent, modal);
+      initComponents();
+      this.setLocationRelativeTo(null);
+      this.cargarTabla();
+      this.cargaCampos();
+     
     }
-
+    
+   private void cargaCampos(){
+   
+       tabla_vers.addMouseListener(new MouseAdapter() 
+        {
+         public void mouseClicked(MouseEvent e) 
+            {
+            DefaultTableModel modelo = (DefaultTableModel)tabla_vers.getModel();
+            int fila = tabla_vers.rowAtPoint(e.getPoint());
+            //int columna = tabla_vers.columnAtPoint(e.getPoint());
+            if ((fila > -1))
+                {
+                 num_vers.setText(modelo.getValueAt(fila,1).toString());
+                }
+                //estaba aca
+                 int i=fila;
+                    Version v= (Version)versiones.get(i);
+                        num_vers.setText(v.getNro_version().toString());
+                        size_vers.setText(String.valueOf(v.getJuego().getSize()));
+                        fecha_vers.setText(v.getFecha_alta().toString());
+                  
+                
+            }
+        });
+   }
+    
+    private void cargarTabla(){
+        DefaultTableModel modelo = (DefaultTableModel)tabla_vers.getModel();
+        modelo.setRowCount(0);
+        
+        try {        
+            versiones = cv.verInfoVer();
+            int i = 0;
+            while (i < versiones.size()){
+                Version v = (Version)versiones.get(i);
+                String [] fila = {v.getJuego().getNombre(), v.getNro_version(), v.getJuego().getDes().getNick()};
+                modelo.addRow(fila);
+                i++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Versiones.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+  
+   /*private void cargarCampos(){
+       int row = tabla_vers.getSelectedRow();
+       String vers = tabla_vers.getValueAt(row, 2).toString();
+       num_vers.setText(vers);
+   }*/
+  
+  
+  
+  
+  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -38,7 +115,11 @@ public class Versiones extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Versiones", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
@@ -53,6 +134,8 @@ public class Versiones extends javax.swing.JFrame {
                 "Juego", "Version", "Desarrollador"
             }
         ));
+        tabla_vers.setColumnSelectionAllowed(true);
+        tabla_vers.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tabla_vers);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -85,19 +168,21 @@ public class Versiones extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Tamaño (KB)");
 
-        num_vers.setText("jTextField1");
-
-        link_vers.setText("jTextField2");
-
-        fecha_vers.setText("jTextField3");
-
-        size_vers.setText("jTextField4");
-
         estado.add(rechazada);
         rechazada.setText("Rechazada");
+        rechazada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rechazadaActionPerformed(evt);
+            }
+        });
 
         estado.add(aprobada);
         aprobada.setText("Aprobada");
+        aprobada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aprobadaActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Establecer Estado");
@@ -110,6 +195,11 @@ public class Versiones extends javax.swing.JFrame {
         jLabel6.setText("Motivo Rechazo");
 
         aceptar.setText("Aceptar");
+        aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aceptarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -184,11 +274,16 @@ public class Versiones extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addGap(7, 7, 7)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(aceptar))
         );
 
         salir.setText("Salir");
+        salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -200,9 +295,9 @@ public class Versiones extends javax.swing.JFrame {
                     .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,6 +313,55 @@ public class Versiones extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_formWindowActivated
+
+    private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_salirActionPerformed
+
+    private void aprobadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprobadaActionPerformed
+        motivo.enable(false);
+    }//GEN-LAST:event_aprobadaActionPerformed
+
+    private void rechazadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechazadaActionPerformed
+        // TODO add your handling code here:
+        motivo.enable(true);
+    }//GEN-LAST:event_rechazadaActionPerformed
+
+    private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
+        // TODO add your handling code here:
+        Version v =(Version)versiones.get(tabla_vers.getSelectedRow());
+        String motivo = null;
+                if(!this.motivo.getText().equals("")){
+                    motivo = this.motivo.getText();
+                }
+        if(aprobada.isSelected())
+        { 
+            try {
+                
+                cv.CambiarEstado("aprobada", v.getJuego().getId(), v.getOrden_alta(),motivo);
+                JOptionPane.showMessageDialog(this, "Operacion Exitosa", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                this.cargarTabla();
+            } catch (SQLException ex) {
+                Logger.getLogger(Versiones.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else if(rechazada.isSelected())
+        {
+            try {
+                cv.CambiarEstado("rechazada", v.getJuego().getId(), v.getOrden_alta(),motivo);
+                JOptionPane.showMessageDialog(this, "Operacion Exitosa", "Exito", JOptionPane.INFORMATION_MESSAGE);
+                this.cargarTabla();
+                
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Operacion Fallida", "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(Versiones.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_aceptarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
