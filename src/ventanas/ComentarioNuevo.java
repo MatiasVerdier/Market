@@ -1,5 +1,6 @@
 package ventanas;
 
+import controladores.ControladorComentarios;
 import controladores.ControladorCompras;
 //import controladores.ControladorUsuarios;
 import controladores.Controladorjuegos;
@@ -18,6 +19,8 @@ public class ComentarioNuevo extends javax.swing.JDialog {
     
     /* no se si respeta el diseño tener el controlador de compras aca  -Matias */
     private ControladorCompras cc = ControladorCompras.getInstancia();
+    
+    private ControladorComentarios ccom = ControladorComentarios.getInstancia();
     /*-------------------------------------------------------------------------*/
     
     private ArrayList ids_juegos;
@@ -232,7 +235,7 @@ public class ComentarioNuevo extends javax.swing.JDialog {
             nuevo.setFecha(this.fecha.getDate());
             nuevo.setId_padre(id_com_padre);
             //nuevo.setId_padre(Integer.parseInt(this.com_padre.getText()));
-            int res = cj.altaComentario(nuevo);
+            int res = ccom.altaComentario(nuevo);
             JOptionPane.showMessageDialog(this, "Se dio de alta el comentario", "Exito", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
         } catch (SQLException ex) {
