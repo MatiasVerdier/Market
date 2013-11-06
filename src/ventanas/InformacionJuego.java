@@ -253,7 +253,7 @@ public class InformacionJuego extends javax.swing.JDialog {
                 .addGroup(panel_info_basicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_info_basicaLayout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(panel_info_basicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel_info_basicaLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
@@ -348,6 +348,7 @@ public class InformacionJuego extends javax.swing.JDialog {
         jScrollPane3.setViewportView(compradores);
 
         btn_compra.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btn_compra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/shop-cart-add-icon16.png"))); // NOI18N
         btn_compra.setText("Ingresar Compra");
         btn_compra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -396,6 +397,7 @@ public class InformacionJuego extends javax.swing.JDialog {
         jScrollPane4.setViewportView(comentarios);
 
         btn_comentario.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btn_comentario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/coment16.png"))); // NOI18N
         btn_comentario.setText("Nuevo Comentario");
         btn_comentario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -425,6 +427,7 @@ public class InformacionJuego extends javax.swing.JDialog {
         );
 
         btn_salir.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/close_16.png"))); // NOI18N
         btn_salir.setText("Salir");
         btn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -498,7 +501,7 @@ public class InformacionJuego extends javax.swing.JDialog {
                             .addComponent(panel_versiones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(panel_compradores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 2, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(panel_categorias, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );

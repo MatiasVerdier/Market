@@ -118,6 +118,7 @@ public class Juegos extends javax.swing.JDialog {
         jLabel1.setText("Categorias");
 
         btn_salir.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/close_16.png"))); // NOI18N
         btn_salir.setText("Salir");
         btn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
