@@ -30,6 +30,7 @@ public class Main extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         carga_datos = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         arch_salir = new javax.swing.JMenuItem();
         menu_perfil = new javax.swing.JMenu();
         menu_admin_p = new javax.swing.JMenuItem();
@@ -102,6 +103,14 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem7.setText("Cargar Datos de Prueba");
         carga_datos.add(jMenuItem7);
+
+        jMenuItem1.setText("Ver Accesos al Sitio");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        carga_datos.add(jMenuItem1);
 
         arch_salir.setText("Salir");
         arch_salir.addActionListener(new java.awt.event.ActionListener() {
@@ -310,9 +319,16 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void menu_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_loginActionPerformed
+        this.setVisible(false);
         Versiones v = new Versiones(this, true);
         v.setVisible(true);
+        this.setVisible(true);
     }//GEN-LAST:event_menu_loginActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        AccesoSitio acc = new AccesoSitio();
+        acc.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
 
 //    public static void main(String args[]) {
@@ -335,6 +351,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton7;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenu menu_acerca;
