@@ -1,6 +1,7 @@
 package ventanas;
 
 import controladores.ControladorVersiones;
+import controladores.Controladorjuegos;
 import dominio.Version;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,8 +17,9 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class Versiones extends javax.swing.JDialog {
-ControladorVersiones cv = ControladorVersiones.getInstancia();
-ArrayList versiones= new ArrayList();    
+    ControladorVersiones cv = ControladorVersiones.getInstancia();
+    Controladorjuegos cj = Controladorjuegos.getInstancia();
+    ArrayList versiones= new ArrayList();    
     
 
     public Versiones(java.awt.Frame parent, boolean modal) 
@@ -348,6 +350,9 @@ ArrayList versiones= new ArrayList();
             try {
                 
                 cv.CambiarEstado("aprobada", v.getJuego().getId(), v.getOrden_alta(),motivo);
+                //cambia el campo tiene_ultima_version a 0 para todos los 
+                //usuarios que compraron el juego del cual se aprueba la nueva version
+                cj.cambiarTieneUltimaVersion(v.getJuego().getId(), 0);
                 JOptionPane.showMessageDialog(this, "Operacion Exitosa", "Exito", JOptionPane.INFORMATION_MESSAGE);
                 this.cargarTabla();
             } catch (SQLException ex) {
